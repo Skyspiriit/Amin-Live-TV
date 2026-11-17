@@ -250,7 +250,7 @@ class MainActivity : Activity() {
 
     private fun visibleChannels(): List<Channel> {
         val now = System.currentTimeMillis()
-        return catalogue.inCategory(category).filter { history.isVisible(it, now) }
+        return catalogue.inCategory(category).filter { it.officialLiveUrl != null || history.isVisible(it, now) }
     }
 
     private fun savedPosition(): String? = preferences.getString("position-${category.key}", null)
@@ -292,7 +292,11 @@ class MainActivity : Activity() {
             setDrawSelectorOnTop(true)
             selector = surface(Color.TRANSPARENT, ACCENT)
             adapter = ChannelAdapter(this@MainActivity)
-            setOnItemClickListener { _, _, position, _ -> beginPlayback(position) }
+            setOnItemClickListener { _, _, position, _ ->
+                val channel = currentList[position]
+                if (channel.officialLiveUrl != null) openOfficialLive(channel)
+                else beginPlayback(position)
+            }
             onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: android.widget.AdapterView<*>, item: View?, position: Int, id: Long) {
                     currentList.getOrNull(position)?.let(::rememberPosition)
@@ -306,6 +310,19 @@ class MainActivity : Activity() {
         grid.requestFocus()
         val selected = currentList.indexOfFirst { it.id == focusId }
         grid.setSelection(if (selected >= 0) selected else previousPosition.coerceIn(currentList.indices))
+    }
+
+    private fun openOfficialLive(channel: Channel) {
+        val url = channel.officialLiveUrl ?: return
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url)).addCategory(Intent.CATEGORY_BROWSABLE)
+        try {
+            startActivity(intent)
+        } catch (_: ActivityNotFoundException) {
+            AlertDialog.Builder(this)
+                .setMessage(R.string.official_live_no_browser)
+                .setPositiveButton(android.R.string.ok, null)
+                .show()
+        }
     }
 
     private inner class ChannelAdapter(private val context: Context) : BaseAdapter() {
@@ -329,8 +346,10 @@ class MainActivity : Activity() {
             val channel = getItem(position)
             val icon = tile.getChildAt(0) as ImageView
             logos.load(channel.logo, icon)
-            (tile.getChildAt(1) as TextView).text = channel.name
-            tile.contentDescription = channel.name
+            (tile.getChildAt(1) as TextView).text = channel.name +
+                if (channel.officialLiveUrl != null) getString(R.string.official_live_suffix) else ""
+            tile.contentDescription = channel.name +
+                if (channel.officialLiveUrl != null) getString(R.string.official_live_suffix) else ""
             return tile
         }
     }

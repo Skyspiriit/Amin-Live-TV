@@ -41,14 +41,13 @@ internal data class Channel(
     val origin: Origin,
     val status: String,
     val verifiedAt: Long,
-    val filmOrder: Int? = null
+    val filmOrder: Int? = null,
+    val officialLiveUrl: String? = null
 ) {
     val sourceSet = streams.map { it.key }.sorted().joinToString("\n")
     val listedInApp = categories.any(::belongsTo)
 
-    fun belongsTo(category: Category): Boolean =
-        category in categories &&
-            (category != Category.NEWS || origin == Origin.DOMESTIC || id == BBC_PERSIAN)
+    fun belongsTo(category: Category): Boolean = category in categories
 
     companion object {
         const val BBC_PERSIAN = "bbc-persian"
@@ -159,6 +158,11 @@ internal class CatalogueStore(context: Context) {
             } else {
                 require(filmOrder == null)
             }
+            val officialLiveUrl = if (entry.isNull("officialLiveUrl")) null else
+                publicUrl(entry.requiredText("officialLiveUrl", 2048)).also { url ->
+                    require(Category.NEWS in categories)
+                    require(URI(url).host?.lowercase() in OFFICIAL_LIVE_HOSTS)
+                }
             val sources = entry.getJSONArray("streams")
             require(sources.length() <= 6)
             val streams = (0 until sources.length()).map { offset ->
@@ -177,7 +181,7 @@ internal class CatalogueStore(context: Context) {
             require(streams.map { it.url }.distinct().size == streams.size)
             if (status == "verified") require(streams.isNotEmpty())
             if (status == "restricted" || status == "unavailable") require(streams.isEmpty())
-            Channel(id, name, categories, logo, streams, origin, status, verifiedAt, filmOrder)
+            Channel(id, name, categories, logo, streams, origin, status, verifiedAt, filmOrder, officialLiveUrl)
         }
         require(Category.entries.all { category -> channels.any { it.belongsTo(category) } })
         require(channels.any { it.id == Channel.BBC_PERSIAN && it.belongsTo(Category.NEWS) })
@@ -202,6 +206,10 @@ internal class CatalogueStore(context: Context) {
 
     private companion object {
         val ID = Regex("[a-z0-9][a-z0-9_-]*")
+        val OFFICIAL_LIVE_HOSTS = setOf(
+            "www.bbc.com", "www.dw.com", "www.france24.com", "www.euronews.com",
+            "www.aljazeera.com", "news.sky.com", "abcnews.go.com", "www.cbsnews.com", "www.youtube.com"
+        )
         const val MAX_BYTES = 2 * 1024 * 1024
         const val DAY_MS = 86_400_000L
     }

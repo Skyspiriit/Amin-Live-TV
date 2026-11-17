@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": 3,
+  "revision": 4,
   "channels": [
     {
       "id": "tv1",
@@ -1722,7 +1722,8 @@
       ],
       "status": "restricted",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "officialLiveUrl": "https://www.bbc.com/persian/watch/bbc_persian_tv/live"
     },
     {
       "id": "radio-farda-tv",
@@ -4193,6 +4194,125 @@
       "lastVerified": null,
       "origin": "satellite",
       "filmOrder": 2310
+    },
+    {
+      "id": "dw-english",
+      "name": "دویچه‌وله انگلیسی",
+      "englishName": "DW English",
+      "categories": [
+        "news"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://www.dw.com/en/live-tv/channel-english"
+      ],
+      "status": "unverified",
+      "lastVerified": null,
+      "origin": "satellite",
+      "officialLiveUrl": "https://www.dw.com/en/live-tv/channel-english"
+    },
+    {
+      "id": "france24-english",
+      "name": "فرانس ۲۴ انگلیسی",
+      "englishName": "France 24 English",
+      "categories": [
+        "news"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://www.france24.com/en/live"
+      ],
+      "status": "unverified",
+      "lastVerified": null,
+      "origin": "satellite",
+      "officialLiveUrl": "https://www.france24.com/en/live"
+    },
+    {
+      "id": "euronews-english",
+      "name": "یورونیوز انگلیسی",
+      "englishName": "Euronews English",
+      "categories": [
+        "news"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://www.euronews.com/live"
+      ],
+      "status": "unverified",
+      "lastVerified": null,
+      "origin": "satellite",
+      "officialLiveUrl": "https://www.euronews.com/live"
+    },
+    {
+      "id": "aljazeera-english",
+      "name": "الجزیره انگلیسی",
+      "englishName": "Al Jazeera English",
+      "categories": [
+        "news"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://www.aljazeera.com/video/live/"
+      ],
+      "status": "unverified",
+      "lastVerified": null,
+      "origin": "satellite",
+      "officialLiveUrl": "https://www.aljazeera.com/video/live/"
+    },
+    {
+      "id": "sky-news-english",
+      "name": "اسکای نیوز",
+      "englishName": "Sky News",
+      "categories": [
+        "news"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://news.sky.com/watch-live"
+      ],
+      "status": "unverified",
+      "lastVerified": null,
+      "origin": "satellite",
+      "officialLiveUrl": "https://news.sky.com/watch-live"
+    },
+    {
+      "id": "abc-news-live",
+      "name": "ای‌بی‌سی نیوز لایو",
+      "englishName": "ABC News Live",
+      "categories": [
+        "news"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://abcnews.go.com/Live"
+      ],
+      "status": "unverified",
+      "lastVerified": null,
+      "origin": "satellite",
+      "officialLiveUrl": "https://abcnews.go.com/Live"
+    },
+    {
+      "id": "cbs-news-247",
+      "name": "سی‌بی‌اس نیوز ۲۴ ساعته",
+      "englishName": "CBS News 24/7",
+      "categories": [
+        "news"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://www.cbsnews.com/live/"
+      ],
+      "status": "unverified",
+      "lastVerified": null,
+      "origin": "satellite",
+      "officialLiveUrl": "https://www.cbsnews.com/live/"
     }
   ]
 }
