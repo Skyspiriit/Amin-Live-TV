@@ -13,16 +13,19 @@ class ChannelPolicyTest {
     private val backup = Stream("https://backup.example/live", "hls", 2)
     private val timings = ScanTimings(false)
 
-    @Test fun onlyDomesticNewsAndBbcAreListedInNews() {
+    @Test fun internationalNewsCanBeListedWithoutChangingNativeStreamHealth() {
         val domestic = station("irinn").copy(origin = Origin.DOMESTIC)
-        val bbc = station(Channel.BBC_PERSIAN).copy(streams = emptyList(), status = "restricted")
-        val international = station("international")
+        val bbc = station(Channel.BBC_PERSIAN).copy(
+            streams = emptyList(), status = "restricted",
+            officialLiveUrl = "https://www.bbc.com/persian/watch/bbc_persian_tv/live")
+        val international = station("international").copy(categories = setOf(Category.NEWS))
         val multi = station("mixed").copy(categories = setOf(Category.FILM, Category.NEWS))
-        val catalogue = Catalogue(2, listOf(domestic, bbc, international, multi))
-        assertEquals(listOf(domestic, bbc), catalogue.inCategory(Category.NEWS))
+        val catalogue = Catalogue(4, listOf(domestic, bbc, international, multi))
+        assertEquals(listOf(domestic, international, bbc, multi), catalogue.inCategory(Category.NEWS))
         assertEquals(listOf(multi), catalogue.inCategory(Category.FILM))
         assertFalse(HealthRecord().canShow(bbc))
-        assertFalse(international.listedInApp)
+        assertTrue(bbc.officialLiveUrl != null)
+        assertTrue(international.listedInApp)
     }
 
     @Test fun filmOrderSurvivesCatalogueRefreshAndChannelRecovery() {
