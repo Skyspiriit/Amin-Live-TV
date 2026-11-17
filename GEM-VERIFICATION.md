@@ -1,5 +1,13 @@
 # GEM channel audit
 
+## v0.2.2 recheck
+
+Rechecked 17 November 2026. The eight supplied CloudFront URLs still did not resolve. Of the 28 directory endpoints, 17 returned HTTP 403 and 11 returned HTTP 404. No test retrieved a playable GEM stream. The broadcaster’s “Watch us LIVE” page returned 404 and GEM Online returned 521. The public satellite roster and social page did not publish a usable native HLS or DASH source. [GEM Group live page](https://gemgroup.tv/en/live/gem/gemtv) · [GEM satellite frequencies](https://gemgroup.tv/en/satellite-frequencies) · [GEM Online](https://gemonline.tv/)
+
+All 34 GEM records remain in the catalogue. As of this recheck, none has a trusted playback link, so v0.2.2 shows none in the menu. On the Android TV emulator, synthetic HLS feeds verified that a failed channel disappears from an open grid and a recovered one returns in its assigned position. [Channel catalogue](channels.json)
+
+## Original v0.2.1 audit
+
 Checked 17 November 2026. The catalogue contains **34 GEM channels**. No channel had a verified playable feed or multiple verified sources. **Nine** are marked unavailable and retained in the catalogue. The other **25** are unverified. Of the 32 GEM entries in Film & Series, 23 remain visible. GEM Sport stays in Sports. GEM Modern Economy is outside the News selection.
 
 The eight supplied CloudFront HLS URLs were requested individually. Their shared hostname returned no address or alias in A, AAAA or CNAME checks, so none produced an HTTP response. The 28 distinct alternative HLS routes exposed by the directory listings returned 15 HTTP 403 responses and 13 HTTP 404 responses. No playlist or video was retrieved from those routes. Each was used for discovery and testing. No stream URLs from those directories were integrated. [Parsa TV GEM Series](https://www.parsatv.com/name=GEM-Series) · [MRTV GEM TV](https://mrtv.me/gem-tv/) · [MRTV GEM Series](https://mrtv.me/gem-series/)

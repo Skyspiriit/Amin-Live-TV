@@ -21,15 +21,15 @@ class ChannelPolicyTest {
         val catalogue = Catalogue(2, listOf(domestic, bbc, international, multi))
         assertEquals(listOf(domestic, bbc), catalogue.inCategory(Category.NEWS))
         assertEquals(listOf(multi), catalogue.inCategory(Category.FILM))
-        assertFalse(bbc.heldByCatalogue)
+        assertFalse(HealthRecord().canShow(bbc))
         assertFalse(international.listedInApp)
     }
 
     @Test fun filmOrderSurvivesCatalogueRefreshAndChannelRecovery() {
-        val persiana = station("persiana-family").copy(categories = setOf(Category.FILM), filmOrder = 1010)
-        val gemFirst = station("gem-tv").copy(categories = setOf(Category.FILM), filmOrder = 2010)
+        val persiana = station("persiana-family").copy(categories = setOf(Category.FILM), filmOrder = 1010, status = "verified")
+        val gemFirst = station("gem-tv").copy(categories = setOf(Category.FILM), filmOrder = 2010, status = "verified")
         val gemNext = station("gem-series").copy(categories = setOf(Category.FILM), filmOrder = 2020, streams = emptyList())
-        val other = station("ifilm").copy(categories = setOf(Category.FILM), filmOrder = 3010)
+        val other = station("ifilm").copy(categories = setOf(Category.FILM), filmOrder = 3010, status = "verified")
         val expected = listOf(persiana, gemFirst, gemNext, other)
         val original = Catalogue(3, expected.reversed())
         val refreshed = Catalogue(4, listOf(gemNext, other, persiana, gemFirst))
@@ -39,29 +39,41 @@ class ChannelPolicyTest {
         val ordered = refreshed.inCategory(Category.FILM)
         val failed = HealthRecord().probeFinished(gemFirst, ProbeResult.FAILED, now, timings)
         val recovered = failed.probeFinished(gemFirst, ProbeResult.PLAYABLE, now + day, timings)
-        assertEquals(listOf(persiana, gemNext, other), ordered.filterNot {
-            it == gemFirst && failed.availabilityAt(now) == Availability.UNAVAILABLE
+        assertEquals(listOf(persiana, other), ordered.filter {
+            (if (it == gemFirst) failed else HealthRecord()).canShow(it)
         })
-        assertEquals(expected, ordered.filterNot {
-            it == gemFirst && recovered.availabilityAt(now + day) == Availability.UNAVAILABLE
+        assertEquals(listOf(persiana, gemFirst, other), ordered.filter {
+            (if (it == gemFirst) recovered else HealthRecord()).canShow(it)
         })
     }
 
-    @Test fun uncertainChecksAndStaleResultsNeverHideAChannel() {
+    @Test fun visibleChannelsNeedATrustedSourceAndSurviveInconclusiveChecks() {
         val channel = station("test")
         val initial = HealthRecord().trackedFor(channel, now)
+        assertFalse(initial.canShow(channel))
+        assertTrue(initial.canShow(channel.copy(status = "verified")))
+        assertFalse(initial.canShow(channel.copy(streams = emptyList())))
+        assertFalse(initial.probeFinished(channel, ProbeResult.UNCERTAIN, now, timings).canShow(channel))
         val positive = initial.probeFinished(channel, ProbeResult.PLAYABLE, now, timings)
-        assertEquals(Availability.AVAILABLE, positive.availabilityAt(now))
-        assertEquals(Availability.CHECKING, positive.availabilityAt(now + day))
+        assertTrue(positive.canShow(channel))
+        assertTrue(positive.nextCheckAt < now + day)
         val uncertain = positive.probeFinished(channel, ProbeResult.UNCERTAIN, now + day, timings)
-        assertEquals(Availability.CHECKING, uncertain.availabilityAt(now + day))
+        assertTrue(uncertain.canShow(channel))
+        assertTrue(uncertain.playbackExhausted(channel, false, now + day, timings).canShow(channel))
         val hidden = positive.probeFinished(channel, ProbeResult.FAILED, now + day, timings)
-        assertEquals(Availability.UNAVAILABLE, hidden.availabilityAt(now + 2 * day))
+        assertFalse(hidden.canShow(channel.copy(status = "verified")))
         val waiting = hidden.probeFinished(channel, ProbeResult.UNCERTAIN, now + 2 * day, timings)
-        assertEquals(Availability.UNAVAILABLE, waiting.availabilityAt(now + 2 * day))
+        assertFalse(waiting.canShow(channel))
         val recovered = waiting.probeFinished(channel, ProbeResult.PLAYABLE, now + 3 * day, timings)
-        assertEquals(Availability.AVAILABLE, recovered.availabilityAt(now + 3 * day))
+        assertTrue(recovered.canShow(channel))
         assertEquals(0, recovered.failedChecks)
+    }
+
+    @Test fun updateTagsAreComparedNumericallyAndOnlyNewerVersionsQualify() {
+        assertEquals("v0.10.0", ReleaseCheck.newerTag(
+            "0.2.2", sequenceOf("v0.2.4", "v0.2.11", "v0.10.0", "v0.9.8", "v5.0.0-beta", "v0.2.2")
+        ))
+        assertNull(ReleaseCheck.newerTag("0.2.2", sequenceOf("v0.2.1", "v0.2.2", "garbage", "v2147483648.0.0")))
     }
 
     @Test fun catalogueChangesKeepViewingButInvalidateOldFailuresAndSources() {

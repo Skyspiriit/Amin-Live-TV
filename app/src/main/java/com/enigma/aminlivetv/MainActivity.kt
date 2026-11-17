@@ -1,16 +1,21 @@
 package com.enigma.aminlivetv
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.StateListDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.SystemClock
 import android.util.Log
 import android.view.Gravity
 import android.view.KeyEvent
@@ -45,7 +50,7 @@ class MainActivity : Activity() {
     private val updates = Executors.newSingleThreadExecutor()
     private val preferences by lazy { getSharedPreferences("viewing", MODE_PRIVATE) }
     private val hideChannelName = Runnable { channelName.visibility = View.GONE }
-    private val fetchCatalogue = Runnable { refreshCatalogue() }
+    private val fetchUpdates = Runnable { refreshUpdates() }
 
     private var screen = Screen.HOME
     private var category = Category.DOMESTIC
@@ -55,7 +60,9 @@ class MainActivity : Activity() {
     private var pendingCatalogue: Catalogue? = null
     private var overlay = false
     private var showRetry = false
-    private var catalogueRequested = false
+    private var latestRelease: String? = null
+    private var nextCatalogueCheck = 0L
+    private var nextReleaseCheck = 0L
     private var foreground = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,24 +72,79 @@ class MainActivity : Activity() {
         logos = Logos()
         val timings = ScanTimings(BuildConfig.TEST_CATALOG)
         history = ChannelHistory(this, timings)
-        monitor = ChannelMonitor(this, history, timings)
+        monitor = ChannelMonitor(this, history, timings, ::onVisibilityChanged)
         catalogue = store.load()
         category = savedCategory("category") ?: Category.DOMESTIC
         showHome()
         if (BuildConfig.TEST_CATALOG) Log.i("AminMonitor", "Local home rendered")
     }
 
-    private fun refreshCatalogue() {
-        if (catalogueRequested) return
-        catalogueRequested = true
-        val current = catalogue
-        updates.execute {
-            val result = store.refresh(current)
-            if (result != null) runOnUiThread {
-                if (isDestroyed) return@runOnUiThread
-                pendingCatalogue = result
-                if (screen == Screen.HOME && foreground) showHome(currentFocus?.tag)
+    private fun scheduleUpdates() {
+        ui.removeCallbacks(fetchUpdates)
+        if (foreground && screen != Screen.PLAYER) {
+            val next = minOf(nextCatalogueCheck, nextReleaseCheck)
+            ui.postDelayed(fetchUpdates, (next - SystemClock.elapsedRealtime()).coerceAtLeast(700L))
+        }
+    }
+
+    private fun refreshUpdates() {
+        if (!foreground || screen == Screen.PLAYER) return
+        val elapsed = SystemClock.elapsedRealtime()
+        if (elapsed >= nextCatalogueCheck) {
+            nextCatalogueCheck = elapsed + CATALOGUE_INTERVAL
+            val current = pendingCatalogue ?: catalogue
+            updates.execute {
+                val result = store.refresh(current)
+                if (result != null) runOnUiThread {
+                    if (isDestroyed) return@runOnUiThread
+                    pendingCatalogue = result
+                    if (foreground) showPendingCatalogue()
+                }
             }
+        }
+        if (elapsed >= nextReleaseCheck) {
+            nextReleaseCheck = elapsed + RELEASE_INTERVAL
+            updates.execute {
+                ReleaseCheck.latest().onSuccess { tag ->
+                    runOnUiThread {
+                        if (isDestroyed || latestRelease == tag) return@runOnUiThread
+                        latestRelease = tag
+                        if (screen == Screen.HOME) showHome(currentFocus?.tag)
+                    }
+                }.onFailure {
+                    ui.post {
+                        if (isDestroyed) return@post
+                        nextReleaseCheck = SystemClock.elapsedRealtime() + CATALOGUE_INTERVAL
+                        scheduleUpdates()
+                    }
+                }
+            }
+        }
+        scheduleUpdates()
+    }
+
+    private fun showPendingCatalogue() {
+        if (pendingCatalogue == null) return
+        when (screen) {
+            Screen.HOME -> showHome(currentFocus?.tag)
+            Screen.GRID -> showGrid(savedPosition())
+            Screen.PLAYER -> Unit
+        }
+    }
+
+    private fun applyPendingCatalogue() {
+        pendingCatalogue?.let { catalogue = it }
+        pendingCatalogue = null
+        monitor.setCatalogue(catalogue)
+    }
+
+    private fun onVisibilityChanged(channel: Channel) {
+        when (screen) {
+            Screen.HOME -> {
+                if (channel.id == preferences.getString("watched-channel", null)) showHome(currentFocus?.tag)
+            }
+            Screen.GRID -> if (channel.belongsTo(category)) showGrid(savedPosition())
+            Screen.PLAYER -> Unit
         }
     }
 
@@ -91,10 +153,9 @@ class MainActivity : Activity() {
 
     private fun showHome(restoreFocus: Any? = null) {
         screen = Screen.HOME
-        pendingCatalogue?.let { catalogue = it }
-        pendingCatalogue = null
-        monitor.setCatalogue(catalogue)
+        applyPendingCatalogue()
         monitor.setEnabled(foreground)
+        scheduleUpdates()
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         val content = column().apply { setPadding(dp(52), dp(26), dp(52), dp(22)) }
         val heading = FrameLayout(this)
@@ -137,7 +198,7 @@ class MainActivity : Activity() {
         val lastId = preferences.getString("watched-channel", null)
         val now = System.currentTimeMillis()
         val last = catalogue.channels.find {
-            it.id == lastId && it.listedInApp && it.streams.isNotEmpty() && history.isVisible(it, now)
+            it.id == lastId && it.listedInApp && history.isVisible(it, now)
         }
         val resume = last?.let { channel ->
             button(getString(R.string.resume_channel, channel.name), 20).apply {
@@ -146,32 +207,66 @@ class MainActivity : Activity() {
                     val targetCategory = lastCategory?.takeIf(channel::belongsTo)
                         ?: channel.categories.first(channel::belongsTo)
                     selectCategory(targetCategory)
+                    currentList = visibleChannels()
                     val index = currentList.indexOfFirst { it.id == channel.id }
                     if (index >= 0) beginPlayback(index) else showGrid(null)
                 }
                 content.addView(this, LinearLayout.LayoutParams(-1, dp(53)).apply { topMargin = dp(17) })
             }
         }
+        val update = latestRelease?.let { tag ->
+            val label = getString(R.string.update_available, tag)
+            button(label, 18).apply {
+                this.tag = UPDATE_TAG
+                setOnClickListener { openRelease(tag, label) }
+                content.addView(this, LinearLayout.LayoutParams(-1, dp(48)).apply { topMargin = dp(12) })
+            }
+        }
         install(content)
-        if (restoreFocus == RESUME_TAG && resume != null) resume.requestFocus() else categoryFocus?.requestFocus()
+        val restored = when (restoreFocus) {
+            RESUME_TAG -> resume
+            UPDATE_TAG -> update
+            else -> null
+        }
+        (restored ?: categoryFocus)?.requestFocus()
+    }
+
+    private fun openRelease(tag: String, label: String) {
+        val page = ReleaseCheck.page(tag)
+        try {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(page)))
+        } catch (_: ActivityNotFoundException) {
+            AlertDialog.Builder(this).setTitle(label)
+                .setMessage(getString(R.string.update_release_link, page))
+                .setPositiveButton(android.R.string.ok, null)
+                .show()
+        }
     }
 
     private fun selectCategory(selected: Category) {
         category = selected
-        val now = System.currentTimeMillis()
-        currentList = catalogue.inCategory(selected)
-            .filter { history.isVisible(it, now) }
         preferences.edit().putString("category", category.key).apply()
     }
 
+    private fun visibleChannels(): List<Channel> {
+        val now = System.currentTimeMillis()
+        return catalogue.inCategory(category).filter { history.isVisible(it, now) }
+    }
+
+    private fun savedPosition(): String? = preferences.getString("position-${category.key}", null)
+
     private fun openCategory(selected: Category) {
         selectCategory(selected)
-        showGrid(preferences.getString("position-${category.key}", null))
+        showGrid(savedPosition())
     }
 
     private fun showGrid(focusId: String?) {
+        val previousPosition = currentList.indexOfFirst { it.id == focusId }
         screen = Screen.GRID
+        applyPendingCatalogue()
+        currentList = visibleChannels()
         monitor.setEnabled(foreground)
+        scheduleUpdates()
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         val content = column().apply { setPadding(dp(46), dp(24), dp(46), dp(22)) }
         content.addView(text(getString(category.title), 30, bold = true), LinearLayout.LayoutParams(-1, -2).apply {
@@ -209,8 +304,8 @@ class MainActivity : Activity() {
         content.addView(grid, LinearLayout.LayoutParams(-1, 0, 1f))
         install(content)
         grid.requestFocus()
-        val index = currentList.indexOfFirst { it.id == focusId }.coerceAtLeast(0)
-        grid.setSelection(index)
+        val selected = currentList.indexOfFirst { it.id == focusId }
+        grid.setSelection(if (selected >= 0) selected else previousPosition.coerceIn(currentList.indices))
     }
 
     private inner class ChannelAdapter(private val context: Context) : BaseAdapter() {
@@ -234,13 +329,8 @@ class MainActivity : Activity() {
             val channel = getItem(position)
             val icon = tile.getChildAt(0) as ImageView
             logos.load(channel.logo, icon)
-            (tile.getChildAt(1) as TextView).apply {
-                text = channel.name
-                setTextColor(if (channel.streams.isEmpty()) MUTED else INK)
-            }
-            tile.contentDescription = if (channel.streams.isEmpty()) {
-                "${channel.name}، ${getString(R.string.no_source)}"
-            } else channel.name
+            (tile.getChildAt(1) as TextView).text = channel.name
+            tile.contentDescription = channel.name
             return tile
         }
     }
@@ -249,6 +339,7 @@ class MainActivity : Activity() {
         if (index !in currentList.indices) return
         screen = Screen.PLAYER
         monitor.setEnabled(false)
+        scheduleUpdates()
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         overlay = false
         val content = FrameLayout(this).apply { setBackgroundColor(Color.BLACK) }
@@ -318,6 +409,7 @@ class MainActivity : Activity() {
         channelName.visibility = View.VISIBLE
         ui.removeCallbacks(hideChannelName)
         ui.postDelayed(hideChannelName, 2400)
+        if (overlay) renderRail()
     }
 
     private fun rememberPosition(channel: Channel) {
@@ -329,9 +421,11 @@ class MainActivity : Activity() {
         val caption = if (showRetry) R.string.retry else R.string.select_channel
         rail.addView(text(getString(caption), 17, MUTED), LinearLayout.LayoutParams(-1, -2))
         val items = LinearLayout(this).apply { layoutDirection = View.LAYOUT_DIRECTION_RTL }
-        val windowSize = minOf(currentList.size, 5)
-        val first = (currentIndex - 2).coerceIn(0, currentList.size - windowSize)
-        for (index in first until first + windowSize) {
+        val visible = visiblePlaybackIndices()
+        val windowSize = minOf(visible.size, 5)
+        val anchor = visible.count { it < currentIndex }
+        val first = (anchor - 2).coerceIn(0, visible.size - windowSize)
+        for (index in visible.subList(first, first + windowSize)) {
             val selected = index == currentIndex
             val label = text(currentList[index].name, 18, if (selected) INK else MUTED, selected).apply {
                 background = if (selected) surface(SELECTED, ACCENT) else surface(SURFACE)
@@ -345,12 +439,24 @@ class MainActivity : Activity() {
         rail.addView(items, LinearLayout.LayoutParams(-1, -2))
     }
 
+    private fun visiblePlaybackIndices(): List<Int> {
+        val now = System.currentTimeMillis()
+        return currentList.indices.filter { history.isVisible(currentList[it], now) }
+    }
+
+    private fun stepChannel(offset: Int) {
+        val visible = visiblePlaybackIndices()
+        val target = if (offset < 0) visible.lastOrNull { it < currentIndex } ?: visible.lastOrNull()
+            else visible.firstOrNull { it > currentIndex } ?: visible.firstOrNull()
+        if (target != null && target != currentIndex) tune(target)
+    }
+
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
         if (screen != Screen.PLAYER) return super.dispatchKeyEvent(event)
         val isOk = event.keyCode in setOf(KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_NUMPAD_ENTER)
         val offset = when (event.keyCode) {
-            KeyEvent.KEYCODE_DPAD_UP -> 1
-            KeyEvent.KEYCODE_DPAD_DOWN -> -1
+            KeyEvent.KEYCODE_DPAD_UP -> -1
+            KeyEvent.KEYCODE_DPAD_DOWN -> 1
             KeyEvent.KEYCODE_DPAD_LEFT -> if (overlay) 1 else 0
             KeyEvent.KEYCODE_DPAD_RIGHT -> if (overlay) -1 else 0
             else -> if (isOk) 0 else return super.dispatchKeyEvent(event)
@@ -361,9 +467,7 @@ class MainActivity : Activity() {
                 overlay = !overlay
                 rail.visibility = if (overlay) View.VISIBLE else View.GONE
                 if (overlay) renderRail()
-            } else if (offset != 0 && currentList.size > 1) {
-                tune(Math.floorMod(currentIndex + offset, currentList.size))
-            }
+            } else if (offset != 0) stepChannel(offset)
         }
         return true
     }
@@ -384,15 +488,15 @@ class MainActivity : Activity() {
     override fun onStart() {
         super.onStart()
         foreground = true
-        if (screen == Screen.HOME && pendingCatalogue != null) showHome(currentFocus?.tag)
+        showPendingCatalogue()
         monitor.setEnabled(screen != Screen.PLAYER)
-        ui.postDelayed(fetchCatalogue, 700)
+        scheduleUpdates()
         if (screen == Screen.PLAYER && livePlayer == null) tune(currentIndex)
     }
 
     override fun onStop() {
         foreground = false
-        ui.removeCallbacks(fetchCatalogue)
+        ui.removeCallbacks(fetchUpdates)
         monitor.setEnabled(false)
         closePlayer()
         super.onStop()
@@ -505,6 +609,9 @@ class MainActivity : Activity() {
 
     private companion object {
         const val RESUME_TAG = "resume"
+        const val UPDATE_TAG = "release"
+        const val CATALOGUE_INTERVAL = 15 * 60_000L
+        const val RELEASE_INTERVAL = 6 * 60 * 60_000L
         val BACKGROUND = Color.rgb(13, 22, 25)
         val SURFACE = Color.rgb(26, 40, 44)
         val SELECTED = Color.rgb(46, 68, 62)

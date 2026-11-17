@@ -15,4 +15,6 @@
     <string name="switching_source">در حال اتصال دوباره…</string>
     <string name="retry">تلاش دوباره</string>
     <string name="select_channel">انتخاب شبکه</string>
+    <string name="update_available">نسخهٔ %1$s در گیت‌هاب موجود است</string>
+    <string name="update_release_link">برای دریافت نسخهٔ جدید، این نشانی را روی تلفن یا رایانه باز کنید:\n%1$s</string>
 </resources>

@@ -45,8 +45,6 @@ internal data class Channel(
 ) {
     val sourceSet = streams.map { it.key }.sorted().joinToString("\n")
     val listedInApp = categories.any(::belongsTo)
-    val heldByCatalogue = id != BBC_PERSIAN && streams.isEmpty() &&
-        (status == "unavailable" || status == "restricted")
 
     fun belongsTo(category: Category): Boolean =
         category in categories &&

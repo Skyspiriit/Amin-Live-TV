@@ -49,8 +49,9 @@ internal data class HealthRecord(
         )
     }
 
-    fun availabilityAt(now: Long): Availability =
-        if (availability == Availability.AVAILABLE && now >= nextCheckAt) Availability.CHECKING else availability
+    fun canShow(channel: Channel): Boolean =
+        channel.streams.isNotEmpty() && availability != Availability.UNAVAILABLE &&
+            (channel.status == "verified" || availability == Availability.AVAILABLE || lastSource != null)
 
     fun favored(now: Long): Boolean =
         viewing.lastWatchedAt > 0 &&
@@ -77,9 +78,7 @@ internal data class HealthRecord(
             availability = when (result) {
                 ProbeResult.PLAYABLE -> Availability.AVAILABLE
                 ProbeResult.FAILED -> Availability.UNAVAILABLE
-                ProbeResult.UNCERTAIN -> if (availability == Availability.UNAVAILABLE) {
-                    Availability.UNAVAILABLE
-                } else Availability.CHECKING
+                ProbeResult.UNCERTAIN -> availability
             },
             checkedAt = now,
             nextCheckAt = now + timings.interval(delay),
@@ -92,7 +91,6 @@ internal data class HealthRecord(
             probeFinished(channel, ProbeResult.FAILED, now, timings)
         } else {
             copy(
-                availability = if (availability == Availability.UNAVAILABLE) availability else Availability.CHECKING,
                 nextCheckAt = now + timings.interval(if (favored(now)) MINUTE_MS else 5 * MINUTE_MS)
             )
         }
@@ -143,7 +141,7 @@ internal class ChannelHistory(context: Context, private val timings: ScanTimings
         records.getOrPut(channel.id) { load(channel.id) }.trackedFor(channel, now)
 
     fun isVisible(channel: Channel, now: Long): Boolean =
-        !channel.heldByCatalogue && forChannel(channel, now).availabilityAt(now) != Availability.UNAVAILABLE
+        forChannel(channel, now).canShow(channel)
 
     fun probeFinished(channel: Channel, result: ProbeResult, now: Long) {
         save(channel.id, forChannel(channel, now).probeFinished(channel, result, now, timings))

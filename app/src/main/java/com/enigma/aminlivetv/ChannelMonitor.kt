@@ -15,7 +15,8 @@ import java.util.concurrent.Executors
 internal class ChannelMonitor(
     context: Context,
     private val history: ChannelHistory,
-    private val timings: ScanTimings
+    private val timings: ScanTimings,
+    private val onVisibilityChanged: (Channel) -> Unit
 ) : AutoCloseable {
     private class Check(val network: Network) {
         @Volatile var cancelled = false
@@ -100,8 +101,12 @@ internal class ChannelMonitor(
             ui.post {
                 active = null
                 if (!check.cancelled && enabled && !closed && connectivity.internetNetwork() == check.network) {
-                    history.probeFinished(candidate.channel, result, System.currentTimeMillis())
+                    val now = System.currentTimeMillis()
+                    val channel = candidate.channel
+                    val wasVisible = history.isVisible(channel, now)
+                    history.probeFinished(channel, result, now)
                     if (BuildConfig.TEST_CATALOG) Log.i("AminMonitor", "${candidate.channel.id} $result")
+                    if (wasVisible != history.isVisible(channel, now)) onVisibilityChanged(channel)
                 }
                 schedule()
             }
