@@ -7,6 +7,8 @@
     <string name="sports">شبکه‌های ورزشی</string>
     <string name="film">فیلم و سریال</string>
     <string name="resume_channel">ادامهٔ تماشا · %1$s</string>
+    <string name="official_live_suffix"> · پخش رسمی</string>
+    <string name="official_live_no_browser">برای بازکردن پخش رسمی این شبکه، مرورگر یا برنامه مناسب روی تلویزیون نصب کنید.</string>
     <string name="no_source">پخش این شبکه در دسترس نیست</string>
     <string name="no_channels">فعلاً شبکه‌ای برای پخش در دسترس نیست.</string>
     <string name="offline">اینترنت قطع است. اتصال را بررسی کنید.</string>
