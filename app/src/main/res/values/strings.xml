@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Amin Live TV</string>
+    <string name="title_fa">امین تی‌وی</string>
+    <string name="domestic">شبکه‌های داخلی</string>
+    <string name="news">شبکه‌های خبری</string>
+    <string name="sports">شبکه‌های ورزشی</string>
+    <string name="film">فیلم و سریال</string>
+    <string name="resume_channel">ادامهٔ تماشا · %1$s</string>
+    <string name="no_source">پخش این شبکه در دسترس نیست</string>
+    <string name="offline">اینترنت قطع است. اتصال را بررسی کنید.</string>
+    <string name="all_sources_failed">پخش این شبکه ممکن نیست.</string>
+    <string name="connecting">در حال اتصال…</string>
+    <string name="switching_source">در حال اتصال دوباره…</string>
+    <string name="retry">تلاش دوباره</string>
+    <string name="select_channel">انتخاب شبکه</string>
+</resources>

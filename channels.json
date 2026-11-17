@@ -1,0 +1,3654 @@
+{
+  "schemaVersion": 1,
+  "revision": 1,
+  "channels": [
+    {
+      "id": "tv1",
+      "name": "شبکه یک",
+      "englishName": "IRIB TV1",
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/IRIB1.ir.png",
+      "streams": [
+        {
+          "url": "https://ncdn.telewebion.ir/tv1/live/playlist.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md",
+          "lastVerified": "2026-11-17"
+        },
+        {
+          "url": "https://live-aburayhan1108.telewebion.ir/ek/tv1/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 2,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+        "https://salintv.com/video/tv1-live/",
+        "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "tv2",
+      "name": "شبکه دو",
+      "englishName": "IRIB TV2",
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/IRIB2.ir.png",
+      "streams": [
+        {
+          "url": "https://ncdn.telewebion.ir/tv2/live/playlist.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md",
+          "lastVerified": "2026-11-17"
+        },
+        {
+          "url": "https://live-aburayhan1111.telewebion.ir/ek/tv2/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 2,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+        "https://salintv.com/video/tv2-live/",
+        "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "tv3",
+      "name": "شبکه سه",
+      "englishName": "IRIB TV3",
+      "categories": [
+        "domestic",
+        "sports"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/IRIB3.ir.png",
+      "streams": [
+        {
+          "url": "https://ncdn.telewebion.ir/tv3/live/playlist.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md",
+          "lastVerified": "2026-11-17"
+        },
+        {
+          "url": "https://live-aburayhan1112.telewebion.ir/ek/tv3/live/108050p/index.m3u8",
+          "type": "hls",
+          "priority": 2,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+        "https://salintv.com/video/tv3-live/",
+        "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "tv4",
+      "name": "شبکه چهار",
+      "englishName": "IRIB TV4",
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/IRIB4.ir.png",
+      "streams": [
+        {
+          "url": "https://ncdn.telewebion.ir/tv4/live/playlist.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md",
+          "lastVerified": "2026-11-17"
+        },
+        {
+          "url": "https://live-aburayhan1109.telewebion.ir/ek/tv4/live/576p/index.m3u8",
+          "type": "hls",
+          "priority": 2,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+        "https://salintv.com/video/tv4-live-stream/",
+        "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "tehran",
+      "name": "شبکه پنج (تهران)",
+      "englishName": "Tehran TV",
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/TehranTV.ir.png",
+      "streams": [
+        {
+          "url": "https://ncdn.telewebion.ir/tehran/live/playlist.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md",
+          "lastVerified": "2026-11-17"
+        },
+        {
+          "url": "https://live-aburayhan1108.telewebion.ir/ek/tehran/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 2,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+        "https://salintv.com/video/tv5-live-stream/",
+        "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "nasim",
+      "name": "شبکه نسیم",
+      "englishName": "Nasim",
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/Nasim.ir.png",
+      "streams": [
+        {
+          "url": "https://ncdn.telewebion.ir/nasim/live/playlist.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md",
+          "lastVerified": "2026-11-17"
+        },
+        {
+          "url": "https://live-aburayhan1110.telewebion.ir/ek/nasim/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 2,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+        "https://salintv.com/video/nasim-tv-live-stream/",
+        "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "amouzesh",
+      "name": "شبکه آموزش",
+      "englishName": "Amoozesh",
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/AmouzeshTV.ir.png",
+      "streams": [
+        {
+          "url": "https://ncdn.telewebion.ir/amouzesh/live/playlist.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md",
+          "lastVerified": "2026-11-17"
+        },
+        {
+          "url": "https://live-aburayhan1103.telewebion.ir/ek/amouzesh/live/576p/index.m3u8",
+          "type": "hls",
+          "priority": 2,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+        "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "salamat",
+      "name": "شبکه سلامت",
+      "englishName": "Salamat",
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/SalamatTV.ir.png",
+      "streams": [
+        {
+          "url": "https://ncdn.telewebion.ir/salamat/live/playlist.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md",
+          "lastVerified": "2026-11-17"
+        },
+        {
+          "url": "https://live-aburayhan1107.telewebion.ir/ek/salamat/live/576p/index.m3u8",
+          "type": "hls",
+          "priority": 2,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+        "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "quran",
+      "name": "شبکه قرآن",
+      "englishName": "Quran TV",
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/QuranTV.ir.png",
+      "streams": [
+        {
+          "url": "https://ncdn.telewebion.ir/quran/live/playlist.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md",
+          "lastVerified": "2026-11-17"
+        },
+        {
+          "url": "https://live-aburayhan1110.telewebion.ir/ek/quran/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 2,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+        "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "ofogh",
+      "name": "شبکه افق",
+      "englishName": "Ofogh",
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/OfoghTV.ir.png",
+      "streams": [
+        {
+          "url": "https://ncdn.telewebion.ir/ofogh/live/playlist.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md",
+          "lastVerified": "2026-11-17"
+        },
+        {
+          "url": "https://live-aburayhan1106.telewebion.ir/ek/ofogh/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 2,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+        "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "mostanad",
+      "name": "شبکه مستند",
+      "englishName": "Mostanad",
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/IRIBMostanad.ir.png",
+      "streams": [
+        {
+          "url": "https://ncdn.telewebion.ir/mostanad/live/playlist.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md",
+          "lastVerified": "2026-11-17"
+        },
+        {
+          "url": "https://live-aburayhan1104.telewebion.ir/ek/mostanad/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 2,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+        "https://salintv.com/video/mostanad-tv/",
+        "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "pooya",
+      "name": "پویا و نهال",
+      "englishName": "Pooya / Nahal",
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/PooyaTV.ir.png",
+      "streams": [],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "unavailable",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "omid",
+      "name": "شبکه امید",
+      "englishName": "Omid",
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/IRIBOmid.ir.png",
+      "streams": [
+        {
+          "url": "https://ncdn.telewebion.ir/omid/live/playlist.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md",
+          "lastVerified": "2026-11-17"
+        },
+        {
+          "url": "https://live-aburayhan1111.telewebion.ir/ek/omid/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 2,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+        "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "golkhane",
+      "name": "گلخانه",
+      "englishName": "Golkhane",
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/GolkhaneTv.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1102.telewebion.ir/ek/golkhane/live/720p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "faratar",
+      "name": "شبکه فراتر",
+      "englishName": "Faratar",
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/IRIBUHD.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1104.telewebion.ir/ek/faratar/live/2160p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "tv1plus",
+      "name": "شبکه یک پلاس",
+      "englishName": "IRIB TV1 Plus",
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/IRIB1Plus.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1108.telewebion.ir/ek/tv1plus/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "irinn",
+      "name": "شبکه خبر",
+      "englishName": "IRINN",
+      "categories": [
+        "news"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/IRINN.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1111.telewebion.ir/ek/irinn/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+        "https://salintv.com/video/khabar-tv-live/"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "irinn2",
+      "name": "شبکه خبر ۲",
+      "englishName": "IRINN 2",
+      "categories": [
+        "news"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/IRINN2.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1112.telewebion.ir/ek/irinn2/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "varzesh",
+      "name": "شبکه ورزش",
+      "englishName": "IRIB Varzesh",
+      "categories": [
+        "sports",
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/VarzeshTV.ir.png",
+      "streams": [
+        {
+          "url": "https://ncdn.telewebion.ir/varzesh/live/playlist.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md",
+          "lastVerified": "2026-11-17"
+        },
+        {
+          "url": "https://live-aburayhan1110.telewebion.ir/ek/varzesh/live/108050p/index.m3u8",
+          "type": "hls",
+          "priority": 2,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+        "https://salintv.com/video/varzesh-tv-live-stream/",
+        "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "ifilm",
+      "name": "آی‌فیلم فارسی",
+      "englishName": "iFilm Persian",
+      "categories": [
+        "film",
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/iFilmPersian.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1113.telewebion.ir/ek/ifilm/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+        "https://salintv.com/video/ifilm-tv-live/"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "hdtest",
+      "name": "شبکه تماشا",
+      "englishName": "Tamasha",
+      "categories": [
+        "film",
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/Tamasha.ir.png",
+      "streams": [
+        {
+          "url": "https://ncdn.telewebion.ir/hdtest/live/playlist.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md",
+          "lastVerified": "2026-11-17"
+        },
+        {
+          "url": "https://live-aburayhan1105.telewebion.ir/ek/hdtest/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 2,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+        "https://salintv.com/video/tamasha-tv-live/",
+        "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "namayesh",
+      "name": "شبکه نمایش",
+      "englishName": "Namayesh",
+      "categories": [
+        "film",
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/NamayeshTV.ir.png",
+      "streams": [
+        {
+          "url": "https://ncdn.telewebion.ir/namayesh/live/playlist.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md",
+          "lastVerified": "2026-11-17"
+        },
+        {
+          "url": "https://live-aburayhan1105.telewebion.ir/ek/namayesh/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 2,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+        "https://github.com/Free-TV/IPTV/blob/master/lists/iran.md"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "habib",
+      "name": "شبکه حبیب",
+      "englishName": "Habib",
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/HabibTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1108.telewebion.ir/na/habib/live/720p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "labbayk",
+      "name": "شبکه لبیک",
+      "englishName": "Labbayk",
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/LabbaykTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1108.telewebion.ir/ek/labbayk/live/720p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "razavi",
+      "name": "شبکه رضوی",
+      "englishName": "Razavi",
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/RazaviTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1112.telewebion.ir/ek/razavi/live/720p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "velayat",
+      "name": "شبکه ولایت",
+      "englishName": "Velayat",
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/VelayatTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1106.telewebion.ir/ek/velayat/live/720p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "sport1",
+      "name": "تلوبیون ورزشی ۱",
+      "englishName": "Telewebion Sport 1",
+      "categories": [
+        "sports"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/TelewebionSport1.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1101.telewebion.ir/ek/sport1/live/108050p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "sport2",
+      "name": "تلوبیون ورزشی ۲",
+      "englishName": "Telewebion Sport 2",
+      "categories": [
+        "sports"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/TelewebionSport2.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1111.telewebion.ir/ek/sport2/live/108050p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "sport3",
+      "name": "تلوبیون ورزشی ۳",
+      "englishName": "Telewebion Sport 3",
+      "categories": [
+        "sports"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/TelewebionSport3.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1111.telewebion.ir/ek/sport3/live/108050p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "abadan",
+      "name": "شبکه آبادان",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/AbadanTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1104.telewebion.ir/ek/abadan/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "aflak",
+      "name": "شبکه افلاک (لرستان)",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/AflakTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1101.telewebion.ir/ek/aflak/live/576p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "aftab",
+      "name": "شبکه آفتاب (مرکزی)",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/AftabTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1101.telewebion.ir/ek/aftab/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "alborz",
+      "name": "شبکه البرز",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/AlborzTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1106.telewebion.ir/ek/alborz/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "atrak",
+      "name": "شبکه اترک (خراسان شمالی)",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/AtrakTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1104.telewebion.ir/ek/atrak/live/576p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "baran",
+      "name": "شبکه باران (گیلان)",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/BaranTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1112.telewebion.ir/ek/baran/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "bushehr",
+      "name": "شبکه بوشهر",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/BoushehrTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1103.telewebion.ir/ek/bushehr/live/576p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "dena",
+      "name": "شبکه دنا (کهگیلویه و بویراحمد)",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/DenaTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1109.telewebion.ir/ek/dena/live/576p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "eshragh",
+      "name": "شبکه اشراق (زنجان)",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/EshraghNetwork.ir.jpg",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1112.telewebion.ir/ek/eshragh/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "fars",
+      "name": "شبکه فارس",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/FarsTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1106.telewebion.ir/ek/fars/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "sina",
+      "name": "شبکه سینا (همدان)",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/HamedanTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1102.telewebion.ir/ek/sina/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "hamoon",
+      "name": "شبکه هامون (سیستان و بلوچستان)",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/HamoonTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1112.telewebion.ir/ek/hamoon/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "ilam",
+      "name": "شبکه ایلام",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/IlamTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1103.telewebion.ir/ek/ilam/live/576p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "esfahan",
+      "name": "شبکه اصفهان",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/IsfahanTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1109.telewebion.ir/ek/esfahan/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "jahanbin",
+      "name": "شبکه جهان‌بین (چهارمحال و بختیاری)",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/JahanbinTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1103.telewebion.ir/ek/jahanbin/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "kerman",
+      "name": "شبکه کرمان",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/KermanTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1103.telewebion.ir/ek/kerman/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "khalijefars",
+      "name": "شبکه خلیج فارس (هرمزگان)",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/KhalijeFarsTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1101.telewebion.ir/ek/khalijefars/live/576p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "khavaran",
+      "name": "شبکه خاوران (خراسان جنوبی)",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/KhavaranTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1112.telewebion.ir/ek/khavaran/live/576p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "khorasanrazavi",
+      "name": "شبکه خراسان رضوی",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/KhorasanRazaviTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1108.telewebion.ir/ek/khorasanrazavi/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "khoozestan",
+      "name": "شبکه خوزستان",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/KhozestanTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1104.telewebion.ir/ek/khoozestan/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "kish",
+      "name": "شبکه کیش",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/KishTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1106.telewebion.ir/ek/kish/live/576p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "kordestan",
+      "name": "شبکه کردستان",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/KordestanTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1104.telewebion.ir/ek/kordestan/live/576p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "mahabad",
+      "name": "شبکه مهاباد",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/MahabadTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1109.telewebion.ir/ek/mahabad/live/576p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "noor",
+      "name": "شبکه نور (قم)",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/NoorTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1106.telewebion.ir/ek/noor/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "qazvin",
+      "name": "شبکه قزوین",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/QazvinTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1112.telewebion.ir/ek/qazvin/live/576p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "sabalan",
+      "name": "شبکه سبلان (اردبیل)",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/SabalanTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1111.telewebion.ir/ek/sabalan/live/576p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "sabz",
+      "name": "شبکه سبز (گلستان)",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/SabzTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1111.telewebion.ir/ek/sabz/live/576p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "sahand",
+      "name": "شبکه سهند (آذربایجان شرقی)",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/SahandTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1106.telewebion.ir/ek/sahand/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "semnan",
+      "name": "شبکه سمنان",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/SemnanTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1107.telewebion.ir/ek/semnan/live/1080p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "tabarestan",
+      "name": "شبکه تبرستان (مازندران)",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/TabarestanTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1105.telewebion.ir/ek/tabarestan/live/576p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "azarbayjangharbi",
+      "name": "شبکه آذربایجان غربی",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/WestAzerbaijanTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1107.telewebion.ir/ek/azarbayjangharbi/live/576p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "taban",
+      "name": "شبکه تابان (یزد)",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/YazdTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1102.telewebion.ir/ek/taban/live/576p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "zagros",
+      "name": "شبکه زاگرس (کرمانشاه)",
+      "englishName": null,
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/ZagrosTV.ir.png",
+      "streams": [
+        {
+          "url": "https://live-aburayhan1109.telewebion.ir/ek/zagros/live/576p/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "iran-international",
+      "name": "ایران اینترنشنال",
+      "englishName": "Iran International",
+      "categories": [
+        "news"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/IranInternational.uk.png",
+      "streams": [
+        {
+          "url": "https://live.livetvstream.co.uk/LS-63503-3/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://www.iranintl.com/live",
+          "lastVerified": "2026-11-17"
+        },
+        {
+          "url": "https://hlspackager.akamaized.net/live/DB/IRAN_INTERNATIONAL/HLS/IRAN_INTERNATIONAL.m3u8",
+          "type": "hls",
+          "priority": 2,
+          "attribution": "https://www.iranintl.com/live",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://www.iranintl.com/live",
+        "https://salintv.com/video/iran-international/"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "voa-persian",
+      "name": "صدای آمریکا فارسی",
+      "englishName": "VOA Persian",
+      "categories": [
+        "news"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/VoATVPersian.us.png",
+      "streams": [
+        {
+          "url": "https://voa-ingest.akamaized.net/hls/live/2033876/tvmc07/playlist.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://tv.voa24.news/channels-dynamic.html?channel=07",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://ir.voanews.com/live/video/416",
+        "https://salintv.com/video/voa/",
+        "https://tv.voa24.news/channels-dynamic.html?channel=07"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "afghanistan-international",
+      "name": "افغانستان اینترنشنال",
+      "englishName": "Afghanistan International",
+      "categories": [
+        "news"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/Afghanistan_-International_-TV_live_stream.jpg",
+      "streams": [
+        {
+          "url": "https://afintl.livetvstream.co.uk/aitv/index.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://www.afintl.com/live",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://www.afintl.com/live",
+        "https://salintv.com/video/afghanistan-international-tv-live-stream/"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "bbc-persian",
+      "name": "بی‌بی‌سی فارسی",
+      "englishName": "BBC News Persian",
+      "categories": [
+        "news"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://www.bbc.com/persian",
+        "https://downloads.bbc.co.uk/usingthebbc/bbc_terms_of_use_19September2022english.pdf"
+      ],
+      "status": "restricted",
+      "lastVerified": null
+    },
+    {
+      "id": "radio-farda-tv",
+      "name": "رادیو فردا (تلویزیون)",
+      "englishName": "Radio Farda TV",
+      "categories": [
+        "news"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/RadioFardaTV.us.png",
+      "streams": [],
+      "sourceAttribution": [
+        "https://www.radiofarda.com/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "ifilm2",
+      "name": "آی‌فیلم ۲",
+      "englishName": "iFilm 2",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://fa2.ifilmtv.ir/"
+      ],
+      "status": "unavailable",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "jamejam",
+      "name": "شبکه جام جم",
+      "englishName": "Jame Jam",
+      "categories": [
+        "domestic",
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://www.jamejam.ir/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "persiana-family",
+      "name": "پرشیانا خانواده",
+      "englishName": "Persiana Family",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/PersianaFamily.fr.png",
+      "streams": [
+        {
+          "url": "https://familyhls.persiana.live/hls/stream.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://persianagroup.tv/live.html",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://persianagroup.tv/live.html",
+        "https://salintv.com/video/persiana-family-live/"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "persiana-series",
+      "name": "پرشیانا سریال",
+      "englishName": "Persiana Series",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/PersianaSeries.fr.png",
+      "streams": [
+        {
+          "url": "https://onehls.persiana.live/hls/stream.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://persianagroup.tv/live.html",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://persianagroup.tv/live.html",
+        "https://salintv.com/video/persiana-one/"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "persiana-cinema",
+      "name": "پرشیانا سینما",
+      "englishName": "Persiana Cinema",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/PersianaCinema.fr.png",
+      "streams": [
+        {
+          "url": "https://cinehls.persiana.live/hls/stream.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://persianagroup.tv/live.html",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://persianagroup.tv/live.html",
+        "https://salintv.com/video/persiana-cinema-live/"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "persiana-korea",
+      "name": "پرشیانا کره",
+      "englishName": "Persiana Korea",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/PersianaKorea.fr.png",
+      "streams": [
+        {
+          "url": "https://korhls.persiana.live/hls/stream.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://persianagroup.tv/live.html",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://persianagroup.tv/live.html",
+        "https://salintv.com/video/persiana-korea-tv/"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "persiana-plus",
+      "name": "پرشیانا پلاس",
+      "englishName": "Persiana Plus",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/PersianaPlus.fr.png",
+      "streams": [],
+      "sourceAttribution": [
+        "https://persianagroup.tv/live.html",
+        "https://persianagroup.tv/legal.html?p=terms"
+      ],
+      "status": "restricted",
+      "lastVerified": null
+    },
+    {
+      "id": "persiana-iranian",
+      "name": "پرشیانا ایرانیان",
+      "englishName": "Persiana Iranian",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/PersianaIranian.fr.png",
+      "streams": [
+        {
+          "url": "https://irhls.persiana.live/hls/stream.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://persianagroup.tv/live.html",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://persianagroup.tv/live.html",
+        "https://salintv.com/video/persiana-iranian-tv-live/"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "persiana-comedy",
+      "name": "پرشیانا کمدی",
+      "englishName": "Persiana Comedy",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/PersianaComedy.fr.png",
+      "streams": [
+        {
+          "url": "https://comedyhls.persiana.live/hls/stream.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://persianagroup.tv/live.html",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://persianagroup.tv/live.html",
+        "https://salintv.com/video/persiana-comedy-live/"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "persiana-reality",
+      "name": "پرشیانا رئالیتی",
+      "englishName": "Persiana Reality",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2024/05/persiana_two.jpg",
+      "streams": [
+        {
+          "url": "https://twohls.persiana.live/hls/stream.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://salintv.com/video/persiana-two-live/",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://persianagroup.tv/live.html",
+        "https://salintv.com/video/persiana-two-live/"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "persiana-turkiye",
+      "name": "پرشیانا ترکیه",
+      "englishName": "Persiana Türkiye",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://persianagroup.tv/live.html"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "persiana-medical",
+      "name": "پرشیانا پزشکی",
+      "englishName": "Persiana Medical",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/PersianaMedical.fr.png",
+      "streams": [],
+      "sourceAttribution": [
+        "https://persianagroup.tv/live.html"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "persiana-docs",
+      "name": "پرشیانا مستند",
+      "englishName": "Persiana Docs",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/PersianaDocs.fr.png",
+      "streams": [],
+      "sourceAttribution": [
+        "https://persianagroup.tv/live.html"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "persiana-junior",
+      "name": "پرشیانا کودک",
+      "englishName": "Persiana Junior",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/PersianaJunior.fr.png",
+      "streams": [],
+      "sourceAttribution": [
+        "https://persianagroup.tv/live.html"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "persiana-fight",
+      "name": "پرشیانا رزمی",
+      "englishName": "Persiana Fight",
+      "categories": [
+        "sports"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/PersianaFight.fr.png",
+      "streams": [
+        {
+          "url": "https://fighthls.persiana.live/hls/stream.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://persianagroup.tv/live.html",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://persianagroup.tv/live.html"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "persiana-sport",
+      "name": "پرشیانا ورزش ۱",
+      "englishName": "Persiana Sports 1",
+      "categories": [
+        "sports"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2024/01/persiana-sport.png",
+      "streams": [],
+      "sourceAttribution": [
+        "https://persianagroup.tv/live.html",
+        "https://salintv.com/video/persiana-sport/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "persiana-sports-2",
+      "name": "پرشیانا ورزش ۲",
+      "englishName": "Persiana Sports 2",
+      "categories": [
+        "sports"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://persianagroup.tv/live.html"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "persiana-sports-3",
+      "name": "پرشیانا ورزش ۳",
+      "englishName": "Persiana Sports 3",
+      "categories": [
+        "sports"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://persianagroup.tv/live.html"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "persiana-women-sports",
+      "name": "پرشیانا ورزش بانوان",
+      "englishName": "Persiana Women Sports",
+      "categories": [
+        "sports"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://persianagroup.tv/live.html"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "persiana-music",
+      "name": "پرشیانا موسیقی",
+      "englishName": "Persiana Music",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/PersianaMusic.fr.png",
+      "streams": [
+        {
+          "url": "https://musichls.persiana.live/hls/stream.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://persianagroup.tv/live.html",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://persianagroup.tv/live.html",
+        "https://salintv.com/video/persiana-music-live/"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "persiana-nostalgia",
+      "name": "پرشیانا نوستالژی",
+      "englishName": "Persiana Nostalgia",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/PersianaNostalgia.fr.png",
+      "streams": [],
+      "sourceAttribution": [
+        "https://persianagroup.tv/live.html",
+        "https://salintv.com/video/persiana-nostalgia-tv/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "persiana-folk",
+      "name": "پرشیانا سنتی",
+      "englishName": "Persiana Folk",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/PersianaFolk.fr.png",
+      "streams": [],
+      "sourceAttribution": [
+        "https://persianagroup.tv/live.html"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "persiana-setmix",
+      "name": "پرشیانا ست‌میکس",
+      "englishName": "Persiana SetMix",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/PersianaSetMix.fr.png",
+      "streams": [],
+      "sourceAttribution": [
+        "https://persianagroup.tv/live.html"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "persiana-travel",
+      "name": "پرشیانا سفر",
+      "englishName": "Persiana Travel",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://raw.githubusercontent.com/shayanline/iptv-iran/main/assets/logos/PersianaTravel.fr.png",
+      "streams": [],
+      "sourceAttribution": [
+        "https://persianagroup.tv/live.html"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "persiana-kurd4",
+      "name": "پرشیانا کرد ۴",
+      "englishName": "Persiana 4 Kurd",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://persianagroup.tv/live.html"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "247-box-tv",
+      "name": "۲۴۷ باکس",
+      "englishName": "247 Box TV",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/247box_tv_live_stream.jpg",
+      "streams": [
+        {
+          "url": "https://hls.247box.live/hls/stream.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://salintv.com/video/247-box-tv-live-stream/",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://salintv.com/video/247-box-tv-live-stream/"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "4u-plus",
+      "name": "فور یو پلاس",
+      "englishName": "4u Plus",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/4u_plus_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/4u-plus-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "4utv",
+      "name": "فور یو تی‌وی",
+      "englishName": "4uTv",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2023/08/4u_tv_live.jpg",
+      "streams": [
+        {
+          "url": "https://hls.4utv.live/hls/stream.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://salintv.com/video/4utv/",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://salintv.com/video/4utv/"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "afn-music-tv",
+      "name": "ای‌اف‌ان",
+      "englishName": "AFN",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/AFN_music_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/afn-music-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "afra-film",
+      "name": "افرا فیلم",
+      "englishName": "Afra Film",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/Afra_film_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/afra-film-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "afra-series",
+      "name": "افرا سریال",
+      "englishName": "Afra Series",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/Afra_series_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/afra-series-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "arax-tv",
+      "name": "آراکس",
+      "englishName": "Arax",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/Arax_tv_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/arax-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "ariana-tv",
+      "name": "آریانا",
+      "englishName": "Ariana",
+      "categories": [
+        "domestic"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/ariana-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "ariana-news-tv",
+      "name": "آریانا نیوز",
+      "englishName": "Ariana News",
+      "categories": [
+        "news"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/ariana_news_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/ariana-news-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "atrina-tv",
+      "name": "آترینا",
+      "englishName": "Atrina",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/08/atrina-tv-live-stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/atrina-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "ava-family",
+      "name": "آوا خانواده",
+      "englishName": "Ava Family",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/ava_family_online.jpg",
+      "streams": [
+        {
+          "url": "https://familyhls.avatv.live/hls/stream.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://salintv.com/video/ava-family-live-stream/",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://salintv.com/video/ava-family-live-stream/"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "ava-series",
+      "name": "آوا سریال",
+      "englishName": "Ava Series",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/ava_series_ive_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/ava-series-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "avang-tv",
+      "name": "آونگ",
+      "englishName": "Avang",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/avang_tv_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/avang-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "cafe-trade-tv",
+      "name": "کافه ترید",
+      "englishName": "Cafe Trade",
+      "categories": [
+        "news"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/cafe_trade_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/cafe-trade-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "caltex-music-tv",
+      "name": "کلتکس موزیک",
+      "englishName": "Caltex Music",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/caltex_music_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/caltex-music-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "classic-tv",
+      "name": "کلاسیک",
+      "englishName": "Classic",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/classic_tv_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/classic-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "didaniha-tv",
+      "name": "دیدنی‌ها",
+      "englishName": "Didaniha",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/didaniha.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/didaniha-tv/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "fareh-iran-tv",
+      "name": "فره ایران",
+      "englishName": "Fareh Iran TV",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/fareh_irantv_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/fareh-iran-tv/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "fx-farsi-tv",
+      "name": "اف‌ایکس فارسی",
+      "englishName": "FX",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2024/03/fx_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/fx-farsi-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "fx2",
+      "name": "اف‌ایکس ۲",
+      "englishName": "FX 2",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/fx2.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/fx2-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "grand-cinema",
+      "name": "گرند سینما",
+      "englishName": "Grand Cinema",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/Grand-_Cinema_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/grand-cinema-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "highvision-tv",
+      "name": "های ویژن",
+      "englishName": "High Vision",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/high-vision_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/highvision-tv-live-stream/",
+        "https://salintv.com/video/high-vision/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "home-plus",
+      "name": "هوم پلاس",
+      "englishName": "Home Plus",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/home_plus_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/home-plus-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "icc-tv",
+      "name": "آی‌سی‌سی",
+      "englishName": "ICC",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/icc_tv_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/icc-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "icnet-1-tv",
+      "name": "آی‌سی‌نت ۱",
+      "englishName": "ICnet 1",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/Icnet1_-tv_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/icnet-1-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "icnet2",
+      "name": "آی‌سی‌نت ۲",
+      "englishName": "ICnet2",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/Icnet2_tv_live_stream-1.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/icnet2-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "icnet3",
+      "name": "آی‌سی‌نت ۳",
+      "englishName": "ICnet3",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/Icnet3_tv_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/icnet3-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "iman-be-masih-tv",
+      "name": "ایمان به مسیح",
+      "englishName": "Iman Be Masih",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/Iman_be_masih_tv_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/iman-be-masih-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "iran-nama",
+      "name": "ایران‌نما",
+      "englishName": "Iran Nama",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/iran-nama_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/iran-nama-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "irane_farda_live_stream",
+      "name": "ایران فردا",
+      "englishName": "Irane Farda",
+      "categories": [
+        "news"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2023/08/iranefarda_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/irane_farda_live_stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "israel-parstv",
+      "name": "اسرائیل پارس‌تی‌وی",
+      "englishName": "Israel ParsTV",
+      "categories": [
+        "news"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/Esrael_parstv_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/israel-parstv/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "itn_tv_live_stream",
+      "name": "آی‌تی‌ان",
+      "englishName": "ITN",
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2023/08/itn_tv_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/itn_tv_live_stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "channel-one-shahram-homayoun",
+      "name": "کانال یک",
+      "englishName": "Kanal Yek",
+      "categories": [
+        "news"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2023/08/kanal_yek_shahram_homayoun.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/channel-one-shahram-homayoun/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "khatereh-tv",
+      "name": "خاطره",
+      "englishName": "Khatereh",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2023/08/khatereh_tv_live.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/khatereh-tv-live/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "maah-tv",
+      "name": "ماه تی‌وی",
+      "englishName": "Maah TV",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/maah_tv_live_stream.jpg",
+      "streams": [
+        {
+          "url": "https://hls.maahtv.live/hls/stream.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://salintv.com/video/maah-tv-live-stream/",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://salintv.com/video/maah-tv-live-stream/",
+        "https://salintv.com/video/maah-tv/"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "manoto",
+      "name": "من‌وتو",
+      "englishName": "Manoto",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2023/08/manoto-1.png",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/manoto/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "mbc-persia-tv",
+      "name": "ام‌بی‌سی پرشیا",
+      "englishName": "MBC Persia",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/mbc_persia_tv_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/mbc-persia-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "me-2",
+      "name": "ام‌ای ۲",
+      "englishName": "ME 2",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/ME2_tv_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/me-2-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "mihan-tv",
+      "name": "میهن تی‌وی",
+      "englishName": "Mihan TV",
+      "categories": [
+        "news"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/mihan_tv_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/mihan-tv/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "mohabat-tv",
+      "name": "محبت",
+      "englishName": "Mohabat",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/mohabat_tv_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/mohabat-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "mtc",
+      "name": "ملی تی‌وی",
+      "englishName": "MTC",
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/MTC_TV_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/mtc/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "navahang-tv",
+      "name": "نواهنگ",
+      "englishName": "NAVAHANG",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2023/08/navahang_live_tv_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/navahang-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "nejat-tv",
+      "name": "نجات",
+      "englishName": "Nejat",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/nejat_tv_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/nejat-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "net-tv",
+      "name": "نت تی‌وی",
+      "englishName": "Net",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/net_tv_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/net-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "novin-tv",
+      "name": "نوین تی‌وی",
+      "englishName": "Novin TV",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/novin-tv-live-stream.jpg",
+      "streams": [
+        {
+          "url": "https://stream.novin.live/hls/playlist.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://salintv.com/video/novin-tv-live-stream/",
+        "https://salintv.com/video/novin-tv/",
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "omid-iran-tv",
+      "name": "امید ایران",
+      "englishName": "Omid Iran",
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/omide_iran_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/omid-iran-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "orange-tv",
+      "name": "اورنج تی‌وی",
+      "englishName": "Orange TV",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/orang_tv_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/orange-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "oxir",
+      "name": "اکسیر",
+      "englishName": "Oxir",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/oxir_tv_live_stream.jpg",
+      "streams": [
+        {
+          "url": "https://hls.oxir.live/hls/stream.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://salintv.com/video/oxir-tv-live-stream/",
+        "https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "pars-tv",
+      "name": "پارس تی‌وی",
+      "englishName": "Pars TV",
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/parstv-live-stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/pars-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "payam-javan",
+      "name": "پیام جوان",
+      "englishName": "Payam Javan",
+      "categories": [
+        "news"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/payam_javan_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/payam-javan-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "payame-aramesh-tv",
+      "name": "پیام آرامش",
+      "englishName": "Payame Aramesh",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/payame_aramesh_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/payame-aramesh-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "persiana-hd",
+      "name": "پرشیانا اچ‌دی",
+      "englishName": "Persiana HD",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2024/05/persiana_hd.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/persiana-hd-live-tv/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "persiana-science-live",
+      "name": "پرشیانا علم",
+      "englishName": "Persiana Science",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2024/05/persiana_science.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/persiana-science-live/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "pmc-royale-tv",
+      "name": "پی‌ام‌سی رویال",
+      "englishName": "PMC Royale",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/Pmc_Royale_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/pmc-royale-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "radio-javan-tv",
+      "name": "رادیو جوان تی‌وی",
+      "englishName": "Radio Javan TV",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/radio_javan_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/radio-javan-tv/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "rahe-nejat",
+      "name": "راه نجات",
+      "englishName": "Rahe Nejat",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/rahe_nejat_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/rahe-nejat-tv-live-stream/"
+      ],
+      "status": "unavailable",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "rta-education-tv",
+      "name": "معارف افغانستان",
+      "englishName": "RTA Education",
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/RTA_Education_tv_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/rta-education-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "sat7-pars-tv",
+      "name": "سَت‌۷ پارس",
+      "englishName": "Sat7 Pars",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/sat7_pars_live_stram.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/sat7-pars-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "sl-2-tv",
+      "name": "اس‌ال ۲",
+      "englishName": "SL 2",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/SL2_tv_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/sl-2-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "sl1-tv",
+      "name": "اس‌ال ۱",
+      "englishName": "SL1",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/sl1_tv_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/sl1-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "sun-music",
+      "name": "سان موزیک",
+      "englishName": "Sun Music",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2024/03/sunmusic_live_stream.jpg",
+      "streams": [
+        {
+          "url": "https://hls.sunmusic.live/hls/stream.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://salintv.com/video/sunmusic-live-stream/",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://salintv.com/video/sunmusic-live-stream/"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "t2-tv",
+      "name": "تی ۲",
+      "englishName": "T2",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/T2_TV_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/t2-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "tapesh",
+      "name": "طپش",
+      "englishName": "Tapesh",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2024/03/tapesh_tv_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/tapesh-tv-live-stream/"
+      ],
+      "status": "unavailable",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "tin-tv",
+      "name": "تین تی‌وی",
+      "englishName": "TIN TV",
+      "categories": [
+        "domestic"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/TIN_TV_live_stream.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/tin-tv-live-stream/"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "tm-tv",
+      "name": "تی‌ام تی‌وی",
+      "englishName": "TM TV",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/TM_tv_live-stream.jpg",
+      "streams": [
+        {
+          "url": "https://hls.tmtv.live/hls/stream.m3u8",
+          "type": "hls",
+          "priority": 1,
+          "attribution": "https://salintv.com/video/tm-tv-live-stream/",
+          "lastVerified": "2026-11-17"
+        }
+      ],
+      "sourceAttribution": [
+        "https://salintv.com/video/tm-tv-live-stream/"
+      ],
+      "status": "verified",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "your-time",
+      "name": "یور تایم",
+      "englishName": "Your Time",
+      "categories": [
+        "film"
+      ],
+      "logo": "https://salintv.com/wp-content/uploads/2025/01/Your_time_tv_live_stream-1.jpg",
+      "streams": [],
+      "sourceAttribution": [
+        "https://salintv.com/video/your-time-tv-live-stream/"
+      ],
+      "status": "unavailable",
+      "lastVerified": "2026-11-17"
+    },
+    {
+      "id": "gem-tv",
+      "name": "جم تی‌وی",
+      "englishName": "GEM tv",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-tv"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-tv-plus",
+      "name": "جم تی‌وی پلاس",
+      "englishName": "GEM tv plus",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-tv-plus"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-rubix",
+      "name": "جم روبیکس",
+      "englishName": "GEM rubix",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-rubix"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-rubix-plus",
+      "name": "جم روبیکس پلاس",
+      "englishName": "GEM rubix plus",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-rubix-plus"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-series",
+      "name": "جم سریال",
+      "englishName": "GEM series",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-series"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-series-plus",
+      "name": "جم سریال پلاس",
+      "englishName": "GEM series plus",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-series-plus"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-river",
+      "name": "جم ریور",
+      "englishName": "GEM river",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-river"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-river-plus",
+      "name": "جم ریور پلاس",
+      "englishName": "GEM river plus",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-river-plus"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-drama",
+      "name": "جم دراما",
+      "englishName": "GEM drama",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-drama"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-drama-plus",
+      "name": "جم دراما پلاس",
+      "englishName": "GEM drama plus",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-drama-plus"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-film",
+      "name": "جم فیلم",
+      "englishName": "GEM film",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-film"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-onyx",
+      "name": "جم اونیکس",
+      "englishName": "GEM onyx",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-onyx"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-24b",
+      "name": "جم ۲۴ بی",
+      "englishName": "GEM 24b",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-24b"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-latino",
+      "name": "جم لاتینو",
+      "englishName": "GEM latino",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-latino"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-mifa",
+      "name": "جم میفا",
+      "englishName": "GEM mifa",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-mifa"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-mifa-plus",
+      "name": "جم میفا پلاس",
+      "englishName": "GEM mifa plus",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-mifa-plus"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-az",
+      "name": "جم آذری",
+      "englishName": "GEM az",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-az"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-kids",
+      "name": "جم کیدز",
+      "englishName": "GEM kids",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-kids"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-junior",
+      "name": "جم جونیور",
+      "englishName": "GEM junior",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-junior"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-bollywood",
+      "name": "جم بالیوود",
+      "englishName": "GEM bollywood",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-bollywood"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-entertainment",
+      "name": "جم سرگرمی",
+      "englishName": "GEM entertainment",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-entertainment"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-food",
+      "name": "جم غذا",
+      "englishName": "GEM food",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-food"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-classic",
+      "name": "جم کلاسیک",
+      "englishName": "GEM classic",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-classic"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-comedy",
+      "name": "جم کمدی",
+      "englishName": "GEM comedy",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-comedy"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-documentary",
+      "name": "جم مستند",
+      "englishName": "GEM documentary",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-documentary"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-life",
+      "name": "جم لایف",
+      "englishName": "GEM life",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-life"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-modern-economy",
+      "name": "جم اقتصاد مدرن",
+      "englishName": "GEM modern economy",
+      "categories": [
+        "news"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-modern-economy"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-nature",
+      "name": "جم طبیعت",
+      "englishName": "GEM nature",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-nature"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-pixel",
+      "name": "جم پیکسل",
+      "englishName": "GEM pixel",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-pixel"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-sport",
+      "name": "جم ورزش",
+      "englishName": "GEM sport",
+      "categories": [
+        "sports"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-sport"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    },
+    {
+      "id": "gem-fit",
+      "name": "جم فیت",
+      "englishName": "GEM fit",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://gemgroup.tv/en/channel-details/gem-fit"
+      ],
+      "status": "unverified",
+      "lastVerified": null
+    }
+  ]
+}
