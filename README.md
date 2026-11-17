@@ -44,7 +44,9 @@ The supplied experimental APK uses an app-specific signing key. Use that same pr
 https://raw.githubusercontent.com/Skyspiriit/Amin-Live-TV/main/channels.json
 ```
 
-The public GitHub endpoint requires no credentials on the TV. A first launch without a remote response uses the bundled catalogue.
+The public GitHub endpoint requires no credentials on the TV.
+
+**Official free news links (proposed branch):** Some international news tiles open the broadcaster's own free live page in an installed TV browser or compatible app. These are marked «پخش رسمی» and are **not** native Media3 streams. No embedded/rehosted stream, copied authentication token, or external-player permission is claimed. If no suitable browser is installed, the tile shows a Persian installation message. CNN's subscription-based main live feed is not included. A code-enabled APK is necessary; updating `channels.json` alone cannot enable this feature in an older installation. A first launch without a remote response uses the bundled catalogue.
 
 - Increment `revision` for each published edit. Keep `schemaVersion` at 1 for this app.
 - Keep existing IDs stable. Updates must retain every existing channel ID. To withdraw a channel with an expired feed, give it `unavailable` status, clear its stream list and record the check date.
