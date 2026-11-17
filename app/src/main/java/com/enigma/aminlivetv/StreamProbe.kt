@@ -59,20 +59,29 @@ internal class StreamProbe(private val cancelled: () -> Boolean) {
             HlsPlaylistParser().parse(Uri.parse(sample.uri.toString()), sample.bytes.inputStream())
 
         val root = read(uri, deadline, MANIFEST_BYTES)
-        val playlist = when (val parsed = parse(root)) {
-            is HlsMediaPlaylist -> parsed
+        return when (val parsed = parse(root)) {
+            is HlsMediaPlaylist -> checkHlsMedia(parsed, deadline)
             is HlsMultivariantPlaylist -> {
-                val variant = parsed.variants.filter { it.format.height > 0 }.minByOrNull { it.format.bitrate }
-                    ?: parsed.variants.firstOrNull() ?: return ProbeResult.UNCERTAIN
-                try {
-                    parse(read(URI(variant.url.toString()), deadline, MANIFEST_BYTES)) as? HlsMediaPlaylist
-                } catch (_: Rejected) {
-                    // One rendition may lag or expire while other variants still work.
-                    return ProbeResult.UNCERTAIN
+                val variants = parsed.variants
+                    .sortedWith(compareBy({ it.format.height <= 0 }, { it.format.bitrate }))
+                    .take(2)
+                for (variant in variants) {
+                    val result = try {
+                        val media = parse(read(URI(variant.url.toString()), deadline, MANIFEST_BYTES)) as? HlsMediaPlaylist
+                        media?.let { checkHlsMedia(it, deadline) }
+                    } catch (_: IOException) {
+                        // An invalid or expired rendition is inconclusive for the whole source.
+                        null
+                    }
+                    if (result == ProbeResult.PLAYABLE) return result
                 }
+                ProbeResult.UNCERTAIN
             }
-            else -> null
-        } ?: return ProbeResult.FAILED
+            else -> ProbeResult.UNCERTAIN
+        }
+    }
+
+    private fun checkHlsMedia(playlist: HlsMediaPlaylist, deadline: Long): ProbeResult {
         if (playlist.protectionSchemes != null) return ProbeResult.UNCERTAIN
         val segments = playlist.segments.takeLast(4).filterNot { it.hasGapTag }
         val segment = segments.getOrNull(segments.lastIndex - 1) ?: segments.lastOrNull()

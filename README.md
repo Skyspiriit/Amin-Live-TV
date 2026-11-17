@@ -1,10 +1,10 @@
 # Amin Live TV
 
-Amin Live TV 0.2.0 is a standalone Persian-language live television app for Android TV 8.0 and later. It runs under `com.enigma.aminlivetv`, upgrades the signed 0.1.0 release in place and can be installed alongside Amin Player.
+Amin Live TV 0.2.1 is a standalone Persian-language live television app for Android TV 8.0 and later. It runs under `com.enigma.aminlivetv`, upgrades earlier signed releases in place and can be installed alongside Amin Player.
 
 ## Install on a Xiaomi Android TV Box
 
-1. Copy `Amin-Live-TV-v0.2.0.apk` to a USB drive and plug it into the box.
+1. Copy `Amin-Live-TV-v0.2.1.apk` to a USB drive and plug it into the box.
 2. Open the drive from the box’s file manager and select the APK. If Android asks, allow the file manager to install unknown apps, then return to the APK and select **Install**. The setting’s name varies by model and firmware.
 3. Open **Amin Live TV** from **Apps**. Choose **شبکه‌های داخلی**, **شبکه‌های خبری**, **شبکه‌های ورزشی** or **فیلم و سریال** and press OK on a station.
 4. While watching, press Up for the next station and Down for the previous one. Press OK to show or hide the channel strip. Left and Right switch stations while the strip is visible. Back returns to the grid. **ادامهٔ تماشا** on the home screen resumes the last station that played successfully.
@@ -13,7 +13,7 @@ If the box cannot open the USB file, install with [Android Platform Tools](https
 
 ```sh
 adb devices
-adb -s <tv-device-id> install -r Amin-Live-TV-v0.2.0.apk
+adb -s <tv-device-id> install -r Amin-Live-TV-v0.2.1.apk
 ```
 
 See [Xiaomi’s APK installation guide](https://www.mi.com/uk/support/article/KA-06405/).
@@ -45,6 +45,7 @@ The public GitHub endpoint requires no credentials on the TV. A first launch wit
 - Increment `revision` for each published edit. Keep `schemaVersion` at 1 for this app.
 - Keep existing IDs stable. Updates must retain every existing channel ID. To withdraw a channel with an expired feed, give it `unavailable` status, clear its stream list and record the check date.
 - A single record may appear in multiple categories. The four category IDs are `domestic`, `news`, `sports` and `film`.
+- From revision 3 onward, every `film` record needs a unique, nonnegative integer `filmOrder`. Use ranks in the 1000s for Persiana, 2000s for GEM and 3000s for other channels. Keep an existing channel's rank when its availability changes so it returns to the same place.
 - Set `origin` to `domestic` for Iranian domestic services or `satellite` for other services. The News grid displays the domestic news records and BBC Persian. International news records stay in the JSON for maintenance.
 - Use clear, broadcaster-authorized HTTPS streams with the formats `hls`, `dash` or `progressive`. List each separately checked source with its attribution, ISO date and a unique priority. Lower numbers are tried first.
 - Set a channel to `verified` only after successful video playback. Leave it `unverified` when listed or when playable integration remains untested. Use `unavailable` for a tested feed that fails and `restricted` when access or permission is required.
@@ -53,4 +54,4 @@ The player tries the last source that rendered video on that device first. It sw
 
 The app records a viewing session after 30 seconds of actual playback. Recent viewing carries more weight than older viewing when scheduling checks. All viewing and health data stays on the TV. One bounded check runs at a time, with up to six channel checks in ten minutes. Every third check gives an eligible least-recently-checked channel a turn. Checks pause during playback and while the app is in the background or offline. Confirmed failures and recovered channels appear when the category is next opened, so the grid stays steady while someone navigates.
 
-[Discovery and verification report](VERIFICATION.md)
+[GEM stream audit](GEM-VERIFICATION.md) · [Earlier discovery and verification](VERIFICATION.md)

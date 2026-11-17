@@ -25,6 +25,28 @@ class ChannelPolicyTest {
         assertFalse(international.listedInApp)
     }
 
+    @Test fun filmOrderSurvivesCatalogueRefreshAndChannelRecovery() {
+        val persiana = station("persiana-family").copy(categories = setOf(Category.FILM), filmOrder = 1010)
+        val gemFirst = station("gem-tv").copy(categories = setOf(Category.FILM), filmOrder = 2010)
+        val gemNext = station("gem-series").copy(categories = setOf(Category.FILM), filmOrder = 2020, streams = emptyList())
+        val other = station("ifilm").copy(categories = setOf(Category.FILM), filmOrder = 3010)
+        val expected = listOf(persiana, gemFirst, gemNext, other)
+        val original = Catalogue(3, expected.reversed())
+        val refreshed = Catalogue(4, listOf(gemNext, other, persiana, gemFirst))
+        assertEquals(expected, original.inCategory(Category.FILM))
+        assertEquals(expected, refreshed.inCategory(Category.FILM))
+
+        val ordered = refreshed.inCategory(Category.FILM)
+        val failed = HealthRecord().probeFinished(gemFirst, ProbeResult.FAILED, now, timings)
+        val recovered = failed.probeFinished(gemFirst, ProbeResult.PLAYABLE, now + day, timings)
+        assertEquals(listOf(persiana, gemNext, other), ordered.filterNot {
+            it == gemFirst && failed.availabilityAt(now) == Availability.UNAVAILABLE
+        })
+        assertEquals(expected, ordered.filterNot {
+            it == gemFirst && recovered.availabilityAt(now + day) == Availability.UNAVAILABLE
+        })
+    }
+
     @Test fun uncertainChecksAndStaleResultsNeverHideAChannel() {
         val channel = station("test")
         val initial = HealthRecord().trackedFor(channel, now)

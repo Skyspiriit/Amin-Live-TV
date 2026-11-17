@@ -161,7 +161,6 @@ class MainActivity : Activity() {
         val now = System.currentTimeMillis()
         currentList = catalogue.inCategory(selected)
             .filter { history.isVisible(it, now) }
-            .sortedBy { it.streams.isEmpty() }
         preferences.edit().putString("category", category.key).apply()
     }
 

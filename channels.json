@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": 2,
+  "revision": 3,
   "channels": [
     {
       "id": "tv1",
@@ -589,7 +589,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "domestic"
+      "origin": "domestic",
+      "filmOrder": 3000
     },
     {
       "id": "hdtest",
@@ -623,7 +624,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "domestic"
+      "origin": "domestic",
+      "filmOrder": 3010
     },
     {
       "id": "namayesh",
@@ -656,7 +658,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "domestic"
+      "origin": "domestic",
+      "filmOrder": 3020
     },
     {
       "id": "habib",
@@ -1751,7 +1754,8 @@
       ],
       "status": "unavailable",
       "lastVerified": "2026-11-17",
-      "origin": "domestic"
+      "origin": "domestic",
+      "filmOrder": 3110
     },
     {
       "id": "jamejam",
@@ -1768,7 +1772,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "domestic"
+      "origin": "domestic",
+      "filmOrder": 3120
     },
     {
       "id": "persiana-family",
@@ -1794,7 +1799,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 1000
     },
     {
       "id": "persiana-series",
@@ -1820,7 +1826,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 1010
     },
     {
       "id": "persiana-cinema",
@@ -1846,7 +1853,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 1020
     },
     {
       "id": "persiana-korea",
@@ -1872,7 +1880,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 1030
     },
     {
       "id": "persiana-plus",
@@ -1889,7 +1898,8 @@
       ],
       "status": "restricted",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 1040
     },
     {
       "id": "persiana-iranian",
@@ -1915,7 +1925,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 1050
     },
     {
       "id": "persiana-comedy",
@@ -1941,7 +1952,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 1060
     },
     {
       "id": "persiana-reality",
@@ -1967,7 +1979,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 1070
     },
     {
       "id": "persiana-turkiye",
@@ -1992,7 +2005,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 1080
     },
     {
       "id": "persiana-medical",
@@ -2017,7 +2031,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 1090
     },
     {
       "id": "persiana-docs",
@@ -2042,7 +2057,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 1100
     },
     {
       "id": "persiana-junior",
@@ -2067,7 +2083,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 1110
     },
     {
       "id": "persiana-fight",
@@ -2183,7 +2200,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 1120
     },
     {
       "id": "persiana-nostalgia",
@@ -2209,7 +2227,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 1130
     },
     {
       "id": "persiana-folk",
@@ -2234,7 +2253,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 1140
     },
     {
       "id": "persiana-setmix",
@@ -2259,7 +2279,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 1150
     },
     {
       "id": "persiana-travel",
@@ -2284,7 +2305,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 1160
     },
     {
       "id": "persiana-kurd4",
@@ -2309,7 +2331,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 1170
     },
     {
       "id": "247-box-tv",
@@ -2333,7 +2356,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3030
     },
     {
       "id": "4u-plus",
@@ -2349,7 +2373,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3130
     },
     {
       "id": "4utv",
@@ -2373,7 +2398,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3040
     },
     {
       "id": "afn-music-tv",
@@ -2389,7 +2415,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3140
     },
     {
       "id": "afra-film",
@@ -2405,7 +2432,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3150
     },
     {
       "id": "afra-series",
@@ -2421,7 +2449,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3160
     },
     {
       "id": "arax-tv",
@@ -2437,7 +2466,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3170
     },
     {
       "id": "ariana-tv",
@@ -2485,7 +2515,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3180
     },
     {
       "id": "ava-family",
@@ -2509,7 +2540,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3050
     },
     {
       "id": "ava-series",
@@ -2525,7 +2557,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3190
     },
     {
       "id": "avang-tv",
@@ -2541,7 +2574,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3200
     },
     {
       "id": "cafe-trade-tv",
@@ -2573,7 +2607,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3210
     },
     {
       "id": "classic-tv",
@@ -2589,7 +2624,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3220
     },
     {
       "id": "didaniha-tv",
@@ -2605,7 +2641,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3230
     },
     {
       "id": "fareh-iran-tv",
@@ -2621,7 +2658,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3240
     },
     {
       "id": "fx-farsi-tv",
@@ -2637,7 +2675,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3250
     },
     {
       "id": "fx2",
@@ -2653,7 +2692,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3260
     },
     {
       "id": "grand-cinema",
@@ -2669,7 +2709,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3270
     },
     {
       "id": "highvision-tv",
@@ -2686,7 +2727,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3280
     },
     {
       "id": "home-plus",
@@ -2702,7 +2744,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3290
     },
     {
       "id": "icc-tv",
@@ -2718,7 +2761,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3300
     },
     {
       "id": "icnet-1-tv",
@@ -2734,7 +2778,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3310
     },
     {
       "id": "icnet2",
@@ -2750,7 +2795,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3320
     },
     {
       "id": "icnet3",
@@ -2766,7 +2812,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3330
     },
     {
       "id": "iman-be-masih-tv",
@@ -2782,7 +2829,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3340
     },
     {
       "id": "iran-nama",
@@ -2798,7 +2846,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3350
     },
     {
       "id": "irane_farda_live_stream",
@@ -2878,7 +2927,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3360
     },
     {
       "id": "maah-tv",
@@ -2903,7 +2953,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3060
     },
     {
       "id": "manoto",
@@ -2919,7 +2970,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3370
     },
     {
       "id": "mbc-persia-tv",
@@ -2935,7 +2987,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3380
     },
     {
       "id": "me-2",
@@ -2951,7 +3004,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3390
     },
     {
       "id": "mihan-tv",
@@ -2983,7 +3037,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3400
     },
     {
       "id": "mtc",
@@ -3015,7 +3070,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3410
     },
     {
       "id": "nejat-tv",
@@ -3031,7 +3087,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3420
     },
     {
       "id": "net-tv",
@@ -3047,7 +3104,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3430
     },
     {
       "id": "novin-tv",
@@ -3073,7 +3131,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3070
     },
     {
       "id": "omid-iran-tv",
@@ -3105,7 +3164,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3440
     },
     {
       "id": "oxir",
@@ -3130,7 +3190,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3080
     },
     {
       "id": "pars-tv",
@@ -3178,7 +3239,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3450
     },
     {
       "id": "persiana-hd",
@@ -3194,7 +3256,8 @@
       ],
       "status": "unavailable",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 1180
     },
     {
       "id": "persiana-science-live",
@@ -3210,7 +3273,8 @@
       ],
       "status": "unavailable",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 1190
     },
     {
       "id": "pmc-royale-tv",
@@ -3226,7 +3290,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3460
     },
     {
       "id": "radio-javan-tv",
@@ -3242,7 +3307,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3470
     },
     {
       "id": "rahe-nejat",
@@ -3258,7 +3324,8 @@
       ],
       "status": "unavailable",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3480
     },
     {
       "id": "rta-education-tv",
@@ -3290,7 +3357,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3490
     },
     {
       "id": "sl-2-tv",
@@ -3306,7 +3374,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3500
     },
     {
       "id": "sl1-tv",
@@ -3322,7 +3391,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3510
     },
     {
       "id": "sun-music",
@@ -3346,7 +3416,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3090
     },
     {
       "id": "t2-tv",
@@ -3362,7 +3433,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3520
     },
     {
       "id": "tapesh",
@@ -3378,7 +3450,8 @@
       ],
       "status": "unavailable",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3530
     },
     {
       "id": "tin-tv",
@@ -3418,7 +3491,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3100
     },
     {
       "id": "your-time",
@@ -3434,7 +3508,8 @@
       ],
       "status": "unavailable",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 3540
     },
     {
       "id": "gem-tv",
@@ -3448,9 +3523,10 @@
       "sourceAttribution": [
         "https://gemgroup.tv/en/channel-details/gem-tv"
       ],
-      "status": "unverified",
-      "lastVerified": null,
-      "origin": "satellite"
+      "status": "unavailable",
+      "lastVerified": "2026-11-17",
+      "origin": "satellite",
+      "filmOrder": 2000
     },
     {
       "id": "gem-tv-plus",
@@ -3466,7 +3542,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 2010
     },
     {
       "id": "gem-rubix",
@@ -3482,7 +3559,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 2020
     },
     {
       "id": "gem-rubix-plus",
@@ -3498,7 +3576,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 2030
     },
     {
       "id": "gem-series",
@@ -3512,9 +3591,10 @@
       "sourceAttribution": [
         "https://gemgroup.tv/en/channel-details/gem-series"
       ],
-      "status": "unverified",
-      "lastVerified": null,
-      "origin": "satellite"
+      "status": "unavailable",
+      "lastVerified": "2026-11-17",
+      "origin": "satellite",
+      "filmOrder": 2040
     },
     {
       "id": "gem-series-plus",
@@ -3530,7 +3610,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 2050
     },
     {
       "id": "gem-river",
@@ -3546,7 +3627,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 2060
     },
     {
       "id": "gem-river-plus",
@@ -3562,7 +3644,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 2070
     },
     {
       "id": "gem-drama",
@@ -3576,9 +3659,10 @@
       "sourceAttribution": [
         "https://gemgroup.tv/en/channel-details/gem-drama"
       ],
-      "status": "unverified",
-      "lastVerified": null,
-      "origin": "satellite"
+      "status": "unavailable",
+      "lastVerified": "2026-11-17",
+      "origin": "satellite",
+      "filmOrder": 2080
     },
     {
       "id": "gem-drama-plus",
@@ -3594,7 +3678,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 2090
     },
     {
       "id": "gem-film",
@@ -3608,9 +3693,10 @@
       "sourceAttribution": [
         "https://gemgroup.tv/en/channel-details/gem-film"
       ],
-      "status": "unverified",
-      "lastVerified": null,
-      "origin": "satellite"
+      "status": "unavailable",
+      "lastVerified": "2026-11-17",
+      "origin": "satellite",
+      "filmOrder": 2100
     },
     {
       "id": "gem-onyx",
@@ -3626,7 +3712,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 2110
     },
     {
       "id": "gem-24b",
@@ -3642,7 +3729,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 2120
     },
     {
       "id": "gem-latino",
@@ -3658,7 +3746,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 2130
     },
     {
       "id": "gem-mifa",
@@ -3674,7 +3763,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 2140
     },
     {
       "id": "gem-mifa-plus",
@@ -3690,7 +3780,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 2150
     },
     {
       "id": "gem-az",
@@ -3706,7 +3797,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 2160
     },
     {
       "id": "gem-kids",
@@ -3720,9 +3812,10 @@
       "sourceAttribution": [
         "https://gemgroup.tv/en/channel-details/gem-kids"
       ],
-      "status": "unverified",
-      "lastVerified": null,
-      "origin": "satellite"
+      "status": "unavailable",
+      "lastVerified": "2026-11-17",
+      "origin": "satellite",
+      "filmOrder": 2170
     },
     {
       "id": "gem-junior",
@@ -3738,7 +3831,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 2180
     },
     {
       "id": "gem-bollywood",
@@ -3752,9 +3846,10 @@
       "sourceAttribution": [
         "https://gemgroup.tv/en/channel-details/gem-bollywood"
       ],
-      "status": "unverified",
-      "lastVerified": null,
-      "origin": "satellite"
+      "status": "unavailable",
+      "lastVerified": "2026-11-17",
+      "origin": "satellite",
+      "filmOrder": 2190
     },
     {
       "id": "gem-entertainment",
@@ -3770,7 +3865,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 2200
     },
     {
       "id": "gem-food",
@@ -3784,9 +3880,10 @@
       "sourceAttribution": [
         "https://gemgroup.tv/en/channel-details/gem-food"
       ],
-      "status": "unverified",
-      "lastVerified": null,
-      "origin": "satellite"
+      "status": "unavailable",
+      "lastVerified": "2026-11-17",
+      "origin": "satellite",
+      "filmOrder": 2210
     },
     {
       "id": "gem-classic",
@@ -3800,9 +3897,10 @@
       "sourceAttribution": [
         "https://gemgroup.tv/en/channel-details/gem-classic"
       ],
-      "status": "unverified",
-      "lastVerified": null,
-      "origin": "satellite"
+      "status": "unavailable",
+      "lastVerified": "2026-11-17",
+      "origin": "satellite",
+      "filmOrder": 2220
     },
     {
       "id": "gem-comedy",
@@ -3818,7 +3916,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 2230
     },
     {
       "id": "gem-documentary",
@@ -3834,7 +3933,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 2240
     },
     {
       "id": "gem-life",
@@ -3850,7 +3950,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 2250
     },
     {
       "id": "gem-modern-economy",
@@ -3882,7 +3983,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 2260
     },
     {
       "id": "gem-pixel",
@@ -3898,7 +4000,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 2270
     },
     {
       "id": "gem-sport",
@@ -3930,7 +4033,8 @@
       ],
       "status": "unverified",
       "lastVerified": null,
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 2280
     },
     {
       "id": "persiana-china",
@@ -3955,7 +4059,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 1200
     },
     {
       "id": "persiana-rap",
@@ -3980,7 +4085,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 1210
     },
     {
       "id": "persiana-podcast",
@@ -4005,7 +4111,8 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 1220
     },
     {
       "id": "persiana-voyage",
@@ -4030,7 +4137,62 @@
       ],
       "status": "verified",
       "lastVerified": "2026-11-17",
-      "origin": "satellite"
+      "origin": "satellite",
+      "filmOrder": 1230
+    },
+    {
+      "id": "gem-travel",
+      "name": "جم تراول",
+      "englishName": "GEM Travel",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://www.gemgroup.tv/en/channel-details/gem-travel",
+        "https://gemgroup.tv/en/satellite-frequencies"
+      ],
+      "status": "unavailable",
+      "lastVerified": "2026-11-17",
+      "origin": "satellite",
+      "filmOrder": 2290
+    },
+    {
+      "id": "gem-music",
+      "name": "جم موزیک",
+      "englishName": "GEM Music",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://www.lyngsat.com/tvchannels/tr/GEM-Music.html",
+        "https://gemgroup.tv/en/satellite-frequencies"
+      ],
+      "status": "unverified",
+      "lastVerified": null,
+      "origin": "satellite",
+      "filmOrder": 2300
+    },
+    {
+      "id": "gem-fashion",
+      "name": "جم فشن",
+      "englishName": "GEM Fashion",
+      "categories": [
+        "film"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://www.lyngsat.com/muxes/Al-Yah-1_East_12034-V.html",
+        "https://gemgroup.tv/en/satellite-frequencies"
+      ],
+      "status": "unverified",
+      "lastVerified": null,
+      "origin": "satellite",
+      "filmOrder": 2310
     }
   ]
 }

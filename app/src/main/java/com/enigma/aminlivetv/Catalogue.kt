@@ -40,7 +40,8 @@ internal data class Channel(
     val streams: List<Stream>,
     val origin: Origin,
     val status: String,
-    val verifiedAt: Long
+    val verifiedAt: Long,
+    val filmOrder: Int? = null
 ) {
     val sourceSet = streams.map { it.key }.sorted().joinToString("\n")
     val listedInApp = categories.any(::belongsTo)
@@ -57,8 +58,14 @@ internal data class Channel(
 }
 
 internal data class Catalogue(val revision: Int, val channels: List<Channel>) {
-    fun inCategory(category: Category): List<Channel> =
-        channels.filter { it.belongsTo(category) }
+    fun inCategory(category: Category): List<Channel> {
+        val matching = channels.filter { it.belongsTo(category) }
+        return if (category == Category.FILM && matching.any { it.filmOrder != null }) {
+            matching.sortedBy { it.filmOrder ?: Int.MAX_VALUE }
+        } else {
+            matching.sortedBy { it.streams.isEmpty() }
+        }
+    }
 }
 
 internal class CatalogueStore(context: Context) {
@@ -125,6 +132,7 @@ internal class CatalogueStore(context: Context) {
         val entries = json.getJSONArray("channels")
         require(entries.length() in 1..2000)
         val ids = HashSet<String>()
+        val filmPositions = HashSet<Int>()
         val channels = (0 until entries.length()).map { index ->
             val entry = entries.getJSONObject(index)
             val id = entry.requiredText("id", 80)
@@ -146,6 +154,13 @@ internal class CatalogueStore(context: Context) {
             val categories = keys.mapTo(LinkedHashSet()) { key ->
                 Category.entries.first { it.key == key }
             }
+            val filmOrder = if (entry.isNull("filmOrder")) null else entry.get("filmOrder") as Int
+            if (Category.FILM in categories) {
+                if (revision >= 3) require(filmOrder != null)
+                if (filmOrder != null) require(filmOrder >= 0 && filmPositions.add(filmOrder))
+            } else {
+                require(filmOrder == null)
+            }
             val sources = entry.getJSONArray("streams")
             require(sources.length() <= 6)
             val streams = (0 until sources.length()).map { offset ->
@@ -164,7 +179,7 @@ internal class CatalogueStore(context: Context) {
             require(streams.map { it.url }.distinct().size == streams.size)
             if (status == "verified") require(streams.isNotEmpty())
             if (status == "restricted" || status == "unavailable") require(streams.isEmpty())
-            Channel(id, name, categories, logo, streams, origin, status, verifiedAt)
+            Channel(id, name, categories, logo, streams, origin, status, verifiedAt, filmOrder)
         }
         require(Category.entries.all { category -> channels.any { it.belongsTo(category) } })
         require(channels.any { it.id == Channel.BBC_PERSIAN && it.belongsTo(Category.NEWS) })
