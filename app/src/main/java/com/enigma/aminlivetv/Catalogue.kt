@@ -208,7 +208,7 @@ internal class CatalogueStore(context: Context) {
         val ID = Regex("[a-z0-9][a-z0-9_-]*")
         val OFFICIAL_LIVE_HOSTS = setOf(
             "www.bbc.com", "www.dw.com", "www.france24.com", "www.euronews.com",
-            "www.aljazeera.com", "news.sky.com", "abcnews.go.com", "www.youtube.com"
+            "www.aljazeera.com", "news.sky.com", "abcnews.go.com", "www.cbsnews.com", "www.youtube.com"
         )
         const val MAX_BYTES = 2 * 1024 * 1024
         const val DAY_MS = 86_400_000L
