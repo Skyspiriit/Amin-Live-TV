@@ -11,6 +11,7 @@ import android.graphics.drawable.StateListDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
@@ -34,6 +35,8 @@ class MainActivity : Activity() {
     private lateinit var store: CatalogueStore
     private lateinit var catalogue: Catalogue
     private lateinit var logos: Logos
+    private lateinit var history: ChannelHistory
+    private lateinit var monitor: ChannelMonitor
     private lateinit var playerView: PlayerView
     private lateinit var rail: LinearLayout
     private lateinit var message: TextView
@@ -42,6 +45,7 @@ class MainActivity : Activity() {
     private val updates = Executors.newSingleThreadExecutor()
     private val preferences by lazy { getSharedPreferences("viewing", MODE_PRIVATE) }
     private val hideChannelName = Runnable { channelName.visibility = View.GONE }
+    private val fetchCatalogue = Runnable { refreshCatalogue() }
 
     private var screen = Screen.HOME
     private var category = Category.DOMESTIC
@@ -51,25 +55,33 @@ class MainActivity : Activity() {
     private var pendingCatalogue: Catalogue? = null
     private var overlay = false
     private var showRetry = false
-    private var restoreResumeFocus = false
+    private var catalogueRequested = false
+    private var foreground = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         immersive()
         store = CatalogueStore(this)
         logos = Logos()
+        val timings = ScanTimings(BuildConfig.TEST_CATALOG)
+        history = ChannelHistory(this, timings)
+        monitor = ChannelMonitor(this, history, timings)
         catalogue = store.load()
         category = savedCategory("category") ?: Category.DOMESTIC
         showHome()
+        if (BuildConfig.TEST_CATALOG) Log.i("AminMonitor", "Local home rendered")
+    }
+
+    private fun refreshCatalogue() {
+        if (catalogueRequested) return
+        catalogueRequested = true
+        val current = catalogue
         updates.execute {
-            val result = store.refresh(catalogue)
+            val result = store.refresh(current)
             if (result != null) runOnUiThread {
                 if (isDestroyed) return@runOnUiThread
                 pendingCatalogue = result
-                if (screen == Screen.HOME) {
-                    restoreResumeFocus = currentFocus?.tag == RESUME_TAG
-                    showHome()
-                }
+                if (screen == Screen.HOME && foreground) showHome(currentFocus?.tag)
             }
         }
     }
@@ -77,10 +89,12 @@ class MainActivity : Activity() {
     private fun savedCategory(key: String): Category? =
         Category.entries.firstOrNull { it.key == preferences.getString(key, null) }
 
-    private fun showHome() {
+    private fun showHome(restoreFocus: Any? = null) {
         screen = Screen.HOME
         pendingCatalogue?.let { catalogue = it }
         pendingCatalogue = null
+        monitor.setCatalogue(catalogue)
+        monitor.setEnabled(foreground)
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         val content = column().apply { setPadding(dp(52), dp(26), dp(52), dp(22)) }
         val heading = FrameLayout(this)
@@ -93,6 +107,7 @@ class MainActivity : Activity() {
         )
         content.addView(heading, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(14) })
         var categoryFocus: View? = null
+        val focusedCategory = restoreFocus as? Category ?: category
         Category.entries.chunked(2).forEach { pair ->
             val row = LinearLayout(this).apply { layoutDirection = View.LAYOUT_DIRECTION_RTL }
             pair.forEachIndexed { index, item ->
@@ -102,6 +117,7 @@ class MainActivity : Activity() {
                     background = focusSurface()
                     isFocusable = true
                     isClickable = true
+                    tag = item
                     contentDescription = getString(item.title)
                     addView(CategoryIcon(this@MainActivity, item), LinearLayout.LayoutParams(dp(38), dp(38)))
                     addView(text(getString(item.title), 26, bold = true), LinearLayout.LayoutParams(-1, -2).apply {
@@ -109,7 +125,7 @@ class MainActivity : Activity() {
                     })
                     setOnClickListener { openCategory(item) }
                 }
-                if (item == category) categoryFocus = tile
+                if (item == focusedCategory) categoryFocus = tile
                 row.addView(tile, LinearLayout.LayoutParams(0, -1, 1f).apply {
                     if (index == 0) marginEnd = dp(14)
                 })
@@ -119,26 +135,33 @@ class MainActivity : Activity() {
 
         val lastCategory = savedCategory("watched-category")
         val lastId = preferences.getString("watched-channel", null)
-        val last = catalogue.channels.find { it.id == lastId && it.streams.isNotEmpty() }
+        val now = System.currentTimeMillis()
+        val last = catalogue.channels.find {
+            it.id == lastId && it.listedInApp && it.streams.isNotEmpty() && history.isVisible(it, now)
+        }
         val resume = last?.let { channel ->
             button(getString(R.string.resume_channel, channel.name), 20).apply {
                 tag = RESUME_TAG
                 setOnClickListener {
-                    val targetCategory = lastCategory?.takeIf { it in channel.categories } ?: channel.categories.first()
+                    val targetCategory = lastCategory?.takeIf(channel::belongsTo)
+                        ?: channel.categories.first(channel::belongsTo)
                     selectCategory(targetCategory)
-                    beginPlayback(currentList.indexOfFirst { it.id == channel.id })
+                    val index = currentList.indexOfFirst { it.id == channel.id }
+                    if (index >= 0) beginPlayback(index) else showGrid(null)
                 }
                 content.addView(this, LinearLayout.LayoutParams(-1, dp(53)).apply { topMargin = dp(17) })
             }
         }
         install(content)
-        if (restoreResumeFocus && resume != null) resume.requestFocus() else categoryFocus?.requestFocus()
-        restoreResumeFocus = false
+        if (restoreFocus == RESUME_TAG && resume != null) resume.requestFocus() else categoryFocus?.requestFocus()
     }
 
     private fun selectCategory(selected: Category) {
         category = selected
-        currentList = catalogue.inCategory(selected).sortedBy { it.streams.isEmpty() }
+        val now = System.currentTimeMillis()
+        currentList = catalogue.inCategory(selected)
+            .filter { history.isVisible(it, now) }
+            .sortedBy { it.streams.isEmpty() }
         preferences.edit().putString("category", category.key).apply()
     }
 
@@ -149,11 +172,20 @@ class MainActivity : Activity() {
 
     private fun showGrid(focusId: String?) {
         screen = Screen.GRID
+        monitor.setEnabled(foreground)
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         val content = column().apply { setPadding(dp(46), dp(24), dp(46), dp(22)) }
         content.addView(text(getString(category.title), 30, bold = true), LinearLayout.LayoutParams(-1, -2).apply {
             bottomMargin = dp(14)
         })
+        if (currentList.isEmpty()) {
+            content.addView(
+                text(getString(R.string.no_channels), 23, MUTED),
+                LinearLayout.LayoutParams(-1, 0, 1f)
+            )
+            install(content)
+            return
+        }
         val grid = GridView(this).apply {
             layoutDirection = View.LAYOUT_DIRECTION_RTL
             numColumns = GridView.AUTO_FIT
@@ -217,6 +249,7 @@ class MainActivity : Activity() {
     private fun beginPlayback(index: Int) {
         if (index !in currentList.indices) return
         screen = Screen.PLAYER
+        monitor.setEnabled(false)
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         overlay = false
         val content = FrameLayout(this).apply { setBackgroundColor(Color.BLACK) }
@@ -266,7 +299,7 @@ class MainActivity : Activity() {
         ui.removeCallbacks(hideChannelName)
         if (overlay) renderRail()
         if (livePlayer == null) {
-            livePlayer = LivePlayer(this, playerView, ::showPlayerStatus, ::onPlaybackStarted)
+            livePlayer = LivePlayer(this, playerView, history, ::showPlayerStatus, ::onPlaybackStarted)
         }
         livePlayer?.select(selected)
     }
@@ -351,16 +384,24 @@ class MainActivity : Activity() {
 
     override fun onStart() {
         super.onStart()
+        foreground = true
+        if (screen == Screen.HOME && pendingCatalogue != null) showHome(currentFocus?.tag)
+        monitor.setEnabled(screen != Screen.PLAYER)
+        ui.postDelayed(fetchCatalogue, 700)
         if (screen == Screen.PLAYER && livePlayer == null) tune(currentIndex)
     }
 
     override fun onStop() {
+        foreground = false
+        ui.removeCallbacks(fetchCatalogue)
+        monitor.setEnabled(false)
         closePlayer()
         super.onStop()
     }
 
     override fun onDestroy() {
         updates.shutdownNow()
+        monitor.close()
         logos.close()
         super.onDestroy()
     }

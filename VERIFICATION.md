@@ -1,54 +1,35 @@
-# Channel discovery and verification
+# Amin Live TV 0.2.0 verification
 
-Checked on 17 November 2026. The bundled catalogue contains **189 distinct channel records**, of which **81 have verified video**. It includes **97 separately tested playback sources** across those 81 channels. Sixteen channels have two sources, and 65 have one.
+Checked 17 November 2026. The catalogue contains **193 unique records**. Of these, **181** belong to at least one visible category before availability filtering. **91** have video playback evidence, and **15** have two verified source URLs. Twelve international news-only records are retained for maintenance.
 
-| Home category | Listed | Video verified |
-| --- | ---: | ---: |
-| شبکه‌های داخلی | 65 | 56 |
-| شبکه‌های خبری | 15 | 5 |
-| شبکه‌های ورزشی | 11 | 6 |
-| فیلم و سریال | 104 | 19 |
+| Category | Records | Initially visible | Video verified |
+| --- | ---: | ---: | ---: |
+| شبکه‌های داخلی | 65 | 64 | 56 |
+| شبکه‌های خبری | 3 | 3 | 2 |
+| شبکه‌های ورزشی | 11 | 7 | 6 |
+| فیلم و سریال | 108 | 101 | 32 |
 
-Category totals overlap where a channel belongs to more than one category.
+Totals overlap across categories. Among the 181 eligible records, 91 are verified, 77 are unchecked, 11 are unavailable and 2 are restricted. Twelve tiles are withheld on a fresh installation because the catalogue has no usable source and records them as unavailable or restricted. BBC Persian remains visible. A fresh installation has zero device-confirmed failures. Further hiding and recovery depend on the local playback and health cache. Fifteen multi-source stations use distinct tested Telewebion routes, which can share upstream outages.
 
-| Status | Count | Basis |
-| --- | ---: | --- |
-| Verified | 81 | Sampled video decoded from at least one included source. |
-| Unverified | 101 | The channel was identified and a playable source suitable for the app is still needed or untested. |
-| Unavailable | 5 | A tested source failed or supplied test bars at the time of the check. |
-| Restricted | 2 | Playback through this native client would require permission or subscriber access. |
+## Sources and repairs
 
-## What was checked
+- **SalinTV and coverage.** Reopened the Persian archive, live gallery and Persiana directory, and retained the previous investigation of 43 archive pages and 96 individual channel pages. Existing domestic, sports and entertainment coverage was preserved. The News grid contains IRINN, IRINN 2 and BBC Persian. [SalinTV Persian archive](https://salintv.com/categories/live/farsi/) · [Live gallery](https://salintv.com/live-tv-streams/) · [Persiana archive](https://salintv.com/categories/live/farsi/mahvareh/persiana-group/)
+- **Persiana.** Reviewed the current broadcaster player and decoded several seconds of video from 23 published Persiana CDN candidates. Configured 22 free broadcast feeds with visible programme or channel evidence. The 13 additions to the playable set include Türkiye, Medical, Docs, Junior, Nostalgia, Folk, SetMix, Travel, 4 Kurd, China, Rap, Podcast and Voyage. Cinema, Series, Family, Iranian, Comedy, Korea, Reality, Music and Fight were rechecked. The official site ships demonstration streams and uses a separate player flow. Sports 1–3 and Women Sports remain unavailable in this app. The broadcaster’s published Sports site returned HTTP 523 on one address and had an expired TLS certificate on the other address. Persiana+ is restricted to subscribers. The historical HD and Science listings have no separate verified feed. [Persiana live](https://persianagroup.tv/live.html) · [Persiana terms](https://persianagroup.tv/legal.html?p=terms) · [Official Sports viewing link](https://t.me/s/Sportspersiana/40570)
+- **BBC Persian.** Checked the BBC’s official live page, the public Akamai HLS reference, documented DASH options and the verified YouTube channel. The Akamai candidate rendered video in a direct diagnostic test. The BBC provides its own live player and individual YouTube broadcasts. A YouTube broadcast has an official embed, but I found no dependable, embeddable 24-hour channel to use in this app. The BBC’s terms restrict taking media out of its player. I found no authorized native HLS or DASH integration, so BBC Persian stays in News with the Persian availability message. [BBC Persian live](https://www.bbc.com/persian/watch/bbc_persian_tv/live) · [BBC Persian on YouTube](https://www.youtube.com/@BBCPersian/streams) · [BBC terms](https://downloads.bbc.co.uk/usingthebbc/bbc_terms_of_use_19September2022english.pdf)
 
-- Visited SalinTV’s Persian archive, live archive, gallery and the channel categories exposed by its sitemap and gallery links. Followed the site’s pagination, including the terminal empty pages its links returned. Across 43 archive pages, 27 returned channel cards. The archives and gallery linked to 96 distinct channel pages, all of which were fetched. Queried three additional GEM footer links, which returned HTTP 404. Merged repeated High Vision, Maah TV and Novin TV listings. Excluded a radio-only listing and pages for individual broadcasts. [Persian archive](https://salintv.com/categories/live/farsi/) · [Live gallery](https://salintv.com/live-tv-streams/) · [Category sitemap](https://salintv.com/categories-sitemap.xml)
-- Reviewed individual station titles, available artwork and player markup. Found HLS references on 85 channel pages and iframe-based players on some pages, including the Khabar page. Verified Khabar through Telewebion’s broadcast CDN. Some SalinTV JW Player or iframe pages reference transient sources or streams on other services. Those references alone were insufficient for native integration. [SalinTV terms](https://salintv.com/terms/) · [Khabar listing](https://salintv.com/video/khabar-tv-live/)
-- Added Iran’s national and provincial stations from public Telewebion lineups, the broadcaster’s Persiana lineup and GEM’s published channels. Included Dari stations found in the SalinTV live listings. Supplemented news with official Iran International, Afghanistan International and VOA pages. Channel artwork is referenced by URL, with a generic play icon when artwork is unavailable. [Telewebion](https://telewebion.ir/live) · [Telewebion lineup references](https://github.com/shayanline/iptv-iran/blob/main/playlists/iran.m3u) · [Persiana](https://persianagroup.tv/live.html) · [GEM](https://gemgroup.tv/en/channels) · [Iran International](https://www.iranintl.com/live) · [Afghanistan International](https://www.afintl.com/live) · [VOA Persian](https://ir.voanews.com/live/video/416)
-- Tested 107 candidate HTTPS HLS endpoints from the available test network. FFmpeg decoded sample frames from 102 endpoints. Sampled video was reviewed for station identity, test images and off-air slates. The catalogue carries the 97 retained sources and their individual provenance and test dates. The app requests streams from broadcaster or distribution hosts directly. It stores station metadata locally and uses no media relay. Sources that require access tokens, authentication, DRM, subscription access or a geographic workaround were excluded.
-- Fifteen two-source channels have distinct Telewebion URLs, typically a multivariant playlist and a separate edge manifest. Both paths were tested and may fail together during a provider outage. Iran International has a broadcaster-player feed and a separate Akamai delivery endpoint. Each was tested independently.
-- The Pooya / Nahal stream showed test bars. iFilm 2, Tapesh, Rahe Nejat and Your Time did not yield video from their tested candidates. iFilm Persian played through Telewebion. The BBC Persian candidate decoded, and the BBC’s conditions for third-party use limited native integration, so the channel is listed as restricted. Persiana+ is restricted because the broadcaster reserves premium channels for subscribers. Persiana’s site also ships demonstration streams under several labels. The verified Persiana listings use sampled broadcaster-branded broadcast endpoints. [BBC terms](https://downloads.bbc.co.uk/usingthebbc/bbc_terms_of_use_19September2022english.pdf) · [Persiana terms](https://persianagroup.tv/legal.html?p=terms)
+## Availability and viewing history
 
-## Android TV checks
+The home screen uses the bundled or last valid cached catalogue. A single background worker checks stream manifests and bounded samples of referenced video. Ambiguous failures, network changes and offline periods leave the last confirmed unavailable status intact and never mark a channel newly unavailable. Confirmed failures and recovered streams are reflected when categories reopen. The last source that rendered video gets first attempt on the next tune. Only 30 seconds or more of active playback contributes to viewing preferences. The scheduler decays the weight of older viewing, uses faster backoff for watched channels and reserves every third due check for a least-recently-checked channel. All viewing data stays on the TV.
 
-The signed APK was built with Android SDK 35. The Android TV test image is Android 14 on x86. The package ID is `com.enigma.aminlivetv`. Android build checks passed with zero lint errors.
+The APK retains package `com.enigma.aminlivetv` and the existing release certificate. The app checks the [public GitHub catalogue](https://raw.githubusercontent.com/Skyspiriit/Amin-Live-TV/main/channels.json) asynchronously and preserves local preferences across catalogue revisions and signed upgrades.
 
-| Check | Result |
-| --- | --- |
-| Installation and launch | The signed app installed alongside the existing Amin Player package and opened with the four Persian categories and version 0.1.0. |
-| D-pad navigation | Opened every category with the remote keys. Checked channel grid focus, OK to play, Up and Down to change channels, the channel strip, and Back to return to the grid and home. |
-| Fullscreen live video | Android Media3 rendered video from IRIB TV1, TV2, TV3, Varzesh, iFilm Persian, Iran International, VOA Persian and Afghanistan International. |
-| Last channel | Varzesh resumed after the app was stopped and started again. The home screen also restored the last category. |
-| Repeated switching | The final APK restored Varzesh after 20 rapid Up and Down channel changes. The grid and home screen remained responsive. |
-| Automatic fallback | A separate test build received HTTP 404 from its priority-one source, loaded a local HLS test stream from priority two, and persisted the successful channel. |
-| Catalogue recovery | The test build accepted a valid newer JSON revision, rejected malformed and incomplete revisions, kept the saved revision after the test endpoint was removed, and started with the bundled revision after clearing its test data. |
+## Acceptance tests
 
-The catalogue tests used a local HTTP fixture in a separate test build. The supplied APK uses the configured GitHub HTTPS endpoint and carries the same catalogue validation and cache logic.
+- **Android TV emulator.** Upgraded signed v0.1.0 to v0.2.0 in place and resumed IRIB TV1 from the previous install. One measured launch reached the home activity in 714 ms. Opened all four grids using the D-pad. Verified the exact three News entries and the BBC availability message.
+- **Native playback.** Media3 rendered Persiana Family, Series, Cinema and Türkiye on the emulator. Türkiye played again after 20 rapid Up and Down channel changes. Amin Player’s package was still installed alongside the upgrade.
+- **Availability and failover fixture.** Confirmed one hidden channel after an HTTP failure. A working backup and an unchecked tile stayed visible. The focused grid stayed stable, and the failed channel reappeared on reopening after its stream recovered. Media3 played the backup HLS feed and a DASH fixture. The monitor fetched bounded video samples for both formats.
+- **Local persistence and outage fixture.** The monitor paused during playback. A failed tune added zero viewing sessions, and a 33-second successful tune saved one session and its source. After restarting, the last good source was attempted first. When all fixture sources and the catalogue endpoint became unreachable, cached channels stayed visible.
+- **Local policy tests.** Six automated tests passed for news filtering, stale and uncertain results, source changes, recent viewing priority, scheduling fairness, qualified viewing time and video sample identification. Android lint passed with zero errors.
+- **Physical Xiaomi box.** The signed APK upgraded the existing installation to 0.2.0 and the TV launcher resolved the updated app. Playback on that box was left untested because another app was on screen. Feed availability on the household connection in Portugal still needs live confirmation.
 
-The signed distribution APK has SHA-256 digest `acb6c6839aa5a8977d5d4bf15cd0db70e86ca9e6db85cec30b1d503c56d40baf`.
-
-## Known limitations
-
-Playback probing took place on the development network. Test streams may differ by programme, provider and location. The physical Xiaomi device and a Portuguese household connection still need testing. Verification is a snapshot, and recurring expiry or week-long stability have not been measured. The 81 figure is the count of channels verified by video decoding and includes stations outside the subset tested in Android TV.
-
-GEM, Manoto, several Persiana stations and other discoveries appear without playable sources where a suitable video source was unavailable or remains unverified. The app lists these after the stations with playable sources and displays a Persian availability message on selection. Broadcaster-inserted advertising may still appear in the video.
-
-The app checks the [public GitHub catalogue](https://raw.githubusercontent.com/Skyspiriit/Amin-Live-TV/main/channels.json) on startup and ships with a bundled copy. The signing key and signing password are kept outside the repository, source archive and release assets.
+APK SHA-256 `9e06a9ebf4332596362c8affbee9446fb41b98c451abcfc3445c36c68b28027e`.

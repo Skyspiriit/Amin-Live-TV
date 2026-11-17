@@ -23,19 +23,42 @@ internal data class Stream(
     val url: String,
     val format: String,
     val priority: Int
-)
+) {
+    val key: String = "$format:$url"
+}
+
+internal enum class Origin(val key: String) {
+    DOMESTIC("domestic"),
+    SATELLITE("satellite")
+}
 
 internal data class Channel(
     val id: String,
     val name: String,
     val categories: Set<Category>,
     val logo: String?,
-    val streams: List<Stream>
-)
+    val streams: List<Stream>,
+    val origin: Origin,
+    val status: String,
+    val verifiedAt: Long
+) {
+    val sourceSet = streams.map { it.key }.sorted().joinToString("\n")
+    val listedInApp = categories.any(::belongsTo)
+    val heldByCatalogue = id != BBC_PERSIAN && streams.isEmpty() &&
+        (status == "unavailable" || status == "restricted")
+
+    fun belongsTo(category: Category): Boolean =
+        category in categories &&
+            (category != Category.NEWS || origin == Origin.DOMESTIC || id == BBC_PERSIAN)
+
+    companion object {
+        const val BBC_PERSIAN = "bbc-persian"
+    }
+}
 
 internal data class Catalogue(val revision: Int, val channels: List<Channel>) {
     fun inCategory(category: Category): List<Channel> =
-        channels.filter { category in it.categories }
+        channels.filter { it.belongsTo(category) }
 }
 
 internal class CatalogueStore(context: Context) {
@@ -57,7 +80,9 @@ internal class CatalogueStore(context: Context) {
             connection.setRequestProperty("Accept", "application/json, text/plain")
             if (connection.responseCode != HttpURLConnection.HTTP_OK) return null
             val bytes = connection.inputStream.use { it.readLimited(MAX_BYTES) }
-            val candidate = parse(bytes)
+            val document = readDocument(bytes)
+            if ((document.get("revision") as Int) <= current.revision) return null
+            val candidate = parse(document)
             if (!candidate.canReplace(current)) return null
 
             val output = cache.startWrite()
@@ -84,10 +109,16 @@ internal class CatalogueStore(context: Context) {
         return other.channels.all { it.id in ids }
     }
 
-    private fun parse(bytes: ByteArray): Catalogue {
+    private fun parse(bytes: ByteArray): Catalogue = parse(readDocument(bytes))
+
+    private fun readDocument(bytes: ByteArray): JSONObject {
         val tokenizer = JSONTokener(bytes.toString(Charsets.UTF_8))
         val json = tokenizer.nextValue() as JSONObject
         require(tokenizer.nextClean() == '\u0000')
+        return json
+    }
+
+    private fun parse(json: JSONObject): Catalogue {
         require(json.get("schemaVersion") == 1)
         val revision = json.get("revision") as Int
         require(revision > 0)
@@ -103,8 +134,9 @@ internal class CatalogueStore(context: Context) {
             val status = entry.requiredText("status", 16)
             require(status in setOf("verified", "unverified", "unavailable", "restricted"))
             val date = entry.get("lastVerified")
-            if (date != JSONObject.NULL) LocalDate.parse(date as String)
+            val verifiedAt = if (date == JSONObject.NULL) 0L else LocalDate.parse(date as String).toEpochDay() * DAY_MS
             if (status == "verified" || status == "unavailable") require(date != JSONObject.NULL)
+            val origin = Origin.entries.first { it.key == entry.requiredText("origin", 12) }
             val logo = entry.get("logo").let { if (it == JSONObject.NULL) null else publicUrl(it as String) }
             val attributions = entry.getJSONArray("sourceAttribution").strings()
             require(attributions.isNotEmpty())
@@ -132,9 +164,10 @@ internal class CatalogueStore(context: Context) {
             require(streams.map { it.url }.distinct().size == streams.size)
             if (status == "verified") require(streams.isNotEmpty())
             if (status == "restricted" || status == "unavailable") require(streams.isEmpty())
-            Channel(id, name, categories, logo, streams)
+            Channel(id, name, categories, logo, streams, origin, status, verifiedAt)
         }
-        require(Category.entries.all { category -> channels.any { category in it.categories } })
+        require(Category.entries.all { category -> channels.any { it.belongsTo(category) } })
+        require(channels.any { it.id == Channel.BBC_PERSIAN && it.belongsTo(Category.NEWS) })
         return Catalogue(revision, channels)
     }
 
@@ -157,6 +190,7 @@ internal class CatalogueStore(context: Context) {
     private companion object {
         val ID = Regex("[a-z0-9][a-z0-9_-]*")
         const val MAX_BYTES = 2 * 1024 * 1024
+        const val DAY_MS = 86_400_000L
     }
 }
 

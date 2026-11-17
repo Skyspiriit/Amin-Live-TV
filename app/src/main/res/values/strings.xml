@@ -8,6 +8,7 @@
     <string name="film">فیلم و سریال</string>
     <string name="resume_channel">ادامهٔ تماشا · %1$s</string>
     <string name="no_source">پخش این شبکه در دسترس نیست</string>
+    <string name="no_channels">فعلاً شبکه‌ای برای پخش در دسترس نیست.</string>
     <string name="offline">اینترنت قطع است. اتصال را بررسی کنید.</string>
     <string name="all_sources_failed">پخش این شبکه ممکن نیست.</string>
     <string name="connecting">در حال اتصال…</string>

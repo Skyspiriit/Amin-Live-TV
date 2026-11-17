@@ -11,8 +11,8 @@ android {
         applicationId = "com.enigma.aminlivetv"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = 2
+        versionName = "0.2.0"
         buildConfigField(
             "String", "CATALOG_URL",
             "\"https://raw.githubusercontent.com/Skyspiriit/Amin-Live-TV/main/channels.json\""
@@ -75,4 +75,5 @@ dependencies {
     implementation("androidx.media3:media3-exoplayer-hls:$media3")
     implementation("androidx.media3:media3-exoplayer-dash:$media3")
     implementation("androidx.media3:media3-ui:$media3")
+    testImplementation("junit:junit:4.13.2")
 }

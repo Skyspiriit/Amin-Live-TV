@@ -16,6 +16,7 @@ import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DefaultHttpDataSource
+import androidx.media3.datasource.HttpDataSource
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import androidx.media3.exoplayer.upstream.DefaultLoadErrorHandlingPolicy
@@ -25,6 +26,7 @@ import androidx.media3.ui.PlayerView
 internal class LivePlayer(
     context: Context,
     private val view: PlayerView,
+    private val history: ChannelHistory,
     private val onStatus: (Int?, Boolean) -> Unit,
     private val onStarted: (Channel) -> Unit
 ) : Player.Listener, AutoCloseable {
@@ -41,7 +43,11 @@ internal class LivePlayer(
         )
         .build()
     private var channel: Channel? = null
+    private var orderedSources = emptyList<Stream>()
+    private var session: ViewingSession? = null
+    private var attemptNetwork: Network? = null
     private var nextSource = 0
+    private var allFailuresConfirmed = true
     private var attempting = false
     private var waitingForNetwork = false
     private var closed = false
@@ -58,17 +64,18 @@ internal class LivePlayer(
     private val watchdog = object : Runnable {
         override fun run() {
             if (!attempting) return
-            if (!online()) {
+            if (connectivity.internetNetwork() == null) {
                 waitForNetwork()
                 return
             }
             val now = SystemClock.elapsedRealtime()
+            session?.save(now)
             val position = player.currentPosition
             if (started && player.isPlaying && position != lastPosition) lastProgress = now
             lastPosition = position
             val timeout = if (started) STALL_MS else STARTUP_MS
             if (now - lastProgress >= timeout) {
-                advance()
+                advance(confirmed = false)
             } else {
                 handler.postDelayed(this, 1000)
             }
@@ -84,8 +91,14 @@ internal class LivePlayer(
     }
 
     fun select(selected: Channel) {
+        finishSession()
         channel = selected
+        orderedSources = history.forChannel(selected, System.currentTimeMillis()).order(selected.streams)
+        session = ViewingSession { playedMs, newSession ->
+            history.viewed(selected, playedMs, newSession, System.currentTimeMillis())
+        }
         nextSource = 0
+        allFailuresConfirmed = true
         attempt()
     }
 
@@ -100,13 +113,15 @@ internal class LivePlayer(
             onStatus(R.string.no_source, false)
             return
         }
-        if (!online()) {
+        attemptNetwork = connectivity.internetNetwork()
+        if (attemptNetwork == null) {
             waitForNetwork()
             return
         }
         waitingForNetwork = false
-        val stream = selected.streams.getOrNull(nextSource)
+        val stream = orderedSources.getOrNull(nextSource)
         if (stream == null) {
+            history.exhausted(selected, allFailuresConfirmed, System.currentTimeMillis())
             onStatus(R.string.all_sources_failed, true)
             return
         }
@@ -141,35 +156,57 @@ internal class LivePlayer(
     }
 
     override fun onIsPlayingChanged(isPlaying: Boolean) {
-        if (isPlaying) confirmPlaying()
+        val now = SystemClock.elapsedRealtime()
+        if (isPlaying && attempting) {
+            if (started) session?.start(now) else confirmPlaying()
+        } else {
+            session?.pause(now)
+            session?.save(now)
+        }
     }
 
     private fun confirmPlaying() {
         if (!attempting || started || !firstFrame || !player.isPlaying) return
         started = true
         lastProgress = SystemClock.elapsedRealtime()
+        session?.start(lastProgress)
         onStatus(null, false)
         channel?.let {
-            Log.i("AminPlayback", "Playing ${it.id} on source ${nextSource + 1}")
+            val source = orderedSources[nextSource]
+            history.played(it, source, System.currentTimeMillis())
+            Log.i("AminPlayback", "Playing ${it.id} on source ${source.priority}")
             onStarted(it)
         }
     }
 
     override fun onPlayerError(error: PlaybackException) {
         if (!attempting) return
-        Log.w("AminPlayback", "Source ${nextSource + 1} failed for ${channel?.id} (${error.errorCodeName})")
-        advance()
+        val source = orderedSources.getOrNull(nextSource) ?: return
+        Log.w("AminPlayback", "Source ${source.priority} failed for ${channel?.id} (${error.errorCodeName})")
+        val response = error.cause as? HttpDataSource.InvalidResponseCodeException
+        val rejected = response != null && response.dataSpec.uri.toString() == source.url &&
+            response.responseCode in setOf(401, 403, 404, 410, 451)
+        val malformed = error.errorCode == PlaybackException.ERROR_CODE_PARSING_MANIFEST_MALFORMED ||
+            error.errorCode == PlaybackException.ERROR_CODE_PARSING_MANIFEST_UNSUPPORTED
+        advance(confirmed = !started && (rejected || malformed))
     }
 
     override fun onPlaybackStateChanged(playbackState: Int) {
-        if (attempting && playbackState == Player.STATE_ENDED) advance()
+        if (attempting && playbackState == Player.STATE_ENDED) advance(confirmed = false)
     }
 
-    private fun advance() {
-        if (!online()) {
+    private fun advance(confirmed: Boolean) {
+        val network = connectivity.internetNetwork()
+        if (network == null) {
             waitForNetwork()
             return
         }
+        if (network != attemptNetwork) {
+            attempt()
+            return
+        }
+        channel?.let { history.sourceFailed(it, System.currentTimeMillis()) }
+        allFailuresConfirmed = allFailuresConfirmed && confirmed
         resetAttempt()
         nextSource += 1
         onStatus(R.string.switching_source, false)
@@ -185,18 +222,21 @@ internal class LivePlayer(
     private fun postConnectivity() {
         handler.post {
             if (closed) return@post
-            if (online() && waitingForNetwork) attempt()
-            if (!online() && attempting) waitForNetwork()
+            val network = connectivity.internetNetwork()
+            if (network == null && attempting) waitForNetwork()
+            if (network != null && (waitingForNetwork || (attempting && network != attemptNetwork))) attempt()
         }
     }
 
-    private fun online(): Boolean {
-        val capabilities = connectivity.getNetworkCapabilities(connectivity.activeNetwork)
-        return capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true &&
-            (BuildConfig.TEST_CATALOG || capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED))
+    private fun finishSession() {
+        session?.save(SystemClock.elapsedRealtime(), finished = true)
+        session = null
     }
 
     private fun resetAttempt() {
+        val now = SystemClock.elapsedRealtime()
+        session?.pause(now)
+        session?.save(now)
         attempting = false
         waitingForNetwork = false
         handler.removeCallbacksAndMessages(null)
@@ -208,6 +248,7 @@ internal class LivePlayer(
         if (closed) return
         closed = true
         attempting = false
+        finishSession()
         handler.removeCallbacksAndMessages(null)
         connectivity.unregisterNetworkCallback(networkCallback)
         player.removeListener(this)
