@@ -12,12 +12,22 @@ import java.net.HttpURLConnection
 import java.net.URI
 import java.time.LocalDate
 
-internal enum class Category(val key: String, val title: Int) {
+// The four main categories come from `channels`. The others are documentary groups that only
+// `programmes` use, so older apps, which reject unknown channel categories, keep updating.
+internal enum class Category(val key: String, val title: Int, val main: Boolean = true) {
     DOMESTIC("domestic", R.string.domestic),
     NEWS("news", R.string.news),
     SPORTS("sports", R.string.sports),
-    FILM("film", R.string.film)
+    FILM("film", R.string.film),
+    DOCUMENTARY("documentary", R.string.documentary, false),
+    WILDLIFE("wildlife", R.string.wildlife, false),
+    NATURE("nature", R.string.nature, false),
+    SCIENCE("science", R.string.science, false)
 }
+
+// Official YouTube playback: the channel's current live broadcast, its playlist, or the live
+// broadcast with the playlist as the fallback when nothing is live.
+internal data class YouTube(val channel: String?, val playlist: String?)
 
 internal data class Stream(
     val url: String,
@@ -42,7 +52,8 @@ internal data class Channel(
     val status: String,
     val verifiedAt: Long,
     val filmOrder: Int? = null,
-    val officialLiveUrl: String? = null
+    val officialLiveUrl: String? = null,
+    val youtube: YouTube? = null
 ) {
     val sourceSet = streams.map { it.key }.sorted().joinToString("\n")
     val listedInApp = categories.any(::belongsTo)
@@ -149,7 +160,7 @@ internal class CatalogueStore(context: Context) {
             val keys = entry.getJSONArray("categories").strings()
             require(keys.isNotEmpty() && keys.distinct().size == keys.size)
             val categories = keys.mapTo(LinkedHashSet()) { key ->
-                Category.entries.first { it.key == key }
+                Category.entries.first { it.main && it.key == key }
             }
             val filmOrder = if (entry.isNull("filmOrder")) null else entry.get("filmOrder") as Int
             if (Category.FILM in categories) {
@@ -181,11 +192,45 @@ internal class CatalogueStore(context: Context) {
             require(streams.map { it.url }.distinct().size == streams.size)
             if (status == "verified") require(streams.isNotEmpty())
             if (status == "restricted" || status == "unavailable") require(streams.isEmpty())
-            Channel(id, name, categories, logo, streams, origin, status, verifiedAt, filmOrder, officialLiveUrl)
+            val youtube = entry.youtube()?.also { require(Category.NEWS in categories && it.playlist == null) }
+            Channel(id, name, categories, logo, streams, origin, status, verifiedAt, filmOrder, officialLiveUrl, youtube)
         }
-        require(Category.entries.all { category -> channels.any { it.belongsTo(category) } })
+        require(Category.entries.filter { it.main }.all { category -> channels.any { it.belongsTo(category) } })
         require(channels.any { it.id == Channel.BBC_PERSIAN && it.belongsTo(Category.NEWS) })
-        return Catalogue(revision, channels)
+        return Catalogue(revision, channels + parseProgrammes(json, channels, ids))
+    }
+
+    // Documentary groups. Each programme plays a catalogue channel natively (`channelRef`)
+    // or official YouTube content, and belongs to exactly one group.
+    private fun parseProgrammes(json: JSONObject, channels: List<Channel>, ids: MutableSet<String>): List<Channel> {
+        val entries = json.optJSONArray("programmes") ?: return emptyList()
+        require(entries.length() <= 200)
+        return (0 until entries.length()).map { index ->
+            val entry = entries.getJSONObject(index)
+            val id = entry.requiredText("id", 80)
+            require(ID.matches(id) && ids.add(id))
+            val name = entry.requiredText("name", 100)
+            val group = entry.requiredText("group", 16).let { key -> Category.entries.first { !it.main && it.key == key } }
+            entry.getJSONArray("sourceAttribution").strings().also { require(it.isNotEmpty()) }.forEach { publicUrl(it) }
+            val reference = if (entry.isNull("channelRef")) null else entry.requiredText("channelRef", 80)
+            val youtube = entry.youtube()
+            require((reference == null) != (youtube == null))
+            if (reference != null) {
+                val base = channels.first { it.id == reference }
+                base.copy(id = id, name = name, categories = setOf(group), filmOrder = null, officialLiveUrl = null)
+            } else {
+                Channel(id, name, setOf(group), null, emptyList(), Origin.SATELLITE, "unverified", 0L, youtube = youtube)
+            }
+        }
+    }
+
+    private fun JSONObject.youtube(): YouTube? {
+        val channel = if (isNull("youtubeChannel")) null else requiredText("youtubeChannel", 24)
+        val playlist = if (isNull("youtubePlaylist")) null else requiredText("youtubePlaylist", 64)
+        if (channel == null && playlist == null) return null
+        channel?.let { require(YOUTUBE_CHANNEL.matches(it)) }
+        playlist?.let { require(YOUTUBE_PLAYLIST.matches(it)) }
+        return YouTube(channel, playlist)
     }
 
     private fun publicUrl(value: String): String {
@@ -206,6 +251,8 @@ internal class CatalogueStore(context: Context) {
 
     private companion object {
         val ID = Regex("[a-z0-9][a-z0-9_-]*")
+        val YOUTUBE_CHANNEL = Regex("UC[A-Za-z0-9_-]{22}")
+        val YOUTUBE_PLAYLIST = Regex("(PL|UU)[A-Za-z0-9_-]{10,62}")
         val OFFICIAL_LIVE_HOSTS = setOf(
             "www.bbc.com", "www.dw.com", "www.france24.com", "www.euronews.com",
             "www.aljazeera.com", "news.sky.com", "abcnews.go.com", "www.cbsnews.com", "www.youtube.com"

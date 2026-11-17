@@ -35,7 +35,7 @@ import java.util.concurrent.Executors
 
 @OptIn(UnstableApi::class)
 class MainActivity : Activity() {
-    private enum class Screen { HOME, GRID, PLAYER }
+    private enum class Screen { HOME, GRID, PLAYER, YOUTUBE }
 
     private lateinit var store: CatalogueStore
     private lateinit var catalogue: Catalogue
@@ -57,6 +57,7 @@ class MainActivity : Activity() {
     private var currentList = emptyList<Channel>()
     private var currentIndex = 0
     private var livePlayer: LivePlayer? = null
+    private var youTubePlayer: YouTubePlayer? = null
     private var pendingCatalogue: Catalogue? = null
     private var overlay = false
     private var showRetry = false
@@ -64,6 +65,7 @@ class MainActivity : Activity() {
     private var nextCatalogueCheck = 0L
     private var nextReleaseCheck = 0L
     private var foreground = false
+    private val watching get() = screen == Screen.PLAYER || screen == Screen.YOUTUBE
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,14 +83,14 @@ class MainActivity : Activity() {
 
     private fun scheduleUpdates() {
         ui.removeCallbacks(fetchUpdates)
-        if (foreground && screen != Screen.PLAYER) {
+        if (foreground && !watching) {
             val next = minOf(nextCatalogueCheck, nextReleaseCheck)
             ui.postDelayed(fetchUpdates, (next - SystemClock.elapsedRealtime()).coerceAtLeast(700L))
         }
     }
 
     private fun refreshUpdates() {
-        if (!foreground || screen == Screen.PLAYER) return
+        if (!foreground || watching) return
         val elapsed = SystemClock.elapsedRealtime()
         if (elapsed >= nextCatalogueCheck) {
             nextCatalogueCheck = elapsed + CATALOGUE_INTERVAL
@@ -128,7 +130,7 @@ class MainActivity : Activity() {
         when (screen) {
             Screen.HOME -> showHome(currentFocus?.tag)
             Screen.GRID -> showGrid(savedPosition())
-            Screen.PLAYER -> Unit
+            Screen.PLAYER, Screen.YOUTUBE -> Unit
         }
     }
 
@@ -144,7 +146,7 @@ class MainActivity : Activity() {
                 if (channel.id == preferences.getString("watched-channel", null)) showHome(currentFocus?.tag)
             }
             Screen.GRID -> if (channel.belongsTo(category)) showGrid(savedPosition())
-            Screen.PLAYER -> Unit
+            Screen.PLAYER, Screen.YOUTUBE -> Unit
         }
     }
 
@@ -169,29 +171,34 @@ class MainActivity : Activity() {
         content.addView(heading, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(14) })
         var categoryFocus: View? = null
         val focusedCategory = restoreFocus as? Category ?: category
-        Category.entries.chunked(2).forEach { pair ->
+        // Two rows of main categories, then one smaller row of documentary groups.
+        val (main, groups) = Category.entries.partition { it.main }
+        (main.chunked(2) + listOf(groups.filter { catalogue.inCategory(it).isNotEmpty() })).forEach { items ->
+            if (items.isEmpty()) return@forEach
+            val small = !items.first().main
             val row = LinearLayout(this).apply { layoutDirection = View.LAYOUT_DIRECTION_RTL }
-            pair.forEachIndexed { index, item ->
+            items.forEachIndexed { index, item ->
                 val tile = LinearLayout(this).apply {
                     gravity = Gravity.CENTER
-                    orientation = LinearLayout.VERTICAL
+                    orientation = if (small) LinearLayout.HORIZONTAL else LinearLayout.VERTICAL
                     background = focusSurface()
                     isFocusable = true
                     isClickable = true
                     tag = item
                     contentDescription = getString(item.title)
-                    addView(CategoryIcon(this@MainActivity, item), LinearLayout.LayoutParams(dp(38), dp(38)))
-                    addView(text(getString(item.title), 26, bold = true), LinearLayout.LayoutParams(-1, -2).apply {
-                        topMargin = dp(6)
+                    val icon = dp(if (small) 32 else 38)
+                    addView(CategoryIcon(this@MainActivity, item), LinearLayout.LayoutParams(icon, icon))
+                    addView(text(getString(item.title), if (small) 24 else 26, bold = true), LinearLayout.LayoutParams(-2, -2).apply {
+                        if (small) marginStart = dp(10) else topMargin = dp(6)
                     })
                     setOnClickListener { openCategory(item) }
                 }
                 if (item == focusedCategory) categoryFocus = tile
                 row.addView(tile, LinearLayout.LayoutParams(0, -1, 1f).apply {
-                    if (index == 0) marginEnd = dp(14)
+                    if (index < items.size - 1) marginEnd = dp(14)
                 })
             }
-            content.addView(row, LinearLayout.LayoutParams(-1, 0, 1f).apply { topMargin = dp(14) })
+            content.addView(row, LinearLayout.LayoutParams(-1, 0, if (small) 0.62f else 1f).apply { topMargin = dp(14) })
         }
 
         val lastCategory = savedCategory("watched-category")
@@ -250,7 +257,9 @@ class MainActivity : Activity() {
 
     private fun visibleChannels(): List<Channel> {
         val now = System.currentTimeMillis()
-        return catalogue.inCategory(category).filter { it.officialLiveUrl != null || history.isVisible(it, now) }
+        return catalogue.inCategory(category).filter {
+            it.youtube != null || it.officialLiveUrl != null || history.isVisible(it, now)
+        }
     }
 
     private fun savedPosition(): String? = preferences.getString("position-${category.key}", null)
@@ -294,8 +303,11 @@ class MainActivity : Activity() {
             adapter = ChannelAdapter(this@MainActivity)
             setOnItemClickListener { _, _, position, _ ->
                 val channel = currentList[position]
-                if (channel.officialLiveUrl != null) openOfficialLive(channel)
-                else beginPlayback(position)
+                when {
+                    channel.youtube != null -> playYouTube(position)
+                    channel.officialLiveUrl != null -> openOfficialLive(channel)
+                    else -> beginPlayback(position)
+                }
             }
             onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: android.widget.AdapterView<*>, item: View?, position: Int, id: Long) {
@@ -332,7 +344,7 @@ class MainActivity : Activity() {
 
         override fun getView(position: Int, recycled: View?, parent: ViewGroup): View {
             val tile = recycled as? LinearLayout ?: column().apply {
-                layoutParams = android.widget.AbsListView.LayoutParams(-1, dp(107))
+                layoutParams = android.widget.AbsListView.LayoutParams(-1, dp(120))
                 gravity = Gravity.CENTER
                 background = surface(SURFACE)
                 setPadding(dp(8), dp(8), dp(8), dp(8))
@@ -342,14 +354,23 @@ class MainActivity : Activity() {
                 addView(text("", 18, bold = true).apply { maxLines = 2 }, LinearLayout.LayoutParams(-1, -2).apply {
                     topMargin = dp(5)
                 })
+                addView(text("", 14, MUTED), LinearLayout.LayoutParams(-1, -2))
             }
             val channel = getItem(position)
             val icon = tile.getChildAt(0) as ImageView
             logos.load(channel.logo, icon)
-            (tile.getChildAt(1) as TextView).text = channel.name +
-                if (channel.officialLiveUrl != null) getString(R.string.official_live_suffix) else ""
-            tile.contentDescription = channel.name +
-                if (channel.officialLiveUrl != null) getString(R.string.official_live_suffix) else ""
+            // Native streams have no tag; official playback says where it comes from.
+            val source = when {
+                channel.youtube != null -> getString(R.string.source_youtube)
+                channel.officialLiveUrl != null -> getString(R.string.source_official_site)
+                else -> null
+            }
+            (tile.getChildAt(1) as TextView).text = channel.name
+            (tile.getChildAt(2) as TextView).apply {
+                text = source
+                visibility = if (source == null) View.GONE else View.VISIBLE
+            }
+            tile.contentDescription = listOfNotNull(channel.name, source).joinToString("، ")
             return tile
         }
     }
@@ -397,6 +418,64 @@ class MainActivity : Activity() {
         content.isFocusableInTouchMode = true
         content.requestFocus()
         tune(index)
+    }
+
+    // Official YouTube content inside the app. OK pauses, Up and Down change programme, Back
+    // returns to the grid.
+    private fun playYouTube(index: Int) {
+        val youtube = currentList.getOrNull(index)?.youtube ?: return
+        closePlayer()
+        screen = Screen.YOUTUBE
+        currentIndex = index
+        rememberPosition(currentList[index])
+        monitor.setEnabled(false)
+        scheduleUpdates()
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        val content = FrameLayout(this).apply { setBackgroundColor(Color.BLACK) }
+        val player = YouTubePlayer(this, { label ->
+            message.visibility = if (label == null) View.GONE else View.VISIBLE
+            if (label != null) message.setText(label)
+        }, ::openYouTubeApp)
+        youTubePlayer = player
+        content.addView(player.view, frame(-1, -1))
+        channelName = text(currentList[index].name, 24, bold = true).apply {
+            background = surface(PANEL)
+            setPadding(dp(21), dp(9), dp(21), dp(9))
+        }
+        content.addView(channelName, frame(-2, -2, Gravity.TOP or Gravity.START).apply {
+            topMargin = dp(28)
+            marginStart = dp(42)
+        })
+        message = text("", 22).apply {
+            background = surface(PANEL)
+            setPadding(dp(24), dp(13), dp(24), dp(13))
+            visibility = View.GONE
+        }
+        content.addView(message, frame(-2, -2, Gravity.CENTER))
+        install(content)
+        content.isFocusableInTouchMode = true
+        content.requestFocus()
+        ui.postDelayed(hideChannelName, 4000)
+        player.play(youtube)
+    }
+
+    // Opens one specific broadcast or playlist in the official YouTube TV app. Back there returns here.
+    private fun openYouTubeApp(url: String): Boolean {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url)).setPackage(YOUTUBE_TV)
+        Log.i("AminYouTube", "Opening $url in the YouTube app")
+        if (intent.resolveActivity(packageManager) == null) return false
+        // Coming back from YouTube lands on the grid, not on a player that would hand off again.
+        closePlayer()
+        showGrid(currentList[currentIndex].id)
+        startActivity(intent)
+        return true
+    }
+
+    private fun stepYouTube(offset: Int) {
+        val playable = currentList.indices.filter { currentList[it].youtube != null }
+        val position = playable.indexOf(currentIndex)
+        if (playable.size < 2 || position < 0) return
+        playYouTube(playable[(position + offset).mod(playable.size)])
     }
 
     private fun tune(index: Int) {
@@ -471,8 +550,19 @@ class MainActivity : Activity() {
     }
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
-        if (screen != Screen.PLAYER) return super.dispatchKeyEvent(event)
         val isOk = event.keyCode in setOf(KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_NUMPAD_ENTER)
+        if (screen == Screen.YOUTUBE) {
+            val offset = when (event.keyCode) {
+                KeyEvent.KEYCODE_DPAD_UP -> -1
+                KeyEvent.KEYCODE_DPAD_DOWN -> 1
+                else -> if (isOk) 0 else return super.dispatchKeyEvent(event)
+            }
+            if (event.action == KeyEvent.ACTION_DOWN && event.repeatCount == 0) {
+                if (isOk) youTubePlayer?.togglePause() else stepYouTube(offset)
+            }
+            return true
+        }
+        if (!watching) return super.dispatchKeyEvent(event)
         val offset = when (event.keyCode) {
             KeyEvent.KEYCODE_DPAD_UP -> -1
             KeyEvent.KEYCODE_DPAD_DOWN -> 1
@@ -495,7 +585,7 @@ class MainActivity : Activity() {
     @Suppress("DEPRECATION")
     override fun onBackPressed() {
         when (screen) {
-            Screen.PLAYER -> {
+            Screen.PLAYER, Screen.YOUTUBE -> {
                 closePlayer()
                 showGrid(currentList[currentIndex].id)
             }
@@ -508,9 +598,10 @@ class MainActivity : Activity() {
         super.onStart()
         foreground = true
         showPendingCatalogue()
-        monitor.setEnabled(screen != Screen.PLAYER)
+        monitor.setEnabled(!watching)
         scheduleUpdates()
         if (screen == Screen.PLAYER && livePlayer == null) tune(currentIndex)
+        if (screen == Screen.YOUTUBE && youTubePlayer == null) playYouTube(currentIndex)
     }
 
     override fun onStop() {
@@ -532,6 +623,8 @@ class MainActivity : Activity() {
         ui.removeCallbacks(hideChannelName)
         livePlayer?.close()
         livePlayer = null
+        youTubePlayer?.close()
+        youTubePlayer = null
     }
 
     @Suppress("DEPRECATION")
@@ -544,7 +637,7 @@ class MainActivity : Activity() {
 
     private fun install(content: View) {
         content.layoutDirection = View.LAYOUT_DIRECTION_RTL
-        content.setBackgroundColor(if (screen == Screen.PLAYER) Color.BLACK else BACKGROUND)
+        content.setBackgroundColor(if (watching) Color.BLACK else BACKGROUND)
         setContentView(content)
         immersive()
     }
@@ -621,6 +714,30 @@ class MainActivity : Activity() {
                     canvas.drawLine(20f, 7f, 18f, 5f, pen)
                     canvas.drawLine(5f, 16f, 27f, 16f, pen)
                 }
+                Category.DOCUMENTARY -> {
+                    canvas.drawRoundRect(4f, 7f, 28f, 25f, 3f, 3f, pen)
+                    canvas.drawLine(13f, 11.5f, 13f, 20.5f, pen)
+                    canvas.drawLine(13f, 11.5f, 21f, 16f, pen)
+                    canvas.drawLine(13f, 20.5f, 21f, 16f, pen)
+                }
+                Category.WILDLIFE -> {
+                    canvas.drawOval(10f, 15f, 22f, 26f, pen)
+                    canvas.drawCircle(7f, 12f, 2.5f, pen)
+                    canvas.drawCircle(12.5f, 7f, 2.5f, pen)
+                    canvas.drawCircle(19.5f, 7f, 2.5f, pen)
+                    canvas.drawCircle(25f, 12f, 2.5f, pen)
+                }
+                Category.NATURE -> {
+                    canvas.drawLine(16f, 4f, 7f, 20f, pen)
+                    canvas.drawLine(16f, 4f, 25f, 20f, pen)
+                    canvas.drawLine(7f, 20f, 25f, 20f, pen)
+                    canvas.drawLine(16f, 20f, 16f, 28f, pen)
+                }
+                Category.SCIENCE -> {
+                    canvas.drawCircle(16f, 16f, 6.5f, pen)
+                    canvas.drawOval(3f, 12f, 29f, 20f, pen)
+                    canvas.drawCircle(25f, 6f, 1.2f, pen)
+                }
             }
             canvas.restore()
         }
@@ -628,6 +745,7 @@ class MainActivity : Activity() {
 
     private companion object {
         const val RESUME_TAG = "resume"
+        const val YOUTUBE_TV = "com.google.android.youtube.tv"
         const val UPDATE_TAG = "release"
         const val CATALOGUE_INTERVAL = 15 * 60_000L
         const val RELEASE_INTERVAL = 6 * 60 * 60_000L

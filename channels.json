@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": 4,
+  "revision": 5,
   "channels": [
     {
       "id": "tv1",
@@ -1718,12 +1718,14 @@
         "https://downloads.bbc.co.uk/usingthebbc/bbc_terms_of_use_19September2022english.pdf",
         "https://www.bbc.com/persian/watch/bbc_persian_tv/live",
         "https://www.youtube.com/@BBCPersian/streams",
-        "https://www.bbc.co.uk/usingthebbc/terms-of-use/"
+        "https://www.bbc.co.uk/usingthebbc/terms-of-use/",
+        "https://www.youtube.com/@BBCNewsPersian/live"
       ],
       "status": "restricted",
       "lastVerified": null,
       "origin": "satellite",
-      "officialLiveUrl": "https://www.bbc.com/persian/watch/bbc_persian_tv/live"
+      "officialLiveUrl": "https://www.bbc.com/persian/watch/bbc_persian_tv/live",
+      "youtubeChannel": "UCHZk9MrT3DGWmVqdsj5y0EA"
     },
     {
       "id": "radio-farda-tv",
@@ -4205,12 +4207,14 @@
       "logo": null,
       "streams": [],
       "sourceAttribution": [
-        "https://www.dw.com/en/live-tv/channel-english"
+        "https://www.dw.com/en/live-tv/channel-english",
+        "https://www.youtube.com/@dwnews/live"
       ],
       "status": "unverified",
       "lastVerified": null,
       "origin": "satellite",
-      "officialLiveUrl": "https://www.dw.com/en/live-tv/channel-english"
+      "officialLiveUrl": "https://www.dw.com/en/live-tv/channel-english",
+      "youtubeChannel": "UCknLrEdhRCp1aegoMqRaCZg"
     },
     {
       "id": "france24-english",
@@ -4222,12 +4226,14 @@
       "logo": null,
       "streams": [],
       "sourceAttribution": [
-        "https://www.france24.com/en/live"
+        "https://www.france24.com/en/live",
+        "https://www.youtube.com/@France24_en/live"
       ],
       "status": "unverified",
       "lastVerified": null,
       "origin": "satellite",
-      "officialLiveUrl": "https://www.france24.com/en/live"
+      "officialLiveUrl": "https://www.france24.com/en/live",
+      "youtubeChannel": "UCQfwfsi5VrQ8yKZ-UWmAEFg"
     },
     {
       "id": "euronews-english",
@@ -4239,12 +4245,14 @@
       "logo": null,
       "streams": [],
       "sourceAttribution": [
-        "https://www.euronews.com/live"
+        "https://www.euronews.com/live",
+        "https://www.youtube.com/@euronews/live"
       ],
       "status": "unverified",
       "lastVerified": null,
       "origin": "satellite",
-      "officialLiveUrl": "https://www.euronews.com/live"
+      "officialLiveUrl": "https://www.euronews.com/live",
+      "youtubeChannel": "UCSrZ3UV4jOidv8ppoVuvW9Q"
     },
     {
       "id": "aljazeera-english",
@@ -4256,12 +4264,14 @@
       "logo": null,
       "streams": [],
       "sourceAttribution": [
-        "https://www.aljazeera.com/video/live/"
+        "https://www.aljazeera.com/video/live/",
+        "https://www.youtube.com/@aljazeeraenglish/live"
       ],
       "status": "unverified",
       "lastVerified": null,
       "origin": "satellite",
-      "officialLiveUrl": "https://www.aljazeera.com/video/live/"
+      "officialLiveUrl": "https://www.aljazeera.com/video/live/",
+      "youtubeChannel": "UCNye-wNBqNL5ZzHSJj3l8Bg"
     },
     {
       "id": "sky-news-english",
@@ -4273,12 +4283,14 @@
       "logo": null,
       "streams": [],
       "sourceAttribution": [
-        "https://news.sky.com/watch-live"
+        "https://news.sky.com/watch-live",
+        "https://www.youtube.com/@SkyNews/live"
       ],
       "status": "unverified",
       "lastVerified": null,
       "origin": "satellite",
-      "officialLiveUrl": "https://news.sky.com/watch-live"
+      "officialLiveUrl": "https://news.sky.com/watch-live",
+      "youtubeChannel": "UCoMdktPbSTixAyNGwb-UYkQ"
     },
     {
       "id": "abc-news-live",
@@ -4290,16 +4302,18 @@
       "logo": null,
       "streams": [],
       "sourceAttribution": [
-        "https://abcnews.go.com/Live"
+        "https://abcnews.go.com/Live",
+        "https://www.youtube.com/@ABCNews/live"
       ],
       "status": "unverified",
       "lastVerified": null,
       "origin": "satellite",
-      "officialLiveUrl": "https://abcnews.go.com/Live"
+      "officialLiveUrl": "https://abcnews.go.com/Live",
+      "youtubeChannel": "UCBi2mrWuNuyYy4gbM6fU18Q"
     },
     {
       "id": "cbs-news-247",
-      "name": "سی‌بی‌اس نیوز ۲۴ ساعته",
+      "name": "سی‌بی‌اس نیوز",
       "englishName": "CBS News 24/7",
       "categories": [
         "news"
@@ -4307,12 +4321,189 @@
       "logo": null,
       "streams": [],
       "sourceAttribution": [
-        "https://www.cbsnews.com/live/"
+        "https://www.cbsnews.com/live/",
+        "https://www.youtube.com/@CBSNews/live"
       ],
       "status": "unverified",
       "lastVerified": null,
       "origin": "satellite",
-      "officialLiveUrl": "https://www.cbsnews.com/live/"
+      "officialLiveUrl": "https://www.cbsnews.com/live/",
+      "youtubeChannel": "UC8p1vwvWtl6T73JiExfWs1g"
+    },
+    {
+      "id": "cnn-headlines",
+      "name": "سی‌ان‌ان هدلاینز",
+      "englishName": "CNN Headlines (YouTube)",
+      "categories": [
+        "news"
+      ],
+      "logo": null,
+      "streams": [],
+      "sourceAttribution": [
+        "https://www.youtube.com/@CNN/live"
+      ],
+      "status": "unverified",
+      "lastVerified": null,
+      "origin": "satellite",
+      "youtubeChannel": "UCupvZG-5ko_eiXAupbDfxWw"
+    }
+  ],
+  "programmes": [
+    {
+      "id": "doc-persiana-docs",
+      "name": "پرشیانا مستند",
+      "group": "documentary",
+      "channelRef": "persiana-docs",
+      "sourceAttribution": [
+        "https://persianagroup.tv/live.html"
+      ]
+    },
+    {
+      "id": "doc-arte-reportage",
+      "name": "آرته · گزارش",
+      "group": "documentary",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PL-eZcc0GI8-V7YRL2wmJhXYIKg8OIrh85"
+      ],
+      "youtubePlaylist": "PL-eZcc0GI8-V7YRL2wmJhXYIKg8OIrh85"
+    },
+    {
+      "id": "doc-earth-touch",
+      "name": "ارث تاچ · مستند کامل",
+      "group": "documentary",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLprl6grN2nB1FON-JIcUQjoWTyTFGp7Cv"
+      ],
+      "youtubePlaylist": "PLprl6grN2nB1FON-JIcUQjoWTyTFGp7Cv"
+    },
+    {
+      "id": "doc-nhk-globe",
+      "name": "ان‌اچ‌کی · جهان",
+      "group": "documentary",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLFEzXnIQVwV_ObzI9MC5sbOBGVx5AOJDB"
+      ],
+      "youtubePlaylist": "PLFEzXnIQVwV_ObzI9MC5sbOBGVx5AOJDB"
+    },
+    {
+      "id": "doc-nhk-trains",
+      "name": "ان‌اچ‌کی · قطارهای ژاپن",
+      "group": "documentary",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLFEzXnIQVwV8uQG7Iv-aRqkL9LkAMMh6r"
+      ],
+      "youtubePlaylist": "PLFEzXnIQVwV8uQG7Iv-aRqkL9LkAMMh6r"
+    },
+    {
+      "id": "wild-love-nature-live",
+      "name": "لاو نیچر · زنده",
+      "group": "wildlife",
+      "sourceAttribution": [
+        "https://www.youtube.com/@LoveNature/live"
+      ],
+      "youtubeChannel": "UCRZPkuHwaoKwTP3CYPdVldg",
+      "youtubePlaylist": "PLYZ8jvuaFC6cSN9T7NskwThv5WUppZEUW"
+    },
+    {
+      "id": "wild-wildearth-safari",
+      "name": "وایلد ارث · سافاری",
+      "group": "wildlife",
+      "sourceAttribution": [
+        "https://www.youtube.com/@WildEarth/live"
+      ],
+      "youtubeChannel": "UCV6HJBZD_hZcIX9JVJ3dCXQ",
+      "youtubePlaylist": "PLg-ZmYeeKdTus4MlWUdut23U1gLPJnMf-"
+    },
+    {
+      "id": "wild-earth-touch-cats",
+      "name": "ارث تاچ · گربه‌سانان",
+      "group": "wildlife",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLprl6grN2nB1B3Ks3gE68LyU92xyhHrQf"
+      ],
+      "youtubePlaylist": "PLprl6grN2nB1B3Ks3gE68LyU92xyhHrQf"
+    },
+    {
+      "id": "wild-love-nature-ocean",
+      "name": "لاو نیچر · حیات دریایی",
+      "group": "wildlife",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLYZ8jvuaFC6d6N5oS7d4EVhvbAHEVx9fE"
+      ],
+      "youtubePlaylist": "PLYZ8jvuaFC6d6N5oS7d4EVhvbAHEVx9fE"
+    },
+    {
+      "id": "nature-naturescape",
+      "name": "نیچراسکیپ · مناظر",
+      "group": "nature",
+      "sourceAttribution": [
+        "https://www.youtube.com/@StingrayNaturescape/videos"
+      ],
+      "youtubePlaylist": "UUHz-H7LYSYQb51WF0wuQvNA"
+    },
+    {
+      "id": "nature-naturescape-water",
+      "name": "نیچراسکیپ · صدای آب",
+      "group": "nature",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLUow8OoHt2OPy_KnIvpLGKZ16AAba9sX5"
+      ],
+      "youtubePlaylist": "PLUow8OoHt2OPy_KnIvpLGKZ16AAba9sX5"
+    },
+    {
+      "id": "nature-arte",
+      "name": "آرته · طبیعت",
+      "group": "nature",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PL-eZcc0GI8-Vpqjzo1Dau8yhXEVTP9Rnq"
+      ],
+      "youtubePlaylist": "PL-eZcc0GI8-Vpqjzo1Dau8yhXEVTP9Rnq"
+    },
+    {
+      "id": "nature-love-nature-habitats",
+      "name": "لاو نیچر · زیستگاه‌ها",
+      "group": "nature",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLYZ8jvuaFC6cERkYWcCqJZ7G0ghW6F5B6"
+      ],
+      "youtubePlaylist": "PLYZ8jvuaFC6cERkYWcCqJZ7G0ghW6F5B6"
+    },
+    {
+      "id": "science-nasa-iss",
+      "name": "ناسا · زنده از فضا",
+      "group": "science",
+      "sourceAttribution": [
+        "https://www.youtube.com/@NASA/live"
+      ],
+      "youtubeChannel": "UCLA_DiR1FfKNvjuUpBHmylQ",
+      "youtubePlaylist": "PL2aBZuCeDwlQTMjNAeDU5wVqqm4KPECIT"
+    },
+    {
+      "id": "science-nasa-webb",
+      "name": "ناسا · تلسکوپ جیمز وب",
+      "group": "science",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PL2aBZuCeDwlQTMjNAeDU5wVqqm4KPECIT"
+      ],
+      "youtubePlaylist": "PL2aBZuCeDwlQTMjNAeDU5wVqqm4KPECIT"
+    },
+    {
+      "id": "science-nasa-mars",
+      "name": "ناسا · مریخ‌نورد",
+      "group": "science",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PL2aBZuCeDwlRF14ds9UR1uVpLRjDQy7d5"
+      ],
+      "youtubePlaylist": "PL2aBZuCeDwlRF14ds9UR1uVpLRjDQy7d5"
+    },
+    {
+      "id": "science-nhk-climate",
+      "name": "ان‌اچ‌کی · تغییر اقلیم",
+      "group": "science",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLFEzXnIQVwV84T3gXLXk52MshTkF7NOUX"
+      ],
+      "youtubePlaylist": "PLFEzXnIQVwV84T3gXLXk52MshTkF7NOUX"
     }
   ]
 }

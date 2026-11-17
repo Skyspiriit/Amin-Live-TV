@@ -28,6 +28,21 @@ class ChannelPolicyTest {
         assertTrue(international.listedInApp)
     }
 
+    @Test fun documentaryGroupsStaySeparateFromTheFourMainCategories() {
+        val film = station("persiana-docs").copy(categories = setOf(Category.FILM), filmOrder = 1100, status = "verified")
+        val native = film.copy(id = "doc-persiana-docs", categories = setOf(Category.DOCUMENTARY), filmOrder = null)
+        val youtube = station("doc-arte").copy(
+            categories = setOf(Category.DOCUMENTARY), streams = emptyList(), youtube = YouTube(null, "PL-example-list"))
+        val wildlife = station("wild-live").copy(
+            categories = setOf(Category.WILDLIFE), streams = emptyList(), youtube = YouTube("UC0123456789012345678901", "PL-example-list"))
+        val catalogue = Catalogue(5, listOf(youtube, film, native, wildlife))
+        assertEquals(listOf(native, youtube), catalogue.inCategory(Category.DOCUMENTARY))
+        assertEquals(listOf(film), catalogue.inCategory(Category.FILM))
+        assertEquals(listOf(wildlife), catalogue.inCategory(Category.WILDLIFE))
+        assertEquals(4, Category.entries.count { it.main })
+        assertTrue(Category.entries.filter { !it.main }.none { group -> film.belongsTo(group) })
+    }
+
     @Test fun filmOrderSurvivesCatalogueRefreshAndChannelRecovery() {
         val persiana = station("persiana-family").copy(categories = setOf(Category.FILM), filmOrder = 1010, status = "verified")
         val gemFirst = station("gem-tv").copy(categories = setOf(Category.FILM), filmOrder = 2010, status = "verified")

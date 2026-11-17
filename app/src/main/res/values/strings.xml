@@ -6,8 +6,14 @@
     <string name="news">شبکه‌های خبری</string>
     <string name="sports">شبکه‌های ورزشی</string>
     <string name="film">فیلم و سریال</string>
+    <string name="documentary">مستند</string>
+    <string name="wildlife">حیات وحش</string>
+    <string name="nature">طبیعت</string>
+    <string name="science">علم و فضا</string>
+    <string name="source_youtube">یوتیوب رسمی</string>
+    <string name="programme_unavailable">این برنامه الان در دسترس نیست.</string>
     <string name="resume_channel">ادامهٔ تماشا · %1$s</string>
-    <string name="official_live_suffix"> · پخش رسمی</string>
+    <string name="source_official_site">سایت رسمی</string>
     <string name="official_live_no_browser">برای بازکردن پخش رسمی این شبکه، مرورگر یا برنامه مناسب روی تلویزیون نصب کنید.</string>
     <string name="no_source">پخش این شبکه در دسترس نیست</string>
     <string name="no_channels">فعلاً شبکه‌ای برای پخش در دسترس نیست.</string>
