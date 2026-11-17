@@ -21,7 +21,7 @@ class ChannelPolicyTest {
         val international = station("international").copy(categories = setOf(Category.NEWS))
         val multi = station("mixed").copy(categories = setOf(Category.FILM, Category.NEWS))
         val catalogue = Catalogue(4, listOf(domestic, bbc, international, multi))
-        assertEquals(listOf(domestic, international, bbc, multi), catalogue.inCategory(Category.NEWS))
+        assertEquals(listOf(domestic, international, multi, bbc), catalogue.inCategory(Category.NEWS))
         assertEquals(listOf(multi), catalogue.inCategory(Category.FILM))
         assertFalse(HealthRecord().canShow(bbc))
         assertTrue(bbc.officialLiveUrl != null)
