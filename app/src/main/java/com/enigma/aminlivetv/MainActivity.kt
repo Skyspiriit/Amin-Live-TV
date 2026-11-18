@@ -191,7 +191,9 @@ class MainActivity : Activity() {
             items.forEachIndexed { index, item ->
                 val tile = LinearLayout(this).apply {
                     gravity = Gravity.CENTER
-                    orientation = if (small) LinearLayout.HORIZONTAL else LinearLayout.VERTICAL
+                    // A small tile puts its icon beside the label, unless six share the row.
+                    val beside = small && items.size <= 4
+                    orientation = if (beside) LinearLayout.HORIZONTAL else LinearLayout.VERTICAL
                     background = focusSurface()
                     isFocusable = true
                     isClickable = true
@@ -199,8 +201,13 @@ class MainActivity : Activity() {
                     contentDescription = getString(item.title)
                     val icon = dp(if (small) 32 else 38)
                     addView(CategoryIcon(this@MainActivity, item), LinearLayout.LayoutParams(icon, icon))
-                    addView(text(getString(item.title), if (small) 24 else 26, bold = true), LinearLayout.LayoutParams(-2, -2).apply {
-                        if (small) marginStart = dp(10) else topMargin = dp(6)
+                    val size = when {
+                        !small -> 26
+                        items.size > 4 -> 21
+                        else -> 24
+                    }
+                    addView(text(getString(item.title), size, bold = true), LinearLayout.LayoutParams(-2, -2).apply {
+                        if (beside) marginStart = dp(10) else topMargin = dp(if (small) 2 else 6)
                     })
                     setOnClickListener { openCategory(item) }
                 }
@@ -777,6 +784,21 @@ class MainActivity : Activity() {
                     canvas.drawCircle(16f, 16f, 6.5f, pen)
                     canvas.drawOval(3f, 12f, 29f, 20f, pen)
                     canvas.drawCircle(25f, 6f, 1.2f, pen)
+                }
+                Category.MOVIES -> {
+                    canvas.drawRoundRect(5f, 6f, 27f, 26f, 2f, 2f, pen)
+                    canvas.drawLine(10f, 6f, 10f, 26f, pen)
+                    canvas.drawLine(22f, 6f, 22f, 26f, pen)
+                    canvas.drawLine(5f, 16f, 10f, 16f, pen)
+                    canvas.drawLine(22f, 16f, 27f, 16f, pen)
+                }
+                Category.SERIES -> {
+                    canvas.drawRoundRect(4f, 10f, 24f, 26f, 2f, 2f, pen)
+                    canvas.drawLine(8f, 6f, 28f, 6f, pen)
+                    canvas.drawLine(28f, 6f, 28f, 22f, pen)
+                    canvas.drawLine(11.5f, 14f, 11.5f, 22f, pen)
+                    canvas.drawLine(11.5f, 14f, 17.5f, 18f, pen)
+                    canvas.drawLine(11.5f, 22f, 17.5f, 18f, pen)
                 }
             }
             canvas.restore()

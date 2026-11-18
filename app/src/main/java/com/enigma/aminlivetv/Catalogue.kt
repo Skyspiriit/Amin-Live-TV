@@ -22,7 +22,9 @@ internal enum class Category(val key: String, val title: Int, val main: Boolean 
     DOCUMENTARY("documentary", R.string.documentary, false),
     WILDLIFE("wildlife", R.string.wildlife, false),
     NATURE("nature", R.string.nature, false),
-    SCIENCE("science", R.string.science, false)
+    SCIENCE("science", R.string.science, false),
+    MOVIES("movies", R.string.movies, false),
+    SERIES("series", R.string.series, false)
 }
 
 // Official YouTube playback: the channel's current live broadcast, its playlist, or the live
@@ -197,20 +199,25 @@ internal class CatalogueStore(context: Context) {
         }
         require(Category.entries.filter { it.main }.all { category -> channels.any { it.belongsTo(category) } })
         require(channels.any { it.id == Channel.BBC_PERSIAN && it.belongsTo(Category.NEWS) })
-        return Catalogue(revision, channels + parseProgrammes(json, channels, ids))
+        val programmes = parseProgrammes(json.optJSONArray("programmes"), channels, ids) +
+            parseProgrammes(json.optJSONArray("programmes2"), channels, ids)
+        return Catalogue(revision, channels + programmes)
     }
 
-    // Documentary groups. Each programme plays a catalogue channel natively (`channelRef`)
-    // or official YouTube content, and belongs to exactly one group.
-    private fun parseProgrammes(json: JSONObject, channels: List<Channel>, ids: MutableSet<String>): List<Channel> {
-        val entries = json.optJSONArray("programmes") ?: return emptyList()
-        require(entries.length() <= 200)
-        return (0 until entries.length()).map { index ->
+    // Documentary, movie and series groups. Each programme plays a catalogue channel natively
+    // (`channelRef`) or official YouTube content, and belongs to exactly one group. `programmes`
+    // holds the groups 0.3.0 and 0.3.1 know; `programmes2` holds later ones, which those versions
+    // ignore. A group this version doesn't know is skipped rather than rejecting the catalogue.
+    private fun parseProgrammes(entries: JSONArray?, channels: List<Channel>, ids: MutableSet<String>): List<Channel> {
+        if (entries == null) return emptyList()
+        require(entries.length() <= 300)
+        return (0 until entries.length()).mapNotNull { index ->
             val entry = entries.getJSONObject(index)
             val id = entry.requiredText("id", 80)
             require(ID.matches(id) && ids.add(id))
             val name = entry.requiredText("name", 100)
-            val group = entry.requiredText("group", 16).let { key -> Category.entries.first { !it.main && it.key == key } }
+            val groupKey = entry.requiredText("group", 16)
+            val group = Category.entries.firstOrNull { !it.main && it.key == groupKey } ?: return@mapNotNull null
             entry.getJSONArray("sourceAttribution").strings().also { require(it.isNotEmpty()) }.forEach { publicUrl(it) }
             val reference = if (entry.isNull("channelRef")) null else entry.requiredText("channelRef", 80)
             val youtube = entry.youtube()

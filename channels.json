@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": 5,
+  "revision": 6,
   "channels": [
     {
       "id": "tv1",
@@ -4504,6 +4504,218 @@
         "https://www.youtube.com/playlist?list=PLFEzXnIQVwV84T3gXLXk52MshTkF7NOUX"
       ],
       "youtubePlaylist": "PLFEzXnIQVwV84T3gXLXk52MshTkF7NOUX"
+    },
+    {
+      "id": "doc-fd-earth-untold",
+      "name": "زمین ناگفته",
+      "group": "documentary",
+      "youtubePlaylist": "PLLgqOez346ZNDWpR6-4rJ2NpX-ch6V4bJ",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLLgqOez346ZNDWpR6-4rJ2NpX-ch6V4bJ",
+        "https://www.youtube.com/@FreeDocumentary"
+      ]
+    },
+    {
+      "id": "doc-fd-pharaohs",
+      "name": "افسانه فراعنه",
+      "group": "documentary",
+      "youtubePlaylist": "PLfMrqOdrCidRuHTFRvXUR273P27uDtz1T",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLfMrqOdrCidRuHTFRvXUR273P27uDtz1T",
+        "https://www.youtube.com/@FreeDocumentaryHistory"
+      ]
+    },
+    {
+      "id": "doc-fd-adventure-gold",
+      "name": "جویندگان طلا",
+      "group": "documentary",
+      "youtubePlaylist": "PLcMQY4cjTMtOW47776WClOqemMZiJM4Rv",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLcMQY4cjTMtOW47776WClOqemMZiJM4Rv",
+        "https://www.youtube.com/@FDAdventure"
+      ]
+    },
+    {
+      "id": "doc-endevr-europe",
+      "name": "اندِوِر · اروپا",
+      "group": "documentary",
+      "youtubePlaylist": "PLaevADMuI9-GwMxo4u2delJuknyODMDX8",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLaevADMuI9-GwMxo4u2delJuknyODMDX8",
+        "https://www.youtube.com/@ENDEVRDocs"
+      ]
+    },
+    {
+      "id": "doc-dw-trains",
+      "name": "سفر با قطار",
+      "group": "documentary",
+      "youtubePlaylist": "PLovlAKbQVz6DoWH3TuN06TWGA5VTbZ6nR",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLovlAKbQVz6DoWH3TuN06TWGA5VTbZ6nR",
+        "https://www.youtube.com/@DWDocumentary"
+      ]
+    },
+    {
+      "id": "doc-timeline-myths",
+      "name": "شکارچیان افسانه",
+      "group": "documentary",
+      "youtubePlaylist": "PLhMDlPcDRBKSo2mwbm7xNefVxGAaRqePB",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLhMDlPcDRBKSo2mwbm7xNefVxGAaRqePB",
+        "https://www.youtube.com/@TimelineChannel"
+      ]
+    },
+    {
+      "id": "doc-gedeon-history",
+      "name": "تاریخ و تمدن",
+      "group": "documentary",
+      "youtubePlaylist": "PLT6Xypp1yjXiGr3qnqCM-U6lG4R2xnYO0",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLT6Xypp1yjXiGr3qnqCM-U6lG4R2xnYO0",
+        "https://www.youtube.com/@GEDEONDOC"
+      ]
+    },
+    {
+      "id": "wild-real-wild-calm",
+      "name": "حیات وحش آرام",
+      "group": "wildlife",
+      "youtubePlaylist": "PL306tQWTn9VQXWyEyVRm5Q0WzvyEmr-Ym",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PL306tQWTn9VQXWyEyVRm5Q0WzvyEmr-Ym",
+        "https://www.youtube.com/@RealWild"
+      ]
+    },
+    {
+      "id": "wild-fd-nature-europe",
+      "name": "اروپای وحشی",
+      "group": "wildlife",
+      "youtubePlaylist": "PLeCPQtbuJaPsXmcYhoJd3GV4ncwcf0H4e",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLeCPQtbuJaPsXmcYhoJd3GV4ncwcf0H4e",
+        "https://www.youtube.com/@FreeDocumentaryNature"
+      ]
+    },
+    {
+      "id": "nature-fd-ocean",
+      "name": "اقیانوس‌ها",
+      "group": "nature",
+      "youtubePlaylist": "PLwT7IOLEcbgSb6QoIrVYOtd3Irf58xctf",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLwT7IOLEcbgSb6QoIrVYOtd3Irf58xctf",
+        "https://www.youtube.com/@FreeDocumentaryOcean"
+      ]
+    },
+    {
+      "id": "science-fd-space",
+      "name": "مستند فضا",
+      "group": "science",
+      "youtubePlaylist": "PLRIrgNqnJcmZLjklgNJyRkVOLOocxzk3a",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLRIrgNqnJcmZLjklgNJyRkVOLOocxzk3a",
+        "https://www.youtube.com/@FDSpace"
+      ]
+    },
+    {
+      "id": "science-ri-history",
+      "name": "تاریخ علم",
+      "group": "science",
+      "youtubePlaylist": "PLbnrZHfNEDZz5GouIleMnlELngM1jW3kL",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLbnrZHfNEDZz5GouIleMnlELngM1jW3kL",
+        "https://www.youtube.com/@TheRoyalInstitution"
+      ]
+    }
+  ],
+  "programmes2": [
+    {
+      "id": "movie-mosfilm",
+      "name": "موس‌فیلم",
+      "group": "movies",
+      "youtubePlaylist": "PL7EqAsBxqGggrcgR5EkZmWtLydBdTS6hF",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PL7EqAsBxqGggrcgR5EkZmWtLydBdTS6hF",
+        "https://www.youtube.com/@Mosfilm_eng"
+      ]
+    },
+    {
+      "id": "movie-filmrise-true",
+      "name": "داستان‌های واقعی",
+      "group": "movies",
+      "youtubePlaylist": "PLYCGB2FR2jUoQJ5A6qqxsoqUYQ8jaz96E",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLYCGB2FR2jUoQJ5A6qqxsoqUYQ8jaz96E",
+        "https://www.youtube.com/@FilmRiseMovies"
+      ]
+    },
+    {
+      "id": "movie-filmrise-comedy",
+      "name": "فیلم کمدی",
+      "group": "movies",
+      "youtubePlaylist": "PLYCGB2FR2jUoTPLYDjh-f3C7G37PYXUcI",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLYCGB2FR2jUoTPLYDjh-f3C7G37PYXUcI",
+        "https://www.youtube.com/@FilmRiseMovies"
+      ]
+    },
+    {
+      "id": "movie-central-christmas",
+      "name": "فیلم کریسمس",
+      "group": "movies",
+      "youtubePlaylist": "PLfRCZ3PuccvAuE3uvcxi2XdunbIgND2ai",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLfRCZ3PuccvAuE3uvcxi2XdunbIgND2ai",
+        "https://www.youtube.com/@MovieCentral"
+      ]
+    },
+    {
+      "id": "movie-shout-drama",
+      "name": "فیلم درام",
+      "group": "movies",
+      "youtubePlaylist": "PLBrrfZs-ew7Pjp25NCMO0FugYh60cHZjF",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLBrrfZs-ew7Pjp25NCMO0FugYh60cHZjF",
+        "https://www.youtube.com/@ShoutStudios"
+      ]
+    },
+    {
+      "id": "movie-shout-noir",
+      "name": "فیلم سیاه‌وسفید",
+      "group": "movies",
+      "youtubePlaylist": "PLBrrfZs-ew7OnCa7SYZn1-UnG6KFvaoqk",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLBrrfZs-ew7OnCa7SYZn1-UnG6KFvaoqk",
+        "https://www.youtube.com/@ShoutStudios"
+      ]
+    },
+    {
+      "id": "series-filmrise-dogs",
+      "name": "برای عشق سگ‌ها",
+      "group": "series",
+      "youtubePlaylist": "PLtbMv4lXX2muPKFvUOqbjH5k9zFfdxd0q",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLtbMv4lXX2muPKFvUOqbjH5k9zFfdxd0q",
+        "https://www.youtube.com/@FilmRiseTelevision"
+      ]
+    },
+    {
+      "id": "series-filmrise-escapes",
+      "name": "فرار از زندان",
+      "group": "series",
+      "youtubePlaylist": "PLtbMv4lXX2muL-XLkq94nyTVBIF_k9M1I",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLtbMv4lXX2muL-XLkq94nyTVBIF_k9M1I",
+        "https://www.youtube.com/@FilmRiseTelevision"
+      ]
+    },
+    {
+      "id": "series-unsolved-mysteries",
+      "name": "معماهای حل‌نشده",
+      "group": "series",
+      "youtubePlaylist": "PLvOTJuUUgID-OS5CSEqiV3BINaZzp9Fa0",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLvOTJuUUgID-OS5CSEqiV3BINaZzp9Fa0",
+        "https://www.youtube.com/@UnsolvedMysteriesFullEpisodes"
+      ]
     }
   ]
 }

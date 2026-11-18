@@ -1,19 +1,19 @@
 # Amin Live TV
 
-Amin Live TV 0.3.1 is a standalone Persian-language live television app for Android TV 8.0 and later. It runs under `com.enigma.aminlivetv`, upgrades earlier signed releases in place and can be installed alongside Amin Player.
+Amin Live TV 0.3.2 is a standalone Persian-language live television app for Android TV 8.0 and later. It runs under `com.enigma.aminlivetv`, upgrades earlier signed releases in place and can be installed alongside Amin Player.
 
 ## Install on a Xiaomi Android TV Box
 
-1. Copy `Amin-Live-TV-v0.3.1.apk` to a USB drive and plug it into the box.
+1. Copy `Amin-Live-TV-v0.3.2.apk` to a USB drive and plug it into the box.
 2. Open the drive from the box’s file manager and select the APK. If Android asks, allow the file manager to install unknown apps, then return to the APK and select **Install**. The setting’s name varies by model and firmware.
-3. Open **Amin Live TV** from **Apps**. Choose **شبکه‌های داخلی**, **شبکه‌های خبری**, **شبکه‌های ورزشی** or **فیلم و سریال**, or one of the documentary groups below them (**مستند**, **حیات وحش**, **طبیعت**, **علم و فضا**), and press OK on a tile.
+3. Open **Amin Live TV** from **Apps**. Choose **شبکه‌های داخلی**, **شبکه‌های خبری**, **شبکه‌های ورزشی** or **فیلم و سریال**, or one of the groups below them (**مستند**, **حیات وحش**, **طبیعت**, **علم و فضا**, **فیلم سینمایی**, **سریال کامل**), and press OK on a tile.
 4. While watching, press Up for the previous station and Down for the next one. Press OK to show or hide the channel strip. Left and Right switch stations while the strip is visible. Back returns to the grid. **ادامهٔ تماشا** on the home screen resumes the last station that played successfully when it is still available.
 
 If the box cannot open the USB file, install with [Android Platform Tools](https://developer.android.com/tools/releases/platform-tools) and [Xiaomi’s developer-options instructions](https://www.mi.com/global/support/article/KA-06513/). Connect only to your own TV on your local network. Confirm the pairing prompt on the TV.
 
 ```sh
 adb devices
-adb -s <tv-device-id> install -r Amin-Live-TV-v0.3.1.apk
+adb -s <tv-device-id> install -r Amin-Live-TV-v0.3.2.apk
 ```
 
 See [Xiaomi’s APK installation guide](https://www.mi.com/uk/support/article/KA-06405/).
@@ -55,6 +55,7 @@ The public GitHub endpoint requires no credentials on the TV.
 - A single record may appear in multiple categories. The four category IDs are `domestic`, `news`, `sports` and `film`.
 - A news record may add `youtubeChannel` (a `UC…` channel ID) to play that channel's current live broadcast. Keep `officialLiveUrl` for apps older than 0.3.0.
 - The documentary groups live in the top-level `programmes` list, which apps older than 0.3.0 ignore. Each programme has an `id`, a Persian `name`, a `group` (`documentary`, `wildlife`, `nature` or `science`) and `sourceAttribution`. It also has either `channelRef` (the ID of a catalogue channel to play natively) or YouTube fields: `youtubeChannel` for a live broadcast and/or `youtubePlaylist` (a `PL…` or `UU…` ID). With both, the playlist is the fallback when nothing is live. Never put a group key in a channel's `categories`, because older apps would reject the whole catalogue.
+- The `movies` and `series` groups (0.3.2 and later) go in a separate top-level `programmes2` list, using the same fields. Apps up to 0.3.1 ignore `programmes2`, but they reject the whole catalogue if `programmes` contains a group they don't know. From 0.3.2, an unknown group in either list is skipped. Before adding a playlist, check that its videos are full-length and play without signing in: age-restricted videos won't play on the TV.
 - From revision 3 onward, every `film` record needs a unique, nonnegative integer `filmOrder`. Use ranks in the 1000s for Persiana, 2000s for GEM and 3000s for other channels. Keep an existing channel's rank when its availability changes so it returns to the same place.
 - Set `origin` to `domestic` for Iranian domestic services or `satellite` for other services. Only domestic news records and BBC Persian are eligible for the News grid. Like other stations, they need a trusted playable source to appear.
 - Use clear, broadcaster-authorized HTTPS streams with the formats `hls`, `dash` or `progressive`. List each separately checked source with its attribution, ISO date and a unique priority. Lower numbers are tried first.

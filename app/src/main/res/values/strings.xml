@@ -10,6 +10,8 @@
     <string name="wildlife">حیات وحش</string>
     <string name="nature">طبیعت</string>
     <string name="science">علم و فضا</string>
+    <string name="movies">فیلم سینمایی</string>
+    <string name="series">سریال کامل</string>
     <string name="source_youtube">یوتیوب رسمی</string>
     <string name="programme_unavailable">این برنامه الان در دسترس نیست.</string>
     <string name="resume_channel">ادامهٔ تماشا · %1$s</string>
