@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": 7,
+  "revision": 8,
   "channels": [
     {
       "id": "tv1",
@@ -4752,6 +4752,752 @@
       "sourceAttribution": [
         "https://www.youtube.com/playlist?list=PLvOTJuUUgID-OS5CSEqiV3BINaZzp9Fa0",
         "https://www.youtube.com/@UnsolvedMysteriesFullEpisodes"
+      ]
+    }
+  ],
+  "iranianSeries": [
+    {
+      "id": "hezartou",
+      "title": "هزارتو",
+      "episodes": [
+        {
+          "id": "s1e1",
+          "season": 1,
+          "number": 1,
+          "videoId": "D_VP8L4z0X0"
+        },
+        {
+          "id": "s1e2",
+          "season": 1,
+          "number": 2,
+          "videoId": "BEFCZSkcJWc"
+        },
+        {
+          "id": "s1e3",
+          "season": 1,
+          "number": 3,
+          "videoId": "4VmQy9cGb6Y"
+        },
+        {
+          "id": "s1e4",
+          "season": 1,
+          "number": 4,
+          "videoId": "-5CXOUnEUcE"
+        },
+        {
+          "id": "s1e5",
+          "season": 1,
+          "number": 5,
+          "videoId": "N5BeXlTTTZM"
+        },
+        {
+          "id": "s1e6",
+          "season": 1,
+          "number": 6,
+          "videoId": "V5xhpfd5hvE"
+        },
+        {
+          "id": "s1e7",
+          "season": 1,
+          "number": 7,
+          "videoId": "a5CXQKrcwzU"
+        },
+        {
+          "id": "s1e8",
+          "season": 1,
+          "number": 8,
+          "videoId": "GeljDJnhbr4"
+        },
+        {
+          "id": "s1e9",
+          "season": 1,
+          "number": 9,
+          "videoId": "rTusfqbtyNQ"
+        },
+        {
+          "id": "s1e10",
+          "season": 1,
+          "number": 10,
+          "videoId": "b5iVProeIM4"
+        },
+        {
+          "id": "s1e11",
+          "season": 1,
+          "number": 11,
+          "videoId": "1hzXe5Resfs"
+        },
+        {
+          "id": "s1e12",
+          "season": 1,
+          "number": 12,
+          "videoId": "EKtEK6mrSNs"
+        },
+        {
+          "id": "s1e13",
+          "season": 1,
+          "number": 13,
+          "videoId": "qxkg6a6ANGs"
+        }
+      ]
+    },
+    {
+      "id": "shahrzad",
+      "title": "شهرزاد",
+      "episodes": [
+        {
+          "id": "s1e1",
+          "season": 1,
+          "number": 1,
+          "videoId": "B2C_2VCzdd0"
+        },
+        {
+          "id": "s1e2",
+          "season": 1,
+          "number": 2,
+          "videoId": "u_B3EiQe83o"
+        },
+        {
+          "id": "s1e3",
+          "season": 1,
+          "number": 3,
+          "videoId": "tbkVng9b5mA"
+        },
+        {
+          "id": "s1e4",
+          "season": 1,
+          "number": 4,
+          "videoId": "IIGRl3fCaXk"
+        },
+        {
+          "id": "s1e5",
+          "season": 1,
+          "number": 5,
+          "videoId": "tAlMWBT1xgQ"
+        },
+        {
+          "id": "s1e6",
+          "season": 1,
+          "number": 6,
+          "videoId": "on3JXB9R4Kk"
+        },
+        {
+          "id": "s1e7",
+          "season": 1,
+          "number": 7,
+          "videoId": "iCCKXajWL7Y"
+        },
+        {
+          "id": "s1e8",
+          "season": 1,
+          "number": 8,
+          "videoId": "qroKId7GY4Y"
+        },
+        {
+          "id": "s1e9",
+          "season": 1,
+          "number": 9,
+          "videoId": "He5AxTvWYe4"
+        },
+        {
+          "id": "s1e10",
+          "season": 1,
+          "number": 10,
+          "videoId": "Ep2J1HbZkR0"
+        },
+        {
+          "id": "s1e11",
+          "season": 1,
+          "number": 11,
+          "videoId": "CQt9C_PlIEM"
+        },
+        {
+          "id": "s1e12",
+          "season": 1,
+          "number": 12,
+          "videoId": "E7g9Cg8LXB0"
+        },
+        {
+          "id": "s1e13",
+          "season": 1,
+          "number": 13,
+          "videoId": "-F3ao99XllE"
+        },
+        {
+          "id": "s1e14",
+          "season": 1,
+          "number": 14,
+          "videoId": "0aX5TyTJ69U"
+        },
+        {
+          "id": "s1e15",
+          "season": 1,
+          "number": 15,
+          "videoId": "yOhPStxK9Yk"
+        },
+        {
+          "id": "s1e16",
+          "season": 1,
+          "number": 16,
+          "videoId": "2uZpo0qlTtc"
+        },
+        {
+          "id": "s1e17",
+          "season": 1,
+          "number": 17,
+          "videoId": "NH-yVUvaQ9c"
+        },
+        {
+          "id": "s1e18",
+          "season": 1,
+          "number": 18,
+          "videoId": "a1RO_mTre_k"
+        },
+        {
+          "id": "s1e19",
+          "season": 1,
+          "number": 19,
+          "videoId": "qdsi6F49F0g"
+        },
+        {
+          "id": "s1e20",
+          "season": 1,
+          "number": 20,
+          "videoId": "8dcP7AOhcdM"
+        },
+        {
+          "id": "s1e21",
+          "season": 1,
+          "number": 21,
+          "videoId": "UgzmV_DN7EA"
+        },
+        {
+          "id": "s1e22",
+          "season": 1,
+          "number": 22,
+          "videoId": "zE5NH8HCIoU"
+        },
+        {
+          "id": "s1e23",
+          "season": 1,
+          "number": 23,
+          "videoId": "0suFD58R_ns"
+        },
+        {
+          "id": "s1e24",
+          "season": 1,
+          "number": 24,
+          "videoId": "K7t8We8X8ts"
+        },
+        {
+          "id": "s1e25",
+          "season": 1,
+          "number": 25,
+          "videoId": "f4CgHVogDPY"
+        },
+        {
+          "id": "s1e26",
+          "season": 1,
+          "number": 26,
+          "videoId": "xhPesQ4gNNE"
+        },
+        {
+          "id": "s1e27",
+          "season": 1,
+          "number": 27,
+          "videoId": "Qe5nhjGzz2Y"
+        },
+        {
+          "id": "s1e28",
+          "season": 1,
+          "number": 28,
+          "videoId": "5RPhkCYzdBU"
+        },
+        {
+          "id": "s2e1",
+          "season": 2,
+          "number": 1,
+          "videoId": "PyWJkZjVbRc"
+        },
+        {
+          "id": "s2e2",
+          "season": 2,
+          "number": 2,
+          "videoId": "PnZfDzcjTfw"
+        },
+        {
+          "id": "s2e3",
+          "season": 2,
+          "number": 3,
+          "videoId": "umnYJDv2BwI"
+        },
+        {
+          "id": "s2e4",
+          "season": 2,
+          "number": 4,
+          "videoId": "xf_NyTP8qZM"
+        },
+        {
+          "id": "s2e5",
+          "season": 2,
+          "number": 5,
+          "videoId": "jRoxo5YOiIQ"
+        },
+        {
+          "id": "s2e6",
+          "season": 2,
+          "number": 6,
+          "videoId": "PPRKknng2i4"
+        },
+        {
+          "id": "s2e7",
+          "season": 2,
+          "number": 7,
+          "videoId": "9rGP00KzE30"
+        },
+        {
+          "id": "s2e8",
+          "season": 2,
+          "number": 8,
+          "videoId": "iSAXqmwSjIE"
+        },
+        {
+          "id": "s2e9",
+          "season": 2,
+          "number": 9,
+          "videoId": "arPSTU-th6c"
+        },
+        {
+          "id": "s2e10",
+          "season": 2,
+          "number": 10,
+          "videoId": "sf81ImT7H_U"
+        },
+        {
+          "id": "s2e11",
+          "season": 2,
+          "number": 11,
+          "videoId": "1rN3fPxKjWs"
+        },
+        {
+          "id": "s2e12",
+          "season": 2,
+          "number": 12,
+          "videoId": "qx--VkWYUU8"
+        },
+        {
+          "id": "s2e13",
+          "season": 2,
+          "number": 13,
+          "videoId": "O7nludRnc9g"
+        },
+        {
+          "id": "s2e14",
+          "season": 2,
+          "number": 14,
+          "videoId": "NqiJVbRcw40"
+        },
+        {
+          "id": "s2e15",
+          "season": 2,
+          "number": 15,
+          "videoId": "7LYKIfEyd-4"
+        },
+        {
+          "id": "s3e1",
+          "season": 3,
+          "number": 1,
+          "videoId": "gO6bBYCsN8U"
+        },
+        {
+          "id": "s3e2",
+          "season": 3,
+          "number": 2,
+          "videoId": "B5YSdAfG4qE"
+        },
+        {
+          "id": "s3e3",
+          "season": 3,
+          "number": 3,
+          "videoId": "FChM2SneYi4"
+        },
+        {
+          "id": "s3e4",
+          "season": 3,
+          "number": 4,
+          "videoId": "mPjGR2UsnUc"
+        },
+        {
+          "id": "s3e5",
+          "season": 3,
+          "number": 5,
+          "videoId": "-l5qeKChSfI"
+        },
+        {
+          "id": "s3e6",
+          "season": 3,
+          "number": 6,
+          "videoId": "hwqMZg0dTDc"
+        },
+        {
+          "id": "s3e7",
+          "season": 3,
+          "number": 7,
+          "videoId": "p8R5eKhOKBA"
+        },
+        {
+          "id": "s3e8",
+          "season": 3,
+          "number": 8,
+          "videoId": "XbF5i3NgAMg"
+        },
+        {
+          "id": "s3e9",
+          "season": 3,
+          "number": 9,
+          "videoId": "LGAnbkJJNW4"
+        },
+        {
+          "id": "s3e10",
+          "season": 3,
+          "number": 10,
+          "videoId": "I1p0aV9HFb0"
+        },
+        {
+          "id": "s3e11",
+          "season": 3,
+          "number": 11,
+          "videoId": "h5U0vZOLOhw"
+        },
+        {
+          "id": "s3e12",
+          "season": 3,
+          "number": 12,
+          "videoId": "crymOTdsLFA"
+        },
+        {
+          "id": "s3e13",
+          "season": 3,
+          "number": 13,
+          "videoId": "3OHrf9fj7iQ"
+        },
+        {
+          "id": "s3e14",
+          "season": 3,
+          "number": 14,
+          "videoId": "-zMQ_l_GbH4"
+        },
+        {
+          "id": "s3e15",
+          "season": 3,
+          "number": 15,
+          "videoId": "Gjb6nIUabK4"
+        },
+        {
+          "id": "s3e16",
+          "season": 3,
+          "number": 16,
+          "videoId": "X0KZwAX-Dv4"
+        }
+      ]
+    },
+    {
+      "id": "shahgoosh",
+      "title": "شاهگوش",
+      "episodes": [
+        {
+          "id": "s1e1",
+          "season": 1,
+          "number": 1,
+          "videoId": "kGplfmdenYg"
+        },
+        {
+          "id": "s1e2",
+          "season": 1,
+          "number": 2,
+          "videoId": "hnrAq8Lt83E"
+        },
+        {
+          "id": "s1e3",
+          "season": 1,
+          "number": 3,
+          "videoId": "WQnS38oNM58"
+        },
+        {
+          "id": "s1e4",
+          "season": 1,
+          "number": 4,
+          "videoId": "pao1Oon_cA8"
+        },
+        {
+          "id": "s1e5",
+          "season": 1,
+          "number": 5,
+          "videoId": "83u1h2A4E-g"
+        },
+        {
+          "id": "s1e6",
+          "season": 1,
+          "number": 6,
+          "videoId": "X8q55_ltG2c"
+        },
+        {
+          "id": "s1e7",
+          "season": 1,
+          "number": 7,
+          "videoId": "7BZ6nReJ2wU"
+        },
+        {
+          "id": "s1e8",
+          "season": 1,
+          "number": 8,
+          "videoId": "wpIyGTbxQEk"
+        },
+        {
+          "id": "s1e9",
+          "season": 1,
+          "number": 9,
+          "videoId": "35rza0Y7PAI"
+        },
+        {
+          "id": "s1e10",
+          "season": 1,
+          "number": 10,
+          "videoId": "U6HM5Qepx2c"
+        },
+        {
+          "id": "s1e11",
+          "season": 1,
+          "number": 11,
+          "videoId": "yuziFLpdHLE"
+        },
+        {
+          "id": "s1e12",
+          "season": 1,
+          "number": 12,
+          "videoId": "B5nrX_xjSa0"
+        },
+        {
+          "id": "s1e13",
+          "season": 1,
+          "number": 13,
+          "videoId": "ba7-1HFa0nU"
+        },
+        {
+          "id": "s1e14",
+          "season": 1,
+          "number": 14,
+          "videoId": "xEMdiDHppHE"
+        },
+        {
+          "id": "s1e15",
+          "season": 1,
+          "number": 15,
+          "videoId": "izQanQxt78U"
+        },
+        {
+          "id": "s1e16",
+          "season": 1,
+          "number": 16,
+          "videoId": "cJjbDgJ3GZY"
+        },
+        {
+          "id": "s1e17",
+          "season": 1,
+          "number": 17,
+          "videoId": "YgsI3s7RjMw"
+        },
+        {
+          "id": "s1e18",
+          "season": 1,
+          "number": 18,
+          "videoId": "-PsN9YN893U"
+        },
+        {
+          "id": "s1e19",
+          "season": 1,
+          "number": 19,
+          "videoId": "-r-njgiUPVE"
+        },
+        {
+          "id": "s1e20",
+          "season": 1,
+          "number": 20,
+          "videoId": "tFwMsB2favU"
+        },
+        {
+          "id": "s1e21",
+          "season": 1,
+          "number": 21,
+          "videoId": "QAwoDNMXd4Q"
+        },
+        {
+          "id": "s1e22",
+          "season": 1,
+          "number": 22,
+          "videoId": "GH0lKCffYOE"
+        },
+        {
+          "id": "s1e23",
+          "season": 1,
+          "number": 23,
+          "videoId": "Vulmsaa7fec"
+        },
+        {
+          "id": "s1e24",
+          "season": 1,
+          "number": 24,
+          "videoId": "2M761RXVcRU"
+        },
+        {
+          "id": "s1e25",
+          "season": 1,
+          "number": 25,
+          "videoId": "qMgs5SKkwd8"
+        },
+        {
+          "id": "s1e26",
+          "season": 1,
+          "number": 26,
+          "videoId": "qCZQmLupn4k"
+        },
+        {
+          "id": "s1e27",
+          "season": 1,
+          "number": 27,
+          "videoId": "FaUl75pREow"
+        },
+        {
+          "id": "s1e28",
+          "season": 1,
+          "number": 28,
+          "videoId": "x7Vyp3yKFQI"
+        }
+      ]
+    },
+    {
+      "id": "shekargah",
+      "title": "شکارگاه",
+      "episodes": [
+        {
+          "id": "s1e1",
+          "season": 1,
+          "number": 1,
+          "videoId": "bt7oUlngHu4"
+        },
+        {
+          "id": "s1e2",
+          "season": 1,
+          "number": 2,
+          "videoId": "gx1MjeMh18I"
+        },
+        {
+          "id": "s1e3",
+          "season": 1,
+          "number": 3,
+          "videoId": "4PWrrNtGN6A"
+        },
+        {
+          "id": "s1e4",
+          "season": 1,
+          "number": 4,
+          "videoId": "YgW8V08GXM4"
+        },
+        {
+          "id": "s1e5",
+          "season": 1,
+          "number": 5,
+          "videoId": "4OfywcKIqWM"
+        },
+        {
+          "id": "s1e6",
+          "season": 1,
+          "number": 6,
+          "videoId": "RHhBgXC0R3I"
+        },
+        {
+          "id": "s1e7",
+          "season": 1,
+          "number": 7,
+          "videoId": "4bIMJPnomAA"
+        },
+        {
+          "id": "s1e8",
+          "season": 1,
+          "number": 8,
+          "videoId": "CS8Uorbqlwo"
+        },
+        {
+          "id": "s1e9",
+          "season": 1,
+          "number": 9,
+          "videoId": "PjQbZlbWoWQ"
+        }
+      ]
+    },
+    {
+      "id": "gole-sang",
+      "title": "گل‌سنگ",
+      "episodes": [
+        {
+          "id": "s1e1",
+          "season": 1,
+          "number": 1,
+          "videoId": "qZIfnhFEWOY"
+        },
+        {
+          "id": "s1e2",
+          "season": 1,
+          "number": 2,
+          "videoId": "nKEECbjIc4s"
+        },
+        {
+          "id": "s1e3",
+          "season": 1,
+          "number": 3,
+          "videoId": "BHPBdyrKcDQ"
+        },
+        {
+          "id": "s1e4",
+          "season": 1,
+          "number": 4,
+          "videoId": "PRwxLsuwZMw"
+        },
+        {
+          "id": "s1e5",
+          "season": 1,
+          "number": 5,
+          "videoId": "NmvsMEmh40Q"
+        },
+        {
+          "id": "s1e6",
+          "season": 1,
+          "number": 6,
+          "videoId": "AZ_COQbBou0"
+        },
+        {
+          "id": "s1e7",
+          "season": 1,
+          "number": 7,
+          "videoId": "3aj5_VRYxp0"
+        },
+        {
+          "id": "s1e8",
+          "season": 1,
+          "number": 8,
+          "videoId": "BIFxINU3LR4"
+        },
+        {
+          "id": "s1e9",
+          "season": 1,
+          "number": 9,
+          "videoId": "MSYudB59UtI"
+        },
+        {
+          "id": "s1e10",
+          "season": 1,
+          "number": 10,
+          "videoId": "vShPSBqQ84A"
+        }
       ]
     }
   ]

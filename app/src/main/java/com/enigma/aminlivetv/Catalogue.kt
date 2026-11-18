@@ -67,7 +67,11 @@ internal data class Channel(
     }
 }
 
-internal data class Catalogue(val revision: Int, val channels: List<Channel>) {
+internal data class Catalogue(
+    val revision: Int,
+    val channels: List<Channel>,
+    val iranianSeries: List<IranianSeries> = emptyList()
+) {
     fun inCategory(category: Category): List<Channel> {
         val matching = channels.filter { it.belongsTo(category) }
         return if (category == Category.FILM && matching.any { it.filmOrder != null }) {
@@ -84,9 +88,12 @@ internal class CatalogueStore(context: Context) {
 
     fun load(): Catalogue {
         val bundled = assets.open("channels.json").use { parse(it.readLimited(MAX_BYTES)) }
-        val cached = runCatching { cache.openRead().use { parse(it.readLimited(MAX_BYTES)) } }.getOrNull()
+        val cached = synchronized(cacheLock) { readCache() }
         return cached?.takeIf { it.canReplace(bundled) } ?: bundled
     }
+
+    private fun readCache(): Catalogue? =
+        runCatching { cache.openRead().use { parse(it.readLimited(MAX_BYTES)) } }.getOrNull()
 
     fun refresh(current: Catalogue): Catalogue? = runCatching {
         val connection = URI(BuildConfig.CATALOG_URL).toURL().openConnection() as HttpURLConnection
@@ -102,13 +109,18 @@ internal class CatalogueStore(context: Context) {
             val candidate = parse(document)
             if (!candidate.canReplace(current)) return null
 
-            val output = cache.startWrite()
-            try {
-                output.write(bytes)
-                cache.finishWrite(output)
-            } catch (failure: Exception) {
-                cache.failWrite(output)
-                throw failure
+            synchronized(cacheLock) {
+                // Both catalogue screens can refresh. A slower response must never overwrite a newer cache.
+                val cached = readCache()?.takeIf { it.canReplace(current) }
+                if (cached != null && !candidate.canReplace(cached)) return cached
+                val output = cache.startWrite()
+                try {
+                    output.write(bytes)
+                    cache.finishWrite(output)
+                } catch (failure: Exception) {
+                    cache.failWrite(output)
+                    throw failure
+                }
             }
             Log.i("AminCatalogue", "Activated revision ${candidate.revision}")
             candidate
@@ -201,7 +213,7 @@ internal class CatalogueStore(context: Context) {
         require(channels.any { it.id == Channel.BBC_PERSIAN && it.belongsTo(Category.NEWS) })
         val programmes = parseProgrammes(json.optJSONArray("programmes"), channels, ids) +
             parseProgrammes(json.optJSONArray("programmes2"), channels, ids)
-        return Catalogue(revision, channels + programmes)
+        return Catalogue(revision, channels + programmes, parseIranianSeries(json))
     }
 
     // Documentary, movie and series groups. Each programme plays a catalogue channel natively
@@ -257,6 +269,7 @@ internal class CatalogueStore(context: Context) {
         (get(key) as String).also { require(it.isNotBlank() && it.length <= maxLength) }
 
     private companion object {
+        val cacheLock = Any()
         val ID = Regex("[a-z0-9][a-z0-9_-]*")
         val YOUTUBE_CHANNEL = Regex("UC[A-Za-z0-9_-]{22}")
         val YOUTUBE_PLAYLIST = Regex("(PL|UU)[A-Za-z0-9_-]{10,62}")

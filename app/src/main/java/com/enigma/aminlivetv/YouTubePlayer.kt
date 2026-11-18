@@ -34,6 +34,8 @@ internal class YouTubePlayer(
     private val ui = Handler(Looper.getMainLooper())
     private val lookups = Executors.newSingleThreadExecutor()
     private var source: YouTube? = null
+    private var episode: Episode? = null
+    private var initialSeconds = 0
     private var usingPlaylist = false
     private var subtitles = false
     private var started = false
@@ -72,24 +74,51 @@ internal class YouTubePlayer(
         load()
     }
 
+    fun playEpisode(selected: Episode, seconds: Double) {
+        episode = selected
+        initialSeconds = seconds.toInt()
+        load()
+    }
+
     fun togglePause() = view.evaluateJavascript("toggle()", null)
+
+    fun pauseEpisode() = view.evaluateJavascript("if (player && player.pauseVideo) player.pauseVideo()", null)
+
+    fun sampleEpisode(callback: (EpisodePlayback?) -> Unit) {
+        view.evaluateJavascript("episodeProgress()") { value ->
+            val sample = runCatching {
+                val json = JSONObject(value)
+                EpisodePlayback(json.getString("videoId"), json.getInt("state"),
+                    json.getDouble("seconds"), json.getDouble("duration"))
+            }.getOrNull()
+            callback(sample)
+        }
+    }
 
     fun close() {
         ui.removeCallbacksAndMessages(null)
         lookups.shutdownNow()
         source = null
+        episode = null
         view.stopLoading()
         view.loadUrl("about:blank")
         view.destroy()
     }
 
     private fun load() {
-        val youtube = source ?: return
+        val selected = episode
+        val youtube = source
         val vars = JSONObject()
             .put("autoplay", 1).put("controls", 0).put("rel", 0).put("fs", 0).put("disablekb", 1)
             .put("iv_load_policy", 3).put("playsinline", 1).put("hl", "fa").put("origin", ORIGIN)
         if (subtitles) vars.put("cc_load_policy", 1).put("cc_lang_pref", "fa")
-        val videoId = if (usingPlaylist) {
+        val videoId = if (selected != null) {
+            vars.put("controls", 1).put("disablekb", 0).put("start", initialSeconds)
+            view.isFocusable = true
+            selected.videoId
+        } else if (youtube == null) {
+            return
+        } else if (usingPlaylist) {
             vars.put("listType", "playlist").put("list", youtube.playlist)
             ""
         } else {
@@ -102,7 +131,9 @@ internal class YouTubePlayer(
         ui.removeCallbacks(startTimeout)
         ui.postDelayed(startTimeout, START_TIMEOUT_MS)
         // The base URL gives YouTube the referrer its embedded player requires.
-        view.loadDataWithBaseURL("$ORIGIN/", page(videoId, vars), "text/html", "utf-8", null)
+        val origin = if (selected == null) ORIGIN else "https://${view.context.packageName}"
+        vars.put("origin", origin)
+        view.loadDataWithBaseURL("$origin/", page(videoId, vars), "text/html", "utf-8", null)
     }
 
     // Logs each caption file the player fetches once, e.g. "en (asr) as fa" for YouTube's
@@ -117,6 +148,10 @@ internal class YouTubePlayer(
     }
 
     private fun failed() {
+        if (episode != null) {
+            episodeUnavailable(R.string.programme_unavailable)
+            return
+        }
         val youtube = source ?: return
         if (!usingPlaylist && youtube.playlist != null) {
             Log.i("AminYouTube", "Live broadcast unavailable, playing the playlist")
@@ -128,6 +163,12 @@ internal class YouTubePlayer(
             Log.i("AminYouTube", "Programme unavailable")
             onStatus(R.string.programme_unavailable)
         }
+    }
+
+    private fun episodeUnavailable(label: Int) {
+        ui.removeCallbacks(startTimeout)
+        view.visibility = View.INVISIBLE
+        onStatus(label)
     }
 
     private inner class Bridge {
@@ -146,7 +187,9 @@ internal class YouTubePlayer(
 
         @JavascriptInterface fun error(code: Int) = ui.post {
             Log.i("AminYouTube", "Player error $code")
-            if (code == 101 || code == 150) openOutside() else failed()
+            if (code == 101 || code == 150) {
+                if (episode != null) episodeUnavailable(R.string.series_embed_blocked) else openOutside()
+            } else failed()
         }
     }
 
@@ -257,6 +300,13 @@ internal class YouTubePlayer(
           if (!player || !player.getPlayerState) return;
           if (player.getPlayerState() == 1) player.pauseVideo(); else player.playVideo();
         }
+        function episodeProgress() {
+          if (!player || !player.getVideoUrl || !player.getVideoUrl()) return null;
+          try {
+            return {videoId: new URL(player.getVideoUrl()).searchParams.get('v'),
+              seconds: player.getCurrentTime(), duration: player.getDuration(), state: player.getPlayerState()};
+          } catch (e) { return null; }
+        }
         </script>
         <script src="https://www.youtube.com/iframe_api"></script>
         </body></html>
@@ -270,3 +320,5 @@ internal class YouTubePlayer(
         val FEED_VIDEO = Regex("<yt:videoId>([A-Za-z0-9_-]{11})</yt:videoId>")
     }
 }
+
+internal data class EpisodePlayback(val videoId: String, val state: Int, val seconds: Double, val duration: Double)

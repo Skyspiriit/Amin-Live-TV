@@ -219,6 +219,15 @@ class MainActivity : Activity() {
             content.addView(row, LinearLayout.LayoutParams(-1, 0, if (small) 0.62f else 1f).apply { topMargin = dp(14) })
         }
 
+        val viewingActions = LinearLayout(this)
+        val iranianSeries = button(getString(R.string.iranian_series), 24).apply {
+            tag = IRANIAN_SERIES_TAG
+            setOnClickListener {
+                startActivity(Intent(this@MainActivity, IranianSeriesActivity::class.java))
+            }
+            viewingActions.addView(this, LinearLayout.LayoutParams(0, -1, 1f))
+        }
+
         val lastCategory = savedCategory("watched-category")
         val lastId = preferences.getString("watched-channel", null)
         val now = System.currentTimeMillis()
@@ -236,9 +245,10 @@ class MainActivity : Activity() {
                     val index = currentList.indexOfFirst { it.id == channel.id }
                     if (index >= 0) beginPlayback(index) else showGrid(null)
                 }
-                content.addView(this, LinearLayout.LayoutParams(-1, dp(53)).apply { topMargin = dp(17) })
+                viewingActions.addView(this, LinearLayout.LayoutParams(0, -1, 1f).apply { marginStart = dp(14) })
             }
         }
+        content.addView(viewingActions, LinearLayout.LayoutParams(-1, dp(53)).apply { topMargin = dp(12) })
         val update = latestRelease?.let { tag ->
             val ready = readyUpdate
             val label = when {
@@ -261,6 +271,7 @@ class MainActivity : Activity() {
         val restored = when (restoreFocus) {
             RESUME_TAG -> resume
             UPDATE_TAG -> update
+            IRANIAN_SERIES_TAG -> iranianSeries
             else -> null
         }
         (restored ?: categoryFocus)?.requestFocus()
@@ -823,6 +834,7 @@ class MainActivity : Activity() {
 
     private companion object {
         const val RESUME_TAG = "resume"
+        const val IRANIAN_SERIES_TAG = "iranian-series"
         const val YOUTUBE_TV = "com.google.android.youtube.tv"
         const val UPDATE_TAG = "release"
         const val CATALOGUE_INTERVAL = 15 * 60_000L
