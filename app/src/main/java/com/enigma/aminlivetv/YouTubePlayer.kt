@@ -3,12 +3,15 @@ package com.enigma.aminlivetv
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
+import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
+import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import org.json.JSONObject
@@ -21,8 +24,8 @@ import java.util.concurrent.Executors
 // back to its playlist. Content whose owner blocks embedding opens in the official YouTube app
 // at that broadcast or playlist instead. Anything that doesn't start in time is reported as
 // unavailable. Documentaries, films and series show Persian subtitles: the video's own Persian
-// track, or YouTube's automatic translation of its English captions, drawn by YouTube's player
-// with the original timing.
+// track, or YouTube's automatic translation of its captions (human-written or automatic), drawn
+// by YouTube's player with the original timing.
 internal class YouTubePlayer(
     context: Context,
     private val onStatus: (label: Int?) -> Unit,
@@ -34,7 +37,13 @@ internal class YouTubePlayer(
     private var usingPlaylist = false
     private var subtitles = false
     private var started = false
+    private val loggedCaptions = java.util.Collections.newSetFromMap(java.util.concurrent.ConcurrentHashMap<String, Boolean>())
     private val startTimeout = Runnable { failed() }
+
+    init {
+        // Debug builds can be inspected from a computer (chrome://inspect); release builds can't.
+        if (BuildConfig.DEBUG) WebView.setWebContentsDebuggingEnabled(true)
+    }
 
     @SuppressLint("SetJavaScriptEnabled")
     val view = WebView(context).apply {
@@ -45,7 +54,14 @@ internal class YouTubePlayer(
         settings.domStorageEnabled = true
         settings.mediaPlaybackRequiresUserGesture = false
         webChromeClient = WebChromeClient()
-        webViewClient = WebViewClient()
+        webViewClient = object : WebViewClient() {
+            // Notes which captions YouTube's own player loads, for the log. Nothing is changed.
+            override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
+                val url = request.url
+                if (url.host == "www.youtube.com" && url.path == "/api/timedtext") captionsLoading(url)
+                return null
+            }
+        }
         addJavascriptInterface(Bridge(), "Amin")
     }
 
@@ -87,6 +103,17 @@ internal class YouTubePlayer(
         ui.postDelayed(startTimeout, START_TIMEOUT_MS)
         // The base URL gives YouTube the referrer its embedded player requires.
         view.loadDataWithBaseURL("$ORIGIN/", page(videoId, vars), "text/html", "utf-8", null)
+    }
+
+    // Logs each caption file the player fetches once, e.g. "en (asr) as fa" for YouTube's
+    // Persian translation of automatic English captions.
+    private fun captionsLoading(url: Uri) {
+        val video = url.getQueryParameter("v") ?: return
+        val language = url.getQueryParameter("lang") ?: return
+        val kind = url.getQueryParameter("kind")?.let { " ($it)" }.orEmpty()
+        val shown = url.getQueryParameter("tlang")?.let { " as $it" }.orEmpty()
+        val entry = "$video: $language$kind$shown"
+        if (loggedCaptions.add(entry)) Log.i("AminYouTube", "Captions loading for $entry")
     }
 
     private fun failed() {
@@ -169,39 +196,52 @@ internal class YouTubePlayer(
         <style>html,body{margin:0;height:100%;background:#000;overflow:hidden}#p{width:100%;height:100%}</style>
         </head><body><div id="p"></div>
         <script>
-        var player, subtitles = $subtitles, subtitled = '', asked = '', tries = 0, retry;
-        // Picks the video's Persian track, else YouTube's Persian translation of its English
-        // captions (human-written before automatic). Runs again for each video in a playlist.
+        var player, subtitles = $subtitles, current = '', rank = 0, checks = 0, retry;
+        var FA = {languageCode: 'fa', languageName: 'فارسی'};
+        // Picks the best Persian subtitles YouTube's player can give, for each video in turn:
+        // 5 the video's own Persian track, 4 YouTube's translation of human English captions,
+        // 3 of other human captions, 2 of the automatic captions the player shows by itself,
+        // 1 of automatic English captions asked for directly (the player doesn't list those,
+        // and only shows them by itself for some videos). A better choice replaces a worse one.
+        // When the player shows automatic Persian captions, the speech is Persian: no subtitles.
         function persian() {
           if (!subtitles || !player || !player.getOption) return;
-          var tracks = player.getOption('captions', 'tracklist') || [];
-          // Some players list no tracks for automatic captions but do report the one showing.
-          var showing = player.getOption('captions', 'track');
-          if (!tracks.length && showing && showing.languageCode) tracks = [showing];
           var video = (player.getVideoData() || {}).video_id || '';
-          if (!video || subtitled == video) return;
-          // The track list arrives a moment after playback starts and no event announces it, so
-          // check again each second, asking for captions again every few seconds of playback
-          // (asking before playback starts can go unanswered); after 30 seconds a video has none.
-          if (!tracks.length) {
-            if (asked != video) { asked = video; tries = 0; }
-            if (player.getPlayerState() == 1 && tries++ % 4 == 0) player.loadModule('captions');
-            if (tries < 30) { clearTimeout(retry); retry = setTimeout(persian, 1000); }
-            else { subtitled = video; Amin.subtitles(video, 'none'); }
-            return;
+          if (!video) return;
+          if (video != current) { current = video; rank = 0; checks = 0; }
+          var tracks = player.getOption('captions', 'tracklist') || [];
+          var showing = player.getOption('captions', 'track') || {};
+          function find(test) { return tracks.filter(test)[0]; }
+          var fa = find(function (t) { return t.languageCode.indexOf('fa') == 0; });
+          var en = find(function (t) { return t.languageCode.indexOf('en') == 0 && t.kind != 'asr'; });
+          var other = find(function (t) { return t.kind != 'asr' && t.is_translateable; });
+          var auto = showing.kind == 'asr' && showing.languageCode ? showing : null;
+          var playing = player.getPlayerState() == 1;
+          var spokenPersian = auto && auto.languageCode.indexOf('fa') == 0;
+          var pick = spokenPersian ? [6, null, 'none needed, persian speech']
+            : fa ? [5, {languageCode: fa.languageCode}, 'persian']
+            : en ? [4, {languageCode: en.languageCode, translationLanguage: FA}, 'translating ' + en.languageCode]
+            : other ? [3, {languageCode: other.languageCode, translationLanguage: FA}, 'translating ' + other.languageCode]
+            : auto ? [2, {languageCode: auto.languageCode, kind: 'asr', translationLanguage: FA}, 'translating automatic ' + auto.languageCode]
+            : playing ? [1, {languageCode: 'en', kind: 'asr', translationLanguage: FA}, 'asking for automatic en'] : null;
+          if (pick && pick[0] > rank) {
+            rank = pick[0];
+            if (pick[1]) {
+              player.loadModule('captions');
+              player.setOption('captions', 'track', pick[1]);
+              player.setOption('captions', 'fontSize', 1);
+            } else {
+              player.unloadModule('captions');
+            }
+            Amin.subtitles(video, pick[2]);
           }
-          subtitled = video;
-          function find(lang, manual) {
-            return tracks.filter(function (t) {
-              return t.languageCode.indexOf(lang) == 0 && (!manual || t.kind != 'asr');
-            })[0];
+          // Track lists arrive a moment after playback starts and no event announces them, so
+          // look again each second for the first 20 seconds of playback.
+          if (rank < 4 && checks < 20) {
+            if (playing) checks++;
+            clearTimeout(retry);
+            retry = setTimeout(persian, 1000);
           }
-          var fa = find('fa', false), en = find('en', true) || find('en', false);
-          if (fa) player.setOption('captions', 'track', {languageCode: fa.languageCode});
-          else if (en) player.setOption('captions', 'track', {languageCode: en.languageCode, translationLanguage: {languageCode: 'fa'}});
-          else player.unloadModule('captions');
-          if (fa || en) player.setOption('captions', 'fontSize', 1);
-          Amin.subtitles(video, fa ? 'persian' : en ? 'translated from ' + en.languageCode + (en.kind == 'asr' ? ' (automatic)' : '') : 'none');
         }
         function onYouTubeIframeAPIReady() {
           player = new YT.Player('p', {width: '100%', height: '100%', videoId: ${JSONObject.quote(videoId)},

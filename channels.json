@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": 6,
+  "revision": 7,
   "channels": [
     {
       "id": "tv1",
@@ -4360,12 +4360,13 @@
     },
     {
       "id": "doc-arte-reportage",
-      "name": "آرته · گزارش",
+      "name": "دویچه‌وله · برگزیده",
       "group": "documentary",
       "sourceAttribution": [
-        "https://www.youtube.com/playlist?list=PL-eZcc0GI8-V7YRL2wmJhXYIKg8OIrh85"
+        "https://www.youtube.com/playlist?list=PLovlAKbQVz6BaS4Skn9c7HQdVRXrAkWwI",
+        "https://www.youtube.com/@DWDocumentary"
       ],
-      "youtubePlaylist": "PL-eZcc0GI8-V7YRL2wmJhXYIKg8OIrh85"
+      "youtubePlaylist": "PLovlAKbQVz6BaS4Skn9c7HQdVRXrAkWwI"
     },
     {
       "id": "doc-earth-touch",
@@ -4378,31 +4379,33 @@
     },
     {
       "id": "doc-nhk-globe",
-      "name": "ان‌اچ‌کی · جهان",
+      "name": "دویچه‌وله · سفر",
       "group": "documentary",
       "sourceAttribution": [
-        "https://www.youtube.com/playlist?list=PLFEzXnIQVwV_ObzI9MC5sbOBGVx5AOJDB"
+        "https://www.youtube.com/playlist?list=PLovlAKbQVz6BE-32_-Q5ojt-Pgqap-Ye9",
+        "https://www.youtube.com/@DWDocumentary"
       ],
-      "youtubePlaylist": "PLFEzXnIQVwV_ObzI9MC5sbOBGVx5AOJDB"
+      "youtubePlaylist": "PLovlAKbQVz6BE-32_-Q5ojt-Pgqap-Ye9"
     },
     {
       "id": "doc-nhk-trains",
-      "name": "ان‌اچ‌کی · قطارهای ژاپن",
+      "name": "دویچه‌وله · فرهنگ",
       "group": "documentary",
       "sourceAttribution": [
-        "https://www.youtube.com/playlist?list=PLFEzXnIQVwV8uQG7Iv-aRqkL9LkAMMh6r"
+        "https://www.youtube.com/playlist?list=PLovlAKbQVz6AF5hFvjI7ZbU2-MY0xHKX9",
+        "https://www.youtube.com/@DWDocumentary"
       ],
-      "youtubePlaylist": "PLFEzXnIQVwV8uQG7Iv-aRqkL9LkAMMh6r"
+      "youtubePlaylist": "PLovlAKbQVz6AF5hFvjI7ZbU2-MY0xHKX9"
     },
     {
       "id": "wild-love-nature-live",
-      "name": "لاو نیچر · زنده",
+      "name": "آفریقای وحشی",
       "group": "wildlife",
       "sourceAttribution": [
-        "https://www.youtube.com/@LoveNature/live"
+        "https://www.youtube.com/playlist?list=PLeCPQtbuJaPu-ZAOfwOPgVuAedGuq7Ixr",
+        "https://www.youtube.com/@FreeDocumentaryNature"
       ],
-      "youtubeChannel": "UCRZPkuHwaoKwTP3CYPdVldg",
-      "youtubePlaylist": "PLYZ8jvuaFC6cSN9T7NskwThv5WUppZEUW"
+      "youtubePlaylist": "PLeCPQtbuJaPu-ZAOfwOPgVuAedGuq7Ixr"
     },
     {
       "id": "wild-wildearth-safari",
@@ -4425,12 +4428,13 @@
     },
     {
       "id": "wild-love-nature-ocean",
-      "name": "لاو نیچر · حیات دریایی",
+      "name": "آبی بزرگ · اقیانوس",
       "group": "wildlife",
       "sourceAttribution": [
-        "https://www.youtube.com/playlist?list=PLYZ8jvuaFC6d6N5oS7d4EVhvbAHEVx9fE"
+        "https://www.youtube.com/playlist?list=PLeCPQtbuJaPuGMY_YblgDhshgMxZ5IqKj",
+        "https://www.youtube.com/@FreeDocumentaryNature"
       ],
-      "youtubePlaylist": "PLYZ8jvuaFC6d6N5oS7d4EVhvbAHEVx9fE"
+      "youtubePlaylist": "PLeCPQtbuJaPuGMY_YblgDhshgMxZ5IqKj"
     },
     {
       "id": "nature-naturescape",
@@ -4443,7 +4447,7 @@
     },
     {
       "id": "nature-naturescape-water",
-      "name": "نیچراسکیپ · صدای آب",
+      "name": "نیچراسکیپ · آب",
       "group": "nature",
       "sourceAttribution": [
         "https://www.youtube.com/playlist?list=PLUow8OoHt2OPy_KnIvpLGKZ16AAba9sX5"
@@ -4452,21 +4456,23 @@
     },
     {
       "id": "nature-arte",
-      "name": "آرته · طبیعت",
+      "name": "نتفلیکس · سیاره ما",
       "group": "nature",
       "sourceAttribution": [
-        "https://www.youtube.com/playlist?list=PL-eZcc0GI8-Vpqjzo1Dau8yhXEVTP9Rnq"
+        "https://www.youtube.com/playlist?list=PLydZ2Hrp_gPS1DRwFcowNTRNR1B9QbPm3",
+        "https://www.youtube.com/@Netflix"
       ],
-      "youtubePlaylist": "PL-eZcc0GI8-Vpqjzo1Dau8yhXEVTP9Rnq"
+      "youtubePlaylist": "PLydZ2Hrp_gPS1DRwFcowNTRNR1B9QbPm3"
     },
     {
       "id": "nature-love-nature-habitats",
-      "name": "لاو نیچر · زیستگاه‌ها",
+      "name": "دویچه‌وله · طبیعت",
       "group": "nature",
       "sourceAttribution": [
-        "https://www.youtube.com/playlist?list=PLYZ8jvuaFC6cERkYWcCqJZ7G0ghW6F5B6"
+        "https://www.youtube.com/playlist?list=PLovlAKbQVz6D2c8fc_GNgofSbJQsSfHVd",
+        "https://www.youtube.com/@DWDocumentary"
       ],
-      "youtubePlaylist": "PLYZ8jvuaFC6cERkYWcCqJZ7G0ghW6F5B6"
+      "youtubePlaylist": "PLovlAKbQVz6D2c8fc_GNgofSbJQsSfHVd"
     },
     {
       "id": "science-nasa-iss",
@@ -4498,12 +4504,13 @@
     },
     {
       "id": "science-nhk-climate",
-      "name": "ان‌اچ‌کی · تغییر اقلیم",
+      "name": "دویچه‌وله · اقلیم",
       "group": "science",
       "sourceAttribution": [
-        "https://www.youtube.com/playlist?list=PLFEzXnIQVwV84T3gXLXk52MshTkF7NOUX"
+        "https://www.youtube.com/playlist?list=PLovlAKbQVz6BufA7Y-gmoYIVQsGxQH0iH",
+        "https://www.youtube.com/@DWDocumentary"
       ],
-      "youtubePlaylist": "PLFEzXnIQVwV84T3gXLXk52MshTkF7NOUX"
+      "youtubePlaylist": "PLovlAKbQVz6BufA7Y-gmoYIVQsGxQH0iH"
     },
     {
       "id": "doc-fd-earth-untold",
@@ -4587,21 +4594,21 @@
     },
     {
       "id": "wild-fd-nature-europe",
-      "name": "اروپای وحشی",
+      "name": "شمال وحشی",
       "group": "wildlife",
-      "youtubePlaylist": "PLeCPQtbuJaPsXmcYhoJd3GV4ncwcf0H4e",
+      "youtubePlaylist": "PLeCPQtbuJaPuuF5M0XdV7i5Z4OVIoap6I",
       "sourceAttribution": [
-        "https://www.youtube.com/playlist?list=PLeCPQtbuJaPsXmcYhoJd3GV4ncwcf0H4e",
+        "https://www.youtube.com/playlist?list=PLeCPQtbuJaPuuF5M0XdV7i5Z4OVIoap6I",
         "https://www.youtube.com/@FreeDocumentaryNature"
       ]
     },
     {
       "id": "nature-fd-ocean",
-      "name": "اقیانوس‌ها",
+      "name": "حیات اقیانوس",
       "group": "nature",
-      "youtubePlaylist": "PLwT7IOLEcbgSb6QoIrVYOtd3Irf58xctf",
+      "youtubePlaylist": "PLwT7IOLEcbgSOl47I7Wd48lsjWHKnw-sI",
       "sourceAttribution": [
-        "https://www.youtube.com/playlist?list=PLwT7IOLEcbgSb6QoIrVYOtd3Irf58xctf",
+        "https://www.youtube.com/playlist?list=PLwT7IOLEcbgSOl47I7Wd48lsjWHKnw-sI",
         "https://www.youtube.com/@FreeDocumentaryOcean"
       ]
     },
@@ -4623,6 +4630,36 @@
       "sourceAttribution": [
         "https://www.youtube.com/playlist?list=PLbnrZHfNEDZz5GouIleMnlELngM1jW3kL",
         "https://www.youtube.com/@TheRoyalInstitution"
+      ]
+    },
+    {
+      "id": "doc-bbc-persian-films",
+      "name": "بی‌بی‌سی · مستند",
+      "group": "documentary",
+      "youtubePlaylist": "PLmdEvtplre61n3cGkQ21_rpMiXy00KvkI",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLmdEvtplre61n3cGkQ21_rpMiXy00KvkI",
+        "https://www.youtube.com/@BBCNewsPersian"
+      ]
+    },
+    {
+      "id": "doc-manoto-docs",
+      "name": "من و تو · مستند",
+      "group": "documentary",
+      "youtubePlaylist": "PLA7A468BEAE99EF5E",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLA7A468BEAE99EF5E",
+        "https://www.youtube.com/@manototv"
+      ]
+    },
+    {
+      "id": "doc-manoto-time-tunnel",
+      "name": "من و تو · تونل زمان",
+      "group": "documentary",
+      "youtubePlaylist": "PLXiFD28PjqaK0yrgmh7nEmbGB3kE2xjZj",
+      "sourceAttribution": [
+        "https://www.youtube.com/playlist?list=PLXiFD28PjqaK0yrgmh7nEmbGB3kE2xjZj",
+        "https://www.youtube.com/@manototv"
       ]
     }
   ],
@@ -4649,22 +4686,22 @@
     },
     {
       "id": "movie-filmrise-comedy",
-      "name": "فیلم کمدی",
+      "name": "وسترن · کنی راجرز",
       "group": "movies",
-      "youtubePlaylist": "PLYCGB2FR2jUoTPLYDjh-f3C7G37PYXUcI",
+      "youtubePlaylist": "PLBrrfZs-ew7MT0Yz2mgiVEPTWCNypF-RT",
       "sourceAttribution": [
-        "https://www.youtube.com/playlist?list=PLYCGB2FR2jUoTPLYDjh-f3C7G37PYXUcI",
-        "https://www.youtube.com/@FilmRiseMovies"
+        "https://www.youtube.com/playlist?list=PLBrrfZs-ew7MT0Yz2mgiVEPTWCNypF-RT",
+        "https://www.youtube.com/@ShoutStudios"
       ]
     },
     {
       "id": "movie-central-christmas",
-      "name": "فیلم کریسمس",
+      "name": "مستند سینمایی",
       "group": "movies",
-      "youtubePlaylist": "PLfRCZ3PuccvAuE3uvcxi2XdunbIgND2ai",
+      "youtubePlaylist": "PLBrrfZs-ew7OT_ZkTbcH86gwRT9ihjyub",
       "sourceAttribution": [
-        "https://www.youtube.com/playlist?list=PLfRCZ3PuccvAuE3uvcxi2XdunbIgND2ai",
-        "https://www.youtube.com/@MovieCentral"
+        "https://www.youtube.com/playlist?list=PLBrrfZs-ew7OT_ZkTbcH86gwRT9ihjyub",
+        "https://www.youtube.com/@ShoutStudios"
       ]
     },
     {
@@ -4689,12 +4726,12 @@
     },
     {
       "id": "series-filmrise-dogs",
-      "name": "برای عشق سگ‌ها",
+      "name": "باب راس · نقاشی",
       "group": "series",
-      "youtubePlaylist": "PLtbMv4lXX2muPKFvUOqbjH5k9zFfdxd0q",
+      "youtubePlaylist": "PLAEQD0ULngi67rwmhrkNjMZKvyCReqDV4",
       "sourceAttribution": [
-        "https://www.youtube.com/playlist?list=PLtbMv4lXX2muPKFvUOqbjH5k9zFfdxd0q",
-        "https://www.youtube.com/@FilmRiseTelevision"
+        "https://www.youtube.com/playlist?list=PLAEQD0ULngi67rwmhrkNjMZKvyCReqDV4",
+        "https://www.youtube.com/@bobross_thejoyofpainting"
       ]
     },
     {
