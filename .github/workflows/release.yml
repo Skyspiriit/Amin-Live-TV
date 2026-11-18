@@ -28,7 +28,8 @@ jobs:
       - name: Check the tag matches the app version
         run: |
           version=$(sed -n 's/^ *versionName = "\(.*\)"/\1/p' app/build.gradle.kts)
-          test "v$version" = "$TAG" || { echo "Tag $TAG does not match versionName $version"; exit 1; }
+          # A two-part version (3.3) is tagged with patch 0 (v3.3.0) so that 0.3.x apps recognise it.
+          test "v$version" = "$TAG" || test "v$version.0" = "$TAG" || { echo "Tag $TAG does not match versionName $version"; exit 1; }
 
       - name: Restore the release key
         env:

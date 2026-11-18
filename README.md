@@ -1,10 +1,10 @@
 # Amin Live TV
 
-Amin Live TV 0.3.3 is a standalone Persian-language live television app for Android TV 8.0 and later. It runs under `com.enigma.aminlivetv`, upgrades earlier signed releases in place and can be installed alongside Amin Player.
+Amin Live TV 3.3 is a standalone Persian-language live television app for Android TV 8.0 and later. It runs under `com.enigma.aminlivetv`, upgrades earlier signed releases in place and can be installed alongside Amin Player.
 
 ## Install on a Xiaomi Android TV Box
 
-1. Copy `Amin-Live-TV-v0.3.3.apk` to a USB drive and plug it into the box.
+1. Copy `Amin-Live-TV-v3.3.0.apk` to a USB drive and plug it into the box.
 2. Open the drive from the box’s file manager and select the APK. If Android asks, allow the file manager to install unknown apps, then return to the APK and select **Install**. The setting’s name varies by model and firmware.
 3. Open **Amin Live TV** from **Apps**. Choose **شبکه‌های داخلی**, **شبکه‌های خبری**, **شبکه‌های ورزشی** or **فیلم و سریال**, or one of the groups below them (**مستند**, **حیات وحش**, **طبیعت**, **علم و فضا**, **فیلم سینمایی**, **سریال کامل**), and press OK on a tile.
 4. While watching, press Up for the previous station and Down for the next one. Press OK to show or hide the channel strip. Left and Right switch stations while the strip is visible. Back returns to the grid. **ادامهٔ تماشا** on the home screen resumes the last station that played successfully when it is still available.
@@ -13,14 +13,16 @@ If the box cannot open the USB file, install with [Android Platform Tools](https
 
 ```sh
 adb devices
-adb -s <tv-device-id> install -r Amin-Live-TV-v0.3.3.apk
+adb -s <tv-device-id> install -r --user 0 Amin-Live-TV-v3.3.0.apk
 ```
+
+Always pass `--user 0`. Without it, ADB installs the app into every Android user, including the hidden work profile on Xiaomi boxes. That second copy then hides the main copy's switch in **Install unknown apps**, and in-app updates can't be allowed. See [UPDATE-PERMISSION-3.3.md](UPDATE-PERMISSION-3.3.md).
 
 See [Xiaomi’s APK installation guide](https://www.mi.com/uk/support/article/KA-06405/).
 
 ## App updates
 
-The app checks the repository’s published GitHub releases in the background at startup. While browsing, it rechecks every six hours after a successful check and retries a failed check after 15 minutes. From 0.3.1, when a newer numbered release has an APK, the app downloads it in the background. It installs the APK only if it is this app, newer, and signed with the same certificate. The home screen button then says «نسخهٔ … آماده است · برای نصب OK را بزنید». OK opens Android's install confirmation. Android puts the focus on **Cancel**, so press Right, then OK on **Install**. The first time only, Android asks to allow Amin Live TV to install apps: choose **Settings**, turn it on, then reopen Amin Live TV, because Android closes it after that change. After an update installs, Android 11 returns to the TV's home screen. Open Amin Live TV again from there. Android doesn't let an app reopen itself. If a download fails, the button retries it. [GitHub releases](https://github.com/Skyspiriit/Amin-Live-TV/releases)
+The app checks the repository’s published GitHub releases in the background at startup. While browsing, it rechecks every six hours after a successful check and retries a failed check after 15 minutes. From 0.3.1, when a newer numbered release (tags `vX.Y.Z`; from 3.3 also `vX.Y`) has an APK, the app downloads it in the background. It installs the APK only if it is this app, newer, and signed with the same certificate. The home screen button then says «نسخهٔ … آماده است · برای نصب OK را بزنید». OK opens Android's install confirmation. Android puts the focus on **Cancel**, so press Right, then OK on **Install**. The first time only, the app opens Android's **Install unknown apps** page for itself (from 3.3). Turn on **Amin Live TV** and press Back. Android restarts the app after that change, and the install confirmation follows by itself. If the switch stays off, the app says so. Version 0.3.3 and earlier don't check first: Android shows its own prompt, choose **Settings**, turn it on, then reopen Amin Live TV. After an update installs, Android 11 returns to the TV's home screen. Open Amin Live TV again from there. Android doesn't let an app reopen itself. If a download fails, the button retries it. [GitHub releases](https://github.com/Skyspiriit/Amin-Live-TV/releases)
 
 ## Build
 

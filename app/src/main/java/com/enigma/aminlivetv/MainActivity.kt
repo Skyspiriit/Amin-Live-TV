@@ -250,7 +250,7 @@ class MainActivity : Activity() {
                 this.tag = UPDATE_TAG
                 setOnClickListener {
                     when {
-                        ready != null -> appUpdate.install(ready)
+                        ready != null -> installUpdate(ready)
                         downloadingRelease == null -> downloadRelease(tag)
                     }
                 }
@@ -281,6 +281,20 @@ class MainActivity : Activity() {
             }
         }
         if (screen == Screen.HOME) showHome(currentFocus?.tag)
+    }
+
+    // Installs a verified update, first asking for this copy's install permission if needed.
+    private fun installUpdate(apk: java.io.File) {
+        if (appUpdate.canInstall()) appUpdate.install(apk)
+        else if (!appUpdate.requestPermission(apk, ::startActivity)) latestRelease?.let(::showUpdateFailed)
+    }
+
+    // Continues an update after the viewer returns from the install-permission page.
+    private fun resumeUpdate() {
+        val (apk, allowed) = appUpdate.takePending() ?: return
+        if (allowed) appUpdate.install(apk)
+        else AlertDialog.Builder(this).setMessage(R.string.update_permission_off)
+            .setPositiveButton(android.R.string.ok, null).show()
     }
 
     private fun showUpdateFailed(tag: String) = openRelease(tag, getString(R.string.update_available, tag))
@@ -650,6 +664,7 @@ class MainActivity : Activity() {
         scheduleUpdates()
         if (screen == Screen.PLAYER && livePlayer == null) tune(currentIndex)
         if (screen == Screen.YOUTUBE && youTubePlayer == null) playYouTube(currentIndex)
+        resumeUpdate()
     }
 
     override fun onStop() {

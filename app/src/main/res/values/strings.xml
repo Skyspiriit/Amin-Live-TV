@@ -28,5 +28,6 @@
     <string name="update_downloading">در حال دریافت نسخهٔ %1$s…</string>
     <string name="update_ready">نسخهٔ %1$s آماده است · برای نصب OK را بزنید</string>
     <string name="update_available">نسخهٔ %1$s موجود است · برای دریافت OK را بزنید</string>
+    <string name="update_permission_off">اجازهٔ نصب برای امین تی‌وی روشن نشد. دوباره OK را بزنید، کلید امین تی‌وی را روشن کنید و Back را بزنید. اگر کنار نام برنامه نشان کیف کوچکی هست، آن نسخهٔ دیگری است و این تلویزیون به کمک خانواده نیاز دارد.</string>
     <string name="update_release_link">برای دریافت نسخهٔ جدید، این نشانی را روی تلفن یا رایانه باز کنید:\n%1$s</string>
 </resources>

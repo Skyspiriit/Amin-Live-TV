@@ -9,7 +9,8 @@ internal object ReleaseCheck {
     private const val REPOSITORY = "Skyspiriit/Amin-Live-TV"
     private const val ENDPOINT = "https://api.github.com/repos/$REPOSITORY/releases?per_page=20"
     private const val MAX_BYTES = 512 * 1024
-    private val versionPattern = Regex("(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)")
+    // Versions are major.minor or major.minor.patch (3.3 is 3.3.0).
+    private val versionPattern = Regex("(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:\\.(0|[1-9][0-9]*))?")
 
     fun latest(): Result<String?> = runCatching {
         val endpoint = if (BuildConfig.TEST_CATALOG) URI(BuildConfig.CATALOG_URL).resolve("releases.json")
@@ -67,7 +68,7 @@ internal object ReleaseCheck {
         val parts = versionPattern.matchEntire(value)?.groupValues ?: return null
         val major = parts[1].toIntOrNull() ?: return null
         val minor = parts[2].toIntOrNull() ?: return null
-        val patch = parts[3].toIntOrNull() ?: return null
+        val patch = if (parts[3].isEmpty()) 0 else parts[3].toIntOrNull() ?: return null
         return Version(major, minor, patch)
     }
 

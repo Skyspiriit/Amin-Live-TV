@@ -6,7 +6,9 @@ import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageInstaller
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
+import android.provider.Settings
 import android.util.Log
 import java.io.File
 import java.net.HttpURLConnection
@@ -16,6 +18,36 @@ import java.net.URI
 // same certificate, then hands it to Android's package installer, which asks the viewer to confirm.
 internal class AppUpdate(private val context: Context, private val onFailed: () -> Unit) {
     private val folder = File(context.cacheDir, "update")
+    private val prefs = context.getSharedPreferences("update", Context.MODE_PRIVATE)
+
+    // Android asks each app, in each user profile, for permission to install apps. On a box
+    // that also has this app in a work profile, the shared "Install unknown apps" list shows
+    // two identical entries, and turning on the other profile's copy doesn't help this one.
+    // So check first and open the settings page for this exact copy only.
+    fun canInstall(): Boolean = context.packageManager.canRequestPackageInstalls()
+
+    // Opens this app's own "Install unknown apps" switch, remembering the APK so the update
+    // continues when the viewer comes back (Android may restart the app after the change).
+    // Returns false if the TV has no such settings page.
+    fun requestPermission(apk: File, start: (Intent) -> Unit): Boolean {
+        prefs.edit().putString(PENDING, apk.name).apply()
+        val own = Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:${context.packageName}"))
+        return runCatching { start(own) }.isSuccess.also { opened ->
+            Log.i("AminUpdate", "Install permission needed; settings opened: $opened")
+            if (!opened) prefs.edit().remove(PENDING).apply()
+        }
+    }
+
+    // After returning from settings: the remembered APK if it is still valid, and whether the
+    // permission is now on. Forgets the request either way, so it is asked once per OK.
+    fun takePending(): Pair<File, Boolean>? {
+        val name = prefs.getString(PENDING, null) ?: return null
+        prefs.edit().remove(PENDING).apply()
+        val apk = File(folder, name).takeIf { it.isFile && verified(it) } ?: return null
+        val allowed = canInstall()
+        Log.i("AminUpdate", "Back from settings; install permission ${if (allowed) "on" else "still off"}")
+        return apk to allowed
+    }
 
     // Blocking: call off the main thread. Returns the verified APK, or null.
     fun download(tag: String): File? = runCatching {
@@ -131,5 +163,6 @@ internal class AppUpdate(private val context: Context, private val onFailed: () 
     private companion object {
         const val ACTION_STATUS = "com.enigma.aminlivetv.UPDATE_STATUS"
         const val MAX_BYTES = 64L * 1024 * 1024
+        const val PENDING = "pendingApk"
     }
 }

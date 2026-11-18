@@ -94,6 +94,12 @@ class ChannelPolicyTest {
         assertNull(ReleaseCheck.newerTag("0.2.2", sequenceOf("v0.2.1", "v0.2.2", "garbage", "v2147483648.0.0")))
     }
 
+    @Test fun twoPartVersionsCountAsPatchZero() {
+        assertEquals("v3.3.0", ReleaseCheck.newerTag("0.3.3", sequenceOf("v0.3.3", "v3.3.0")))
+        assertEquals("v3.4", ReleaseCheck.newerTag("3.3", sequenceOf("v3.3.0", "v3.3", "v3.4")))
+        assertNull(ReleaseCheck.newerTag("3.3", sequenceOf("v3.3.0", "v0.3.3", "v3")))
+    }
+
     @Test fun catalogueChangesKeepViewingButInvalidateOldFailuresAndSources() {
         val channel = station("test")
         val watched = ViewingHistory(sessions = 2, lastWatchedAt = now, recentWeight = 5.0)
