@@ -41,6 +41,7 @@ class IranianSeriesActivity : Activity() {
     private var active = false
     private var finished = false
     private var unavailable = false
+    private var leavingEpisode = false
     private lateinit var nextButton: TextView
     private val sampleTick = object : Runnable {
         override fun run() {
@@ -48,7 +49,7 @@ class IranianSeriesActivity : Activity() {
             if (!active || finished || unavailable) return
             current.sampleEpisode { value ->
                 if (player === current && active && !unavailable) {
-                    value?.let(::recordSample)
+                    if (value != null) recordSample(value)
                     ui.removeCallbacks(this)
                     if (!finished) ui.postDelayed(this, SAMPLE_INTERVAL)
                 }
@@ -194,7 +195,7 @@ class IranianSeriesActivity : Activity() {
         }
     }
 
-    private fun play(title: IranianSeries, selected: Episode, restart: Boolean = false) {
+    private fun play(title: IranianSeries, selected: Episode, restart: Boolean = false, captions: Boolean = false) {
         closePlayer()
         if (restart) progress.clear(title, selected)
         series = title
@@ -214,9 +215,10 @@ class IranianSeriesActivity : Activity() {
         val controls = LinearLayout(this).apply { gravity = Gravity.CENTER }
         val pause = controls.action(R.string.series_play_pause) { player?.togglePause() }
         val restartButton = controls.action(R.string.series_restart) { play(title, selected, restart = true) }
-        val episodesButton = controls.action(R.string.series_episode_list) {
-            closePlayer()
-            showEpisodesOrLibrary(title.id, selected.id)
+        val episodesButton = controls.action(R.string.series_episode_list) { returnToEpisodes() }
+        val captionsLabel = if (captions) R.string.series_captions_on else R.string.series_captions_off
+        val captionsButton = controls.action(captionsLabel) {
+            leaveEpisode { play(title, selected, captions = !captions) }
         }
         val nextLabel = if (title.availability == SeriesAvailability.PARTIAL) R.string.series_next_available
             else R.string.series_next_episode
@@ -237,6 +239,7 @@ class IranianSeriesActivity : Activity() {
             unavailable = blocked || message == R.string.programme_unavailable
             outside.visibility = if (blocked) View.VISIBLE else View.GONE
             pause.visibility = if (unavailable) View.GONE else View.VISIBLE
+            captionsButton.visibility = if (unavailable) View.GONE else View.VISIBLE
             restartButton.visibility = if (blocked) View.GONE else View.VISIBLE
             if (blocked) outside.requestFocus()
             if (unavailable && !blocked) episodesButton.requestFocus()
@@ -247,14 +250,16 @@ class IranianSeriesActivity : Activity() {
         content.addView(controls, LinearLayout.LayoutParams(-1, dp(56)))
         display(content)
         pause.requestFocus()
-        embed.playEpisode(selected, resumeSeconds)
+        embed.playEpisode(selected, resumeSeconds, captions)
         if (BuildConfig.DEBUG) Log.i("AminSeries", "Open ${title.id}/${selected.id} at $resumeSeconds")
         ui.post(sampleTick)
     }
 
-    private fun recordSample(value: EpisodePlayback) {
+    private fun recordSample(value: EpisodePlayback, leaving: Boolean = false) {
         val selected = episode ?: return
-        if (value.videoId != selected.videoId || value.state !in setOf(ENDED, PLAYING, PAUSED) ||
+        val hasPosition = value.state in setOf(ENDED, PLAYING, PAUSED) ||
+            (leaving && value.state == BUFFERING && lastSample != null)
+        if (value.videoId != selected.videoId || !hasPosition ||
             !value.seconds.isFinite() || !value.duration.isFinite() ||
             value.duration <= 0 || value.seconds <= 0 || value.seconds > value.duration + 1) return
         if (!reachedStart && value.seconds < resumeSeconds - SEEK_TOLERANCE) return
@@ -286,12 +291,43 @@ class IranianSeriesActivity : Activity() {
 
     private fun closePlayer() {
         ui.removeCallbacks(sampleTick)
+        leavingEpisode = false
         saveProgress()
         player?.let {
             (it.view.parent as? ViewGroup)?.removeView(it.view)
             it.close()
         }
         player = null
+    }
+
+    private fun returnToEpisodes() {
+        val titleId = series?.id
+        val episodeId = episode?.id
+        leaveEpisode { showEpisodesOrLibrary(titleId, episodeId) }
+    }
+
+    private fun leaveEpisode(after: () -> Unit) {
+        val current = player ?: return
+        if (leavingEpisode) return
+        leavingEpisode = true
+        val finish = Runnable {
+            if (player === current && leavingEpisode) {
+                closePlayer()
+                after()
+            }
+        }
+        if (unavailable || finished) {
+            finish.run()
+            return
+        }
+        ui.postDelayed(finish, 350)
+        current.sampleEpisode { sample ->
+            ui.removeCallbacks(finish)
+            if (player === current && leavingEpisode) {
+                if (sample != null) recordSample(sample, leaving = true)
+                finish.run()
+            }
+        }
     }
 
     private fun openYouTube(url: String): Boolean {
@@ -311,10 +347,7 @@ class IranianSeriesActivity : Activity() {
         val title = series
         val selected = episode
         when {
-            selected != null -> {
-                closePlayer()
-                showEpisodesOrLibrary(title?.id, selected.id)
-            }
+            selected != null -> returnToEpisodes()
             title != null -> showLibrary(title.id)
             else -> super.onBackPressed()
         }
@@ -398,5 +431,6 @@ class IranianSeriesActivity : Activity() {
         const val ENDED = 0
         const val PLAYING = 1
         const val PAUSED = 2
+        const val BUFFERING = 3
     }
 }

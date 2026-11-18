@@ -58,6 +58,7 @@ class MainActivity : Activity() {
     private var currentIndex = 0
     private var livePlayer: LivePlayer? = null
     private var youTubePlayer: YouTubePlayer? = null
+    private var documentaryControls: View? = null
     private var pendingCatalogue: Catalogue? = null
     private var overlay = false
     private var showRetry = false
@@ -495,22 +496,40 @@ class MainActivity : Activity() {
     // Official YouTube content inside the app. OK pauses, Up and Down change programme, Back
     // returns to the grid.
     private fun playYouTube(index: Int) {
-        val youtube = currentList.getOrNull(index)?.youtube ?: return
+        val selected = currentList.getOrNull(index) ?: return
+        val youtube = selected.youtube ?: return
         closePlayer()
         screen = Screen.YOUTUBE
         currentIndex = index
-        rememberPosition(currentList[index])
+        rememberPosition(selected)
         monitor.setEnabled(false)
         scheduleUpdates()
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         val content = FrameLayout(this).apply { setBackgroundColor(Color.BLACK) }
+        val controls = LinearLayout(this).apply {
+            visibility = View.GONE
+            layoutDirection = View.LAYOUT_DIRECTION_RTL
+        }
+        val pause = button(getString(R.string.series_play_pause), 20).apply {
+            isFocusableInTouchMode = true
+            setOnClickListener { youTubePlayer?.togglePause() }
+        }
+        val next = button(getString(R.string.next_documentary), 20).apply {
+            setOnClickListener { youTubePlayer?.skipDocumentary(continuePlaying = true) }
+        }
+        controls.addView(pause, LinearLayout.LayoutParams(dp(140), dp(48)).apply { marginEnd = dp(8) })
+        controls.addView(next, LinearLayout.LayoutParams(dp(140), dp(48)))
+        documentaryControls = controls
         val player = YouTubePlayer(this, { label ->
             message.visibility = if (label == null) View.GONE else View.VISIBLE
             if (label != null) message.setText(label)
-        }, ::openYouTubeApp)
+        }, ::openYouTubeApp) {
+            controls.visibility = View.VISIBLE
+            pause.requestFocus()
+        }
         youTubePlayer = player
         content.addView(player.view, frame(-1, -1))
-        channelName = text(currentList[index].name, 24, bold = true).apply {
+        channelName = text(selected.name, 24, bold = true).apply {
             background = surface(PANEL)
             setPadding(dp(21), dp(9), dp(21), dp(9))
         }
@@ -524,12 +543,18 @@ class MainActivity : Activity() {
             visibility = View.GONE
         }
         content.addView(message, frame(-2, -2, Gravity.CENTER))
+        content.addView(controls, frame(-2, -2, Gravity.TOP or Gravity.END).apply {
+            topMargin = dp(26)
+            marginEnd = dp(42)
+        })
         install(content)
         content.isFocusableInTouchMode = true
         content.requestFocus()
         ui.postDelayed(hideChannelName, 4000)
-        // Documentary, film and series groups get Persian subtitles; live news and TV stay as they are.
-        player.play(youtube, persianSubtitles = currentList[index].categories.any { !it.main })
+        val documentary = if (category in DOCUMENTARY_GROUPS) {
+            youtube.playlist?.let { DocumentaryQueue(this, selected.id, it) }
+        } else null
+        player.play(youtube, persianSubtitles = selected.categories.any { !it.main }, queue = documentary)
     }
 
     // Opens one specific broadcast or playlist in the official YouTube TV app. Back there returns here.
@@ -625,6 +650,16 @@ class MainActivity : Activity() {
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
         val isOk = event.keyCode in setOf(KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_NUMPAD_ENTER)
         if (screen == Screen.YOUTUBE) {
+            if (documentaryControls?.isShown == true) {
+                if (isOk) return super.dispatchKeyEvent(event)
+                if (event.keyCode == KeyEvent.KEYCODE_MEDIA_NEXT || event.keyCode == KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE) {
+                    if (event.action == KeyEvent.ACTION_DOWN && event.repeatCount == 0) {
+                        if (event.keyCode == KeyEvent.KEYCODE_MEDIA_NEXT) youTubePlayer?.skipDocumentary(continuePlaying = true)
+                        else youTubePlayer?.togglePause()
+                    }
+                    return true
+                }
+            }
             val offset = when (event.keyCode) {
                 KeyEvent.KEYCODE_DPAD_UP -> -1
                 KeyEvent.KEYCODE_DPAD_DOWN -> 1
@@ -659,6 +694,7 @@ class MainActivity : Activity() {
     override fun onBackPressed() {
         when (screen) {
             Screen.PLAYER, Screen.YOUTUBE -> {
+                youTubePlayer?.skipDocumentary(continuePlaying = false)
                 closePlayer()
                 showGrid(currentList[currentIndex].id)
             }
@@ -699,6 +735,7 @@ class MainActivity : Activity() {
         livePlayer = null
         youTubePlayer?.close()
         youTubePlayer = null
+        documentaryControls = null
     }
 
     @Suppress("DEPRECATION")
@@ -833,6 +870,7 @@ class MainActivity : Activity() {
     }
 
     private companion object {
+        val DOCUMENTARY_GROUPS = setOf(Category.DOCUMENTARY, Category.WILDLIFE, Category.NATURE)
         const val RESUME_TAG = "resume"
         const val IRANIAN_SERIES_TAG = "iranian-series"
         const val YOUTUBE_TV = "com.google.android.youtube.tv"

@@ -14,7 +14,9 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import org.json.JSONArray
 import org.json.JSONObject
+import java.io.ByteArrayInputStream
 import java.net.HttpURLConnection
 import java.net.URI
 import java.util.concurrent.Executors
@@ -23,13 +25,14 @@ import java.util.concurrent.Executors
 // broadcaster's terms and embedding choices apply. A live channel that isn't broadcasting falls
 // back to its playlist. Content whose owner blocks embedding opens in the official YouTube app
 // at that broadcast or playlist instead. Anything that doesn't start in time is reported as
-// unavailable. Documentaries, films and series show Persian subtitles: the video's own Persian
+// unavailable. Documentaries, films and programme playlists can show Persian subtitles: the video's own Persian
 // track, or YouTube's automatic translation of its captions (human-written or automatic), drawn
 // by YouTube's player with the original timing.
 internal class YouTubePlayer(
     context: Context,
     private val onStatus: (label: Int?) -> Unit,
-    private val openInYouTubeApp: (url: String) -> Boolean
+    private val openInYouTubeApp: (url: String) -> Boolean,
+    private val onDocumentaryMode: () -> Unit = {}
 ) {
     private val ui = Handler(Looper.getMainLooper())
     private val lookups = Executors.newSingleThreadExecutor()
@@ -38,9 +41,16 @@ internal class YouTubePlayer(
     private var initialSeconds = 0
     private var usingPlaylist = false
     private var subtitles = false
+    @Volatile private var suppressEpisodeCaptions = false
     private var started = false
+    private var pageId = 0
+    private var documentary: DocumentaryQueue? = null
+    private var documentaryVideo: String? = null
+    private var discovering = false
+    private val failedDocumentaries = HashSet<String>()
+    private var consecutiveTimeouts = 0
     private val loggedCaptions = java.util.Collections.newSetFromMap(java.util.concurrent.ConcurrentHashMap<String, Boolean>())
-    private val startTimeout = Runnable { failed() }
+    private val startTimeout = Runnable { failed(timedOut = true) }
 
     init {
         // Debug builds can be inspected from a computer (chrome://inspect); release builds can't.
@@ -57,30 +67,53 @@ internal class YouTubePlayer(
         settings.mediaPlaybackRequiresUserGesture = false
         webChromeClient = WebChromeClient()
         webViewClient = object : WebViewClient() {
-            // Notes which captions YouTube's own player loads, for the log. Nothing is changed.
             override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
                 val url = request.url
-                if (url.host == "www.youtube.com" && url.path == "/api/timedtext") captionsLoading(url)
+                if (url.host == "www.youtube.com" && url.path == "/api/timedtext") {
+                    // The embedded player can reuse a caption preference from YouTube. Suppress
+                    // its optional captions for this episode until the viewer opts in here.
+                    if (suppressEpisodeCaptions) {
+                        return WebResourceResponse("text/plain", "utf-8", 204, "No Content", emptyMap(),
+                            ByteArrayInputStream(byteArrayOf()))
+                    }
+                    captionsLoading(url)
+                }
                 return null
             }
         }
         addJavascriptInterface(Bridge(), "Amin")
     }
 
-    fun play(youtube: YouTube, persianSubtitles: Boolean = false) {
+    fun play(youtube: YouTube, persianSubtitles: Boolean = false, queue: DocumentaryQueue? = null) {
         source = youtube
         subtitles = persianSubtitles
         usingPlaylist = youtube.channel == null
-        load()
+        documentary = queue
+        if (usingPlaylist && queue != null) beginDocumentaries() else load()
     }
 
-    fun playEpisode(selected: Episode, seconds: Double) {
+    fun playEpisode(selected: Episode, seconds: Double, captions: Boolean) {
         episode = selected
         initialSeconds = seconds.toInt()
+        subtitles = false
+        suppressEpisodeCaptions = !captions
         load()
     }
 
     fun togglePause() = view.evaluateJavascript("toggle()", null)
+
+    fun skipDocumentary(continuePlaying: Boolean) {
+        if (!usingPlaylist || documentary == null || discovering) return
+        if (documentaryVideo != null) {
+            advanceDocumentary(DocumentaryResult.SKIPPED)
+        } else if (continuePlaying) {
+            failedDocumentaries.clear()
+        }
+        if (continuePlaying) {
+            consecutiveTimeouts = 0
+            playNextDocumentary()
+        }
+    }
 
     fun pauseEpisode() = view.evaluateJavascript("if (player && player.pauseVideo) player.pauseVideo()", null)
 
@@ -96,10 +129,12 @@ internal class YouTubePlayer(
     }
 
     fun close() {
+        ++pageId
         ui.removeCallbacksAndMessages(null)
         lookups.shutdownNow()
         source = null
         episode = null
+        documentary = null
         view.stopLoading()
         view.loadUrl("about:blank")
         view.destroy()
@@ -114,8 +149,11 @@ internal class YouTubePlayer(
         if (subtitles) vars.put("cc_load_policy", 1).put("cc_lang_pref", "fa")
         val videoId = if (selected != null) {
             vars.put("controls", 1).put("disablekb", 0).put("start", initialSeconds)
+            if (!suppressEpisodeCaptions) vars.put("cc_load_policy", 1)
             view.isFocusable = true
             selected.videoId
+        } else if (documentaryVideo != null) {
+            documentaryVideo.orEmpty()
         } else if (youtube == null) {
             return
         } else if (usingPlaylist) {
@@ -126,14 +164,53 @@ internal class YouTubePlayer(
             "live_stream"
         }
         started = false
+        val generation = ++pageId
+        if (discovering) vars.put("autoplay", 0)
         view.visibility = View.VISIBLE
         onStatus(R.string.connecting)
         ui.removeCallbacks(startTimeout)
-        ui.postDelayed(startTimeout, START_TIMEOUT_MS)
+        ui.postDelayed(startTimeout, if (discovering) PLAYLIST_TIMEOUT_MS else START_TIMEOUT_MS)
         // The base URL gives YouTube the referrer its embedded player requires.
         val origin = if (selected == null) ORIGIN else "https://${view.context.packageName}"
         vars.put("origin", origin)
-        view.loadDataWithBaseURL("$origin/", page(videoId, vars), "text/html", "utf-8", null)
+        if (BuildConfig.DEBUG && documentaryVideo != null) Log.i("AminYouTube", "Documentary $videoId")
+        view.loadDataWithBaseURL("$origin/", page(videoId, vars, generation), "text/html", "utf-8", null)
+    }
+
+    private fun beginDocumentaries() {
+        onDocumentaryMode()
+        playNextDocumentary()
+    }
+
+    private fun playNextDocumentary() {
+        documentaryVideo = documentary?.current
+        discovering = documentaryVideo == null
+        load()
+    }
+
+    private fun usePlaylist(videos: List<String>) {
+        discovering = false
+        val queue = documentary ?: return
+        if (BuildConfig.DEBUG) Log.i("AminYouTube", if (videos.isEmpty()) "Using cached documentary candidates"
+            else "Refreshed documentary candidates: ${videos.size}")
+        queue.renew(videos, failedDocumentaries)
+        if (queue.current == null) documentaryUnavailable() else playNextDocumentary()
+    }
+
+    private fun advanceDocumentary(result: DocumentaryResult) {
+        val video = documentaryVideo ?: return
+        if (result == DocumentaryResult.UNAVAILABLE) failedDocumentaries.add(video)
+        documentary?.advance(result)
+        documentaryVideo = null
+    }
+
+    private fun documentaryUnavailable() {
+        ++pageId
+        ui.removeCallbacks(startTimeout)
+        view.stopLoading()
+        view.loadUrl("about:blank")
+        view.visibility = View.INVISIBLE
+        onStatus(R.string.programme_unavailable)
     }
 
     // Logs each caption file the player fetches once, e.g. "en (asr) as fa" for YouTube's
@@ -147,7 +224,17 @@ internal class YouTubePlayer(
         if (loggedCaptions.add(entry)) Log.i("AminYouTube", "Captions loading for $entry")
     }
 
-    private fun failed() {
+    private fun failed(timedOut: Boolean = false) {
+        if (discovering) {
+            usePlaylist(emptyList())
+            return
+        }
+        if (documentaryVideo != null) {
+            advanceDocumentary(DocumentaryResult.UNAVAILABLE)
+            if (timedOut && ++consecutiveTimeouts >= MAX_CONSECUTIVE_TIMEOUTS) documentaryUnavailable()
+            else playNextDocumentary()
+            return
+        }
         if (episode != null) {
             episodeUnavailable(R.string.programme_unavailable)
             return
@@ -156,7 +243,7 @@ internal class YouTubePlayer(
         if (!usingPlaylist && youtube.playlist != null) {
             Log.i("AminYouTube", "Live broadcast unavailable, playing the playlist")
             usingPlaylist = true
-            load()
+            if (documentary != null) beginDocumentaries() else load()
         } else {
             ui.removeCallbacks(startTimeout)
             view.visibility = View.INVISIBLE
@@ -172,22 +259,46 @@ internal class YouTubePlayer(
     }
 
     private inner class Bridge {
-        @JavascriptInterface fun state(value: Int) = ui.post {
+        @JavascriptInterface fun state(generation: Int, value: Int, video: String) = ui.post {
+            if (generation != pageId || discovering || (documentaryVideo != null && documentaryVideo != video)) return@post
             if (value == PLAYING) {
                 if (!started) Log.i("AminYouTube", "Playing")
                 started = true
+                consecutiveTimeouts = 0
                 ui.removeCallbacks(startTimeout)
                 onStatus(null)
+            } else if (value == ENDED && started && documentaryVideo != null) {
+                advanceDocumentary(DocumentaryResult.WATCHED)
+                playNextDocumentary()
+            } else if (documentaryVideo != null) {
+                if (value == PAUSED) ui.removeCallbacks(startTimeout)
+                if (value == BUFFERING) {
+                    ui.removeCallbacks(startTimeout)
+                    ui.postDelayed(startTimeout, START_TIMEOUT_MS)
+                }
             }
+        }
+
+        @JavascriptInterface fun playlist(generation: Int, json: String) = ui.post {
+            if (generation != pageId || !discovering) return@post
+            val videos = runCatching {
+                val list = JSONArray(json)
+                documentaryCandidates((0 until list.length()).asSequence().map { list.optString(it) })
+            }.getOrDefault(emptyList())
+            if (videos.isNotEmpty()) usePlaylist(videos)
         }
 
         @JavascriptInterface fun subtitles(video: String, choice: String) {
             Log.i("AminYouTube", "Subtitles for $video: $choice")
         }
 
-        @JavascriptInterface fun error(code: Int) = ui.post {
+        @JavascriptInterface fun error(generation: Int, code: Int) = ui.post {
+            if (generation != pageId) return@post
             Log.i("AminYouTube", "Player error $code")
-            if (code == 101 || code == 150) {
+            if (discovering || documentaryVideo != null) {
+                // Playlist metadata can still arrive when the first item in the playlist is blocked.
+                if (!discovering) failed()
+            } else if (code == 101 || code == 150) {
                 if (episode != null) episodeUnavailable(R.string.series_embed_blocked) else openOutside()
             } else failed()
         }
@@ -198,6 +309,8 @@ internal class YouTubePlayer(
     private fun openOutside() {
         val youtube = source ?: return
         val playlist = usingPlaylist
+        val generation = pageId
+        val liveOnly = documentary != null
         ui.removeCallbacks(startTimeout)
         lookups.execute {
             val url = runCatching {
@@ -207,13 +320,13 @@ internal class YouTubePlayer(
                     if ("\"isLive\":true" !in page || "\"isUpcoming\":true" in page) null
                     else LIVE_VIDEO.find(page)?.let { "https://www.youtube.com/watch?v=${it.groupValues[1]}" }
                 }
-                live ?: youtube.playlist?.let { list ->
+                live ?: youtube.playlist?.takeUnless { liveOnly }?.let { list ->
                     val feed = fetch("https://www.youtube.com/feeds/videos.xml?playlist_id=$list")
                     FEED_VIDEO.find(feed)?.let { "https://www.youtube.com/watch?v=${it.groupValues[1]}&list=$list" }
                 }
             }.getOrNull()
             ui.post {
-                if (source !== youtube) return@post
+                if (generation != pageId || source !== youtube) return@post
                 if (url != null && openInYouTubeApp(url)) onStatus(null) else failed()
             }
         }
@@ -234,12 +347,13 @@ internal class YouTubePlayer(
         }
     }
 
-    private fun page(videoId: String, vars: JSONObject) = """
+    private fun page(videoId: String, vars: JSONObject, generation: Int) = """
         <!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1">
         <style>html,body{margin:0;height:100%;background:#000;overflow:hidden}#p{width:100%;height:100%}</style>
         </head><body><div id="p"></div>
         <script>
         var player, subtitles = $subtitles, current = '', rank = 0, checks = 0, retry;
+        var discovering = $discovering, readingPlaylist;
         var FA = {languageCode: 'fa', languageName: 'فارسی'};
         // Picks the best Persian subtitles YouTube's player can give, for each video in turn:
         // 5 the video's own Persian track, 4 YouTube's translation of human English captions,
@@ -286,19 +400,42 @@ internal class YouTubePlayer(
             retry = setTimeout(persian, 1000);
           }
         }
+        function readPlaylist() {
+          if (!player || !player.getPlaylist) return;
+          var items = player.getPlaylist() || [];
+          if (items.length) {
+            clearInterval(readingPlaylist);
+            Amin.playlist($generation, JSON.stringify(items.slice(0, 500)));
+          }
+        }
         function onYouTubeIframeAPIReady() {
           player = new YT.Player('p', {width: '100%', height: '100%', videoId: ${JSONObject.quote(videoId)},
             playerVars: $vars,
             events: {
-              onReady: function (e) { if (subtitles) e.target.loadModule('captions'); e.target.playVideo(); },
+              onReady: function (e) {
+                if (discovering) {
+                  readingPlaylist = setInterval(readPlaylist, 250);
+                  readPlaylist();
+                  return;
+                }
+                if (subtitles) e.target.loadModule('captions');
+                e.target.playVideo();
+              },
               onApiChange: persian,
-              onStateChange: function (e) { Amin.state(e.data); if (e.data == 1) persian(); },
-              onError: function (e) { Amin.error(e.data); }
+              onStateChange: function (e) {
+                if (discovering) return;
+                var data = e.target.getVideoData && e.target.getVideoData();
+                Amin.state($generation, e.data, (data || {}).video_id || '');
+                if (e.data == 1) persian();
+              },
+              onError: function (e) { Amin.error($generation, e.data); }
             }});
         }
         function toggle() {
           if (!player || !player.getPlayerState) return;
-          if (player.getPlayerState() == 1) player.pauseVideo(); else player.playVideo();
+          var state = player.getPlayerState();
+          if (state == 1 || (${documentaryVideo != null} && state == 3)) player.pauseVideo();
+          else player.playVideo();
         }
         function episodeProgress() {
           if (!player || !player.getVideoUrl || !player.getVideoUrl()) return null;
@@ -314,8 +451,13 @@ internal class YouTubePlayer(
 
     private companion object {
         const val ORIGIN = "https://com.enigma.aminlivetv"
+        const val ENDED = 0
         const val PLAYING = 1
+        const val PAUSED = 2
+        const val BUFFERING = 3
         const val START_TIMEOUT_MS = 25_000L
+        const val PLAYLIST_TIMEOUT_MS = 12_000L
+        const val MAX_CONSECUTIVE_TIMEOUTS = 5
         val LIVE_VIDEO = Regex("""<link rel="canonical" href="https://www\.youtube\.com/watch\?v=([A-Za-z0-9_-]{11})"""")
         val FEED_VIDEO = Regex("<yt:videoId>([A-Za-z0-9_-]{11})</yt:videoId>")
     }

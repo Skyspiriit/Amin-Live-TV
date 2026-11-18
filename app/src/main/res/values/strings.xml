@@ -12,6 +12,9 @@
     <string name="series_partial">قسمت‌های موجود</string>
     <string name="series_ongoing">در حال پخش</string>
     <string name="series_play_pause">پخش / مکث</string>
+    <string name="series_captions_off">زیرنویس خاموش</string>
+    <string name="series_captions_on">زیرنویس روشن</string>
+    <string name="next_documentary">مستند بعدی</string>
     <string name="series_restart">از ابتدا</string>
     <string name="series_embed_blocked">پخش در برنامه مجاز نیست. تماشا در یوتیوب با ذخیرهٔ زمان همراه نیست.</string>
     <string name="series_open_youtube">تماشا در یوتیوب</string>
