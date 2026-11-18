@@ -1,5 +1,7 @@
 # Persian series inventory
 
+Catalogue revision 11 contains 24 complete numbered runs, 13 partial titles and one ongoing title, with 1,134 episode IDs. The five additions documented in the [3.8.0 source checks](entertainment-sources.md) supply 87 full episodes. The sections below retain the earlier rollout findings and the subsequent 3.7.0 additions.
+
 Checked **18 November 2026**. The review covers **152 distinct titles** across the requested archives and additional distributors. Multi-season titles have separate season rows. The app publishes **12 complete**, **2 partial** and **0 ongoing** titles. **138** candidates stayed out of the app, including the membership-only ongoing title تاکسی.
 
 **Verified playable** means that the signed-out Portuguese YouTube watch-page response identified the exact video and expected publisher, gave a full-episode runtime, reported public playback and permitted embedding. The Android TV emulator was used for representative playback. Length by itself is only a discovery clue. An em dash means there was insufficient evidence for that field. A rejected archival list can contain full-length copies without being eligible for that column. Numbers and percentages use distinct episodes; for rejected titles whose access or authorization failed review, any playlist numbers in the notes are leads for rechecking.

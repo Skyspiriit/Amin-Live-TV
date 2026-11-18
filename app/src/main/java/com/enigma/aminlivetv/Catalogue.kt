@@ -24,7 +24,12 @@ internal enum class Category(val key: String, val title: Int, val main: Boolean 
     NATURE("nature", R.string.nature, false),
     SCIENCE("science", R.string.science, false),
     MOVIES("movies", R.string.movies, false),
-    SERIES("series", R.string.series, false)
+    SERIES("series", R.string.series, false),
+    GAMES("games", R.string.games, false),
+    CINEMA("cinema", R.string.cinema, false),
+    MOTORING("motoring", R.string.motoring, false),
+    CHESS("chess", R.string.chess, false),
+    DEVOTIONAL("devotional", R.string.devotional, false)
 }
 
 // Official YouTube playback: the channel's current live broadcast, its playlist, or the live
@@ -238,7 +243,8 @@ internal class CatalogueStore(context: Context) {
                 val base = channels.first { it.id == reference }
                 base.copy(id = id, name = name, categories = setOf(group), filmOrder = null, officialLiveUrl = null)
             } else {
-                Channel(id, name, setOf(group), null, emptyList(), Origin.SATELLITE, "unverified", 0L, youtube = youtube)
+                val logo = if (entry.isNull("logo")) null else publicUrl(entry.requiredText("logo", 2048))
+                Channel(id, name, setOf(group), logo, emptyList(), Origin.SATELLITE, "unverified", 0L, youtube = youtube)
             }
         }
     }

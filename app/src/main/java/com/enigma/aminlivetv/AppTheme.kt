@@ -17,7 +17,21 @@ internal data class Palette(
     val accent: Int,
     val ink: Int = Color.rgb(247, 250, 244),
     val muted: Int = Color.rgb(190, 202, 198),
-)
+) {
+    val artwork: Int get() = when (key) {
+        "lapis", "violet" -> R.drawable.fantasy_palace
+        "ruby", "saffron" -> R.drawable.fantasy_desert
+        else -> R.drawable.fantasy_garden
+    }
+    val sceneName: String get() = when (key) {
+        "emerald" -> "باغ زمرد"
+        "turquoise" -> "رویای فیروزه"
+        "lapis" -> "قصر لاجورد"
+        "violet" -> "کهکشان بنفشه"
+        "ruby" -> "شفق یاقوت"
+        else -> "کویر زعفران"
+    }
+}
 
 internal object AppTheme {
     val palettes = listOf(

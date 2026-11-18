@@ -1,12 +1,12 @@
 # Amin Live TV
 
-Amin Live TV 3.7.0 is a standalone Persian-language live television app for Android TV 8.0 and later. It runs under `com.enigma.aminlivetv`, upgrades earlier signed releases in place and can be installed alongside Amin Player.
+Amin Live TV 3.8.0 is a standalone Persian-language live television app for Android TV 8.0 and later. It runs under `com.enigma.aminlivetv`, upgrades earlier signed releases in place and can be installed alongside Amin Player.
 
-**Home screen and colours (3.7.0).** The home screen shows the time and the Persian date, coloured category cards and a «رنگ‌ها» (colours) button. That button opens six colour themes: زمرد, فیروزه, لاجورد, بنفشه, یاقوت and زعفران. The choice applies at once to every screen and is saved on the TV.
+**Fantasy home screen (3.8.0).** The illustrated home screen groups live TV, games, cinema and fantasy, cars, chess, documentaries and devotional programmes into clear rows. Press «رنگ‌ها» to preview six fantasy themes based on a Persian garden, a floating palace and a desert palace. The selected setting and colours are saved on the TV. The large series action opens «سریال‌های ایرانی». See [new content and source checks](docs/entertainment-sources.md) and [artwork and design notes](docs/home-artwork.md).
 
 ## Install on a Xiaomi Android TV Box
 
-1. Copy `Amin-Live-TV-v3.7.0.apk` to a USB drive and plug it into the box.
+1. Copy `Amin-Live-TV-v3.8.0.apk` to a USB drive and plug it into the box.
 2. Open the drive from the box’s file manager and select the APK. If Android asks, allow the file manager to install unknown apps, then return to the APK and select **Install**. The setting’s name varies by model and firmware.
 3. Open **Amin Live TV** from **Apps**. Choose **شبکه‌های داخلی**, **شبکه‌های خبری**, **شبکه‌های ورزشی** or **فیلم و سریال**, or one of the groups below them (**مستند**, **حیات وحش**, **طبیعت**, **علم و فضا**, **فیلم سینمایی**, **سریال کامل**), and press OK on a tile.
 4. While watching, press Up for the previous station and Down for the next one. Press OK to show or hide the channel strip. Left and Right switch stations while the strip is visible. Back returns to the grid. **ادامهٔ تماشا** on the home screen resumes the last station that played successfully when it is still available.
@@ -15,7 +15,7 @@ If the box cannot open the USB file, install with [Android Platform Tools](https
 
 ```sh
 adb devices
-adb -s <tv-device-id> install -r --user 0 Amin-Live-TV-v3.7.0.apk
+adb -s <tv-device-id> install -r --user 0 Amin-Live-TV-v3.8.0.apk
 ```
 
 Always pass `--user 0`. Without it, ADB installs the app into every Android user, including the hidden work profile on Xiaomi boxes. That second copy then hides the main copy's switch in **Install unknown apps**, and in-app updates can't be allowed. See [UPDATE-PERMISSION-3.3.md](UPDATE-PERMISSION-3.3.md).

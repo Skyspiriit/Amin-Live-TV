@@ -83,7 +83,7 @@ class MainActivity : Activity() {
         monitor = ChannelMonitor(this, history, timings, ::onVisibilityChanged)
         catalogue = store.load()
         category = savedCategory("category") ?: Category.DOMESTIC
-        showHome()
+        showHome(IRANIAN_SERIES_TAG)
         appUpdate.handle(intent)
         if (BuildConfig.TEST_CATALOG) Log.i("AminMonitor", "Local home rendered")
     }
@@ -173,72 +173,59 @@ class MainActivity : Activity() {
         scheduleUpdates()
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         val content = column().apply {
-            setPadding(dp(48), dp(22), dp(48), dp(18))
+            setPadding(dp(44), dp(20), dp(44), dp(26))
             clipChildren = false
             clipToPadding = false
         }
-
-        // Header: app badge and name on the right, colour button, clock and date on the left.
         val header = LinearLayout(this).apply { gravity = Gravity.CENTER_VERTICAL }
-        header.addView(AppBadge(this), LinearLayout.LayoutParams(dp(54), dp(54)))
-        header.addView(column().apply {
-            gravity = Gravity.START or Gravity.CENTER_VERTICAL
-            addView(text(getString(R.string.title_fa), 32, bold = true).apply { gravity = Gravity.START })
-            addView(text(getString(R.string.home_tagline), 15, MUTED).apply { gravity = Gravity.START })
-        }, LinearLayout.LayoutParams(0, -2, 1f).apply { marginStart = dp(16) })
-        val themeButton = LinearLayout(this).apply {
-            gravity = Gravity.CENTER
-            setPadding(dp(18), 0, dp(18), 0)
-            background = focusSurface()
-            isFocusable = true
-            isClickable = true
+        header.addView(AppBadge(this), LinearLayout.LayoutParams(dp(40), dp(40)))
+        header.addView(text(getString(R.string.title_fa), 28, bold = true).apply {
+            gravity = Gravity.START
+        }, LinearLayout.LayoutParams(0, -2, 1f).apply { marginStart = dp(12) })
+        val themeButton = actionButton(getString(R.string.theme_button), 18).apply {
             tag = THEME_TAG
-            contentDescription = getString(R.string.theme_button)
-            addView(PaletteIcon(this@MainActivity), LinearLayout.LayoutParams(dp(26), dp(26)))
-            addView(text(getString(R.string.theme_button), 18, bold = true), LinearLayout.LayoutParams(-2, -2).apply { marginStart = dp(8) })
+            setPadding(dp(18), 0, dp(18), 0)
             setOnClickListener { showThemePicker() }
-            liftOnFocus()
         }
-        header.addView(themeButton, LinearLayout.LayoutParams(-2, dp(50)).apply { marginEnd = dp(22) })
+        header.addView(themeButton, LinearLayout.LayoutParams(-2, dp(44)).apply { marginEnd = dp(22) })
         val clock = column().apply { gravity = Gravity.END or Gravity.CENTER_VERTICAL }
-        clockTime = text("", 30, bold = true).apply { gravity = Gravity.END }
-        clockDate = text("", 15, MUTED).apply { gravity = Gravity.END }
+        clockTime = text("", 25, bold = true).apply { gravity = Gravity.END }
+        clockDate = text("", 14, MUTED).apply { gravity = Gravity.END }
         clock.addView(clockTime)
         clock.addView(clockDate)
         header.addView(clock, LinearLayout.LayoutParams(-2, -2))
-        content.addView(header, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(10) })
+        content.addView(header, LinearLayout.LayoutParams(-1, dp(48)))
         tickClock()
 
-        var categoryFocus: View? = null
-        val focusedCategory = restoreFocus as? Category ?: category
-        // Two rows of main categories, then one smaller row of documentary groups.
-        val (main, groups) = Category.entries.partition { it.main }
-        (main.chunked(2) + listOf(groups.filter { catalogue.inCategory(it).isNotEmpty() })).forEach { items ->
-            if (items.isEmpty()) return@forEach
-            val small = !items.first().main
-            val row = LinearLayout(this).apply {
-                layoutDirection = View.LAYOUT_DIRECTION_RTL
-                clipChildren = false
-                clipToPadding = false
-            }
-            items.forEachIndexed { index, item ->
-                val tile = if (small) groupTile(item, items.size) else mainTile(item)
-                if (item == focusedCategory) categoryFocus = tile
-                row.addView(tile, LinearLayout.LayoutParams(0, -1, 1f).apply {
-                    if (index < items.size - 1) marginEnd = dp(if (small) 12 else 18)
-                })
-            }
-            content.addView(row, LinearLayout.LayoutParams(-1, 0, if (small) 0.6f else 1f).apply { topMargin = dp(if (small) 16 else 14) })
+        val hero = FrameLayout(this).apply {
+            background = surface(AppTheme.current.backgroundDeep)
+            clipToOutline = true
         }
-
-        val viewingActions = LinearLayout(this).apply { clipChildren = false }
-        val iranianSeries = actionButton(getString(R.string.iranian_series), 22, highlighted = true).apply {
+        hero.addView(ImageView(this).apply {
+            setImageResource(AppTheme.current.artwork)
+            scaleType = ImageView.ScaleType.CENTER_CROP
+            importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+        }, frame(-1, -1))
+        hero.addView(View(this).apply {
+            background = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT,
+                intArrayOf(Color.TRANSPARENT, Color.argb(220, 5, 10, 20)))
+        }, frame(-1, -1))
+        val heroCopy = column().apply {
+            gravity = Gravity.CENTER_VERTICAL
+            setPadding(dp(26), dp(16), dp(26), dp(16))
+        }
+        heroCopy.addView(text(getString(R.string.iranian_series), 31, bold = true).apply { gravity = Gravity.START })
+        heroCopy.addView(text(getString(R.string.home_series_detail), 18, MUTED).apply {
+            gravity = Gravity.START
+        }, LinearLayout.LayoutParams(-1, -2).apply { topMargin = dp(6) })
+        val iranianSeries = actionButton(getString(R.string.choose_series), 20, highlighted = true).apply {
             tag = IRANIAN_SERIES_TAG
-            setOnClickListener {
-                startActivity(Intent(this@MainActivity, IranianSeriesActivity::class.java))
-            }
-            viewingActions.addView(this, LinearLayout.LayoutParams(0, -1, 1f))
+            contentDescription = getString(R.string.iranian_series)
+            setOnClickListener { startActivity(Intent(this@MainActivity, IranianSeriesActivity::class.java)) }
         }
+        heroCopy.addView(iranianSeries, LinearLayout.LayoutParams(dp(224), dp(48)).apply { topMargin = dp(16) })
+        hero.addView(heroCopy, frame(dp(420), -1, Gravity.START))
+        content.addView(hero, LinearLayout.LayoutParams(-1, dp(174)).apply { topMargin = dp(16) })
 
         val lastCategory = savedCategory("watched-category")
         val lastId = preferences.getString("watched-channel", null)
@@ -257,10 +244,32 @@ class MainActivity : Activity() {
                     val index = currentList.indexOfFirst { it.id == channel.id }
                     if (index >= 0) beginPlayback(index) else showGrid(null)
                 }
-                viewingActions.addView(this, LinearLayout.LayoutParams(0, -1, 1f).apply { marginStart = dp(18) })
+                content.addView(this, LinearLayout.LayoutParams(-1, dp(48)).apply { topMargin = dp(12) })
             }
         }
-        content.addView(viewingActions, LinearLayout.LayoutParams(-1, dp(56)).apply { topMargin = dp(16) })
+        val focusableCategories = LinkedHashMap<Category, View>()
+        val shelves = listOf(
+            R.string.home_live to listOf(Category.DOMESTIC, Category.NEWS, Category.SPORTS, Category.FILM),
+            R.string.home_entertainment to listOf(Category.GAMES, Category.CINEMA, Category.MOTORING, Category.CHESS),
+            R.string.home_discover to listOf(Category.DOCUMENTARY, Category.WILDLIFE, Category.NATURE, Category.SCIENCE),
+            R.string.home_archives to listOf(Category.MOVIES, Category.SERIES, Category.DEVOTIONAL)
+        )
+        for ((heading, categories) in shelves) {
+            val available = categories.filter { catalogue.inCategory(it).isNotEmpty() }
+            if (available.isEmpty()) continue
+            content.addView(text(getString(heading), 19, MUTED, bold = true).apply {
+                gravity = Gravity.START
+            }, LinearLayout.LayoutParams(-1, dp(30)).apply { topMargin = dp(14) })
+            val row = LinearLayout(this).apply { clipChildren = false }
+            for ((index, item) in available.withIndex()) {
+                val tile = homeCategory(item)
+                focusableCategories[item] = tile
+                row.addView(tile, LinearLayout.LayoutParams(0, dp(78), 1f).apply {
+                    if (index < available.lastIndex) marginEnd = dp(12)
+                })
+            }
+            content.addView(row, LinearLayout.LayoutParams(-1, -2))
+        }
         val update = latestRelease?.let { tag ->
             val ready = readyUpdate
             val label = when {
@@ -276,71 +285,41 @@ class MainActivity : Activity() {
                         downloadingRelease == null -> downloadRelease(tag)
                     }
                 }
-                content.addView(this, LinearLayout.LayoutParams(-1, dp(48)).apply { topMargin = dp(12) })
+                content.addView(this, LinearLayout.LayoutParams(-1, dp(48)).apply { topMargin = dp(16) })
             }
         }
-        content.addView(text("v${BuildConfig.VERSION_NAME}", 12, MUTED).apply {
-            gravity = Gravity.START
-            textDirection = View.TEXT_DIRECTION_LTR
-            alpha = 0.7f
-        }, LinearLayout.LayoutParams(-1, -2).apply { topMargin = dp(6) })
-        install(content)
+        val scroll = android.widget.ScrollView(this).apply {
+            isFillViewport = true
+            isVerticalScrollBarEnabled = false
+            clipToPadding = false
+            addView(content)
+        }
+        install(scroll)
         val restored = when (restoreFocus) {
             RESUME_TAG -> resume
             UPDATE_TAG -> update
-            IRANIAN_SERIES_TAG -> iranianSeries
             THEME_TAG -> themeButton
-            else -> null
+            IRANIAN_SERIES_TAG -> iranianSeries
+            else -> focusableCategories[restoreFocus as? Category ?: category]
         }
-        (restored ?: categoryFocus)?.requestFocus()
+        (restored ?: iranianSeries).requestFocus()
     }
 
-    // A main category: coloured gradient card with an icon badge, name and a short description.
-    private fun mainTile(item: Category) = LinearLayout(this).apply {
+    private fun homeCategory(item: Category) = LinearLayout(this).apply {
         gravity = Gravity.CENTER_VERTICAL
-        setPadding(dp(26), dp(14), dp(26), dp(14))
+        setPadding(dp(16), dp(8), dp(14), dp(8))
         background = cardSurface()
         isFocusable = true
         isClickable = true
         tag = item
         contentDescription = getString(item.title)
-        addView(FrameLayout(this@MainActivity).apply {
-            background = GradientDrawable().apply { shape = GradientDrawable.OVAL; setColor(ACCENT) }
-            addView(CategoryIcon(this@MainActivity, item, AppTheme.current.backgroundDeep), frame(dp(40), dp(40)))
-        }, LinearLayout.LayoutParams(dp(74), dp(74)))
-        addView(column().apply {
+        addView(CategoryIcon(this@MainActivity, item, ACCENT), LinearLayout.LayoutParams(dp(30), dp(30)))
+        addView(text(getString(item.title), 21, bold = true).apply {
             gravity = Gravity.START or Gravity.CENTER_VERTICAL
-            addView(text(getString(item.title), 28, bold = true).apply { gravity = Gravity.START })
-            categoryLine(item)?.let { addView(text(getString(it), 16, MUTED).apply { gravity = Gravity.START }) }
-        }, LinearLayout.LayoutParams(0, -2, 1f).apply { marginStart = dp(20) })
+            maxLines = 2
+        }, LinearLayout.LayoutParams(0, -1, 1f).apply { marginStart = dp(12) })
         setOnClickListener { openCategory(item) }
         liftOnFocus()
-    }
-
-    // A documentary group: smaller card with the icon above or beside the name.
-    private fun groupTile(item: Category, count: Int) = LinearLayout(this).apply {
-        gravity = Gravity.CENTER
-        val beside = count <= 4
-        orientation = if (beside) LinearLayout.HORIZONTAL else LinearLayout.VERTICAL
-        background = focusSurface()
-        isFocusable = true
-        isClickable = true
-        tag = item
-        contentDescription = getString(item.title)
-        addView(CategoryIcon(this@MainActivity, item, ACCENT), LinearLayout.LayoutParams(dp(32), dp(32)))
-        addView(text(getString(item.title), if (count > 4) 21 else 24, bold = true), LinearLayout.LayoutParams(-2, -2).apply {
-            if (beside) marginStart = dp(10) else topMargin = dp(2)
-        })
-        setOnClickListener { openCategory(item) }
-        liftOnFocus()
-    }
-
-    private fun categoryLine(item: Category) = when (item) {
-        Category.DOMESTIC -> R.string.line_domestic
-        Category.NEWS -> R.string.line_news
-        Category.SPORTS -> R.string.line_sports
-        Category.FILM -> R.string.line_film
-        else -> null
     }
 
     private fun actionButton(label: String, size: Int, highlighted: Boolean = false) = text(label, size, bold = true).apply {
@@ -400,37 +379,38 @@ class MainActivity : Activity() {
         }
         panel.addView(text(getString(R.string.theme_title), 26, bold = true))
         panel.addView(text(getString(R.string.theme_hint), 16, MUTED), LinearLayout.LayoutParams(-2, -2).apply { topMargin = dp(4) })
-        val row = LinearLayout(this).apply { clipChildren = false; clipToPadding = false }
         var focus: View? = null
-        AppTheme.palettes.forEachIndexed { index, palette ->
-            val swatch = column().apply {
-                gravity = Gravity.CENTER
-                setPadding(dp(14), dp(16), dp(14), dp(14))
-                isFocusable = true
-                isClickable = true
-                contentDescription = palette.name
-                background = StateListDrawable().apply {
-                    addState(intArrayOf(android.R.attr.state_focused), surface(palette.surface, palette.accent))
-                    addState(intArrayOf(), surface(palette.background))
-                }
-                addView(View(this@MainActivity).apply {
-                    background = GradientDrawable(GradientDrawable.Orientation.TL_BR, intArrayOf(palette.accent, palette.tileStart)).apply {
-                        shape = GradientDrawable.OVAL
-                        setStroke(dp(2), palette.ink)
+        for (palettes in AppTheme.palettes.chunked(3)) {
+            val row = LinearLayout(this).apply { clipChildren = false; clipToPadding = false }
+            palettes.forEachIndexed { index, palette ->
+                val swatch = column().apply {
+                    gravity = Gravity.CENTER
+                    setPadding(dp(8), dp(8), dp(8), dp(10))
+                    isFocusable = true
+                    isClickable = true
+                    contentDescription = palette.sceneName
+                    background = StateListDrawable().apply {
+                        addState(intArrayOf(android.R.attr.state_focused), surface(palette.surface, palette.accent))
+                        addState(intArrayOf(), surface(palette.background))
                     }
-                }, LinearLayout.LayoutParams(dp(70), dp(70)))
-                addView(text(palette.name, 20, palette.ink, bold = true), LinearLayout.LayoutParams(-2, -2).apply { topMargin = dp(10) })
-                setOnClickListener {
-                    AppTheme.select(this@MainActivity, palette)
-                    dialog.dismiss()
-                    showHome(THEME_TAG)
+                    addView(ImageView(this@MainActivity).apply {
+                        setImageResource(palette.artwork)
+                        scaleType = ImageView.ScaleType.CENTER_CROP
+                        importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+                    }, LinearLayout.LayoutParams(dp(184), dp(76)))
+                    addView(text(palette.sceneName, 19, palette.ink, bold = true), LinearLayout.LayoutParams(-2, -2).apply { topMargin = dp(8) })
+                    setOnClickListener {
+                        AppTheme.select(this@MainActivity, palette)
+                        dialog.dismiss()
+                        showHome(THEME_TAG)
+                    }
+                    liftOnFocus()
                 }
-                liftOnFocus()
+                if (palette == AppTheme.current) focus = swatch
+                row.addView(swatch, LinearLayout.LayoutParams(dp(200), -2).apply { if (index > 0) marginStart = dp(14) })
             }
-            if (palette == AppTheme.current) focus = swatch
-            row.addView(swatch, LinearLayout.LayoutParams(dp(132), -2).apply { if (index > 0) marginStart = dp(14) })
+            panel.addView(row, LinearLayout.LayoutParams(-2, -2).apply { topMargin = dp(14) })
         }
-        panel.addView(row, LinearLayout.LayoutParams(-2, -2).apply { topMargin = dp(22) })
         dim.addView(panel, frame(-2, -2))
         dim.layoutDirection = View.LAYOUT_DIRECTION_RTL
         dialog.setContentView(dim)
@@ -981,7 +961,7 @@ class MainActivity : Activity() {
                     canvas.drawLine(9f, 23f, 23f, 9f, pen)
                     canvas.drawOval(12f, 5.5f, 20f, 26.5f, pen)
                 }
-                Category.FILM -> {
+                Category.FILM, Category.CINEMA -> {
                     canvas.drawRoundRect(5f, 11f, 27f, 26f, 2f, 2f, pen)
                     canvas.drawLine(6f, 11f, 24f, 5f, pen)
                     canvas.drawLine(13f, 9f, 11f, 7f, pen)
@@ -1018,6 +998,33 @@ class MainActivity : Activity() {
                     canvas.drawLine(22f, 6f, 22f, 26f, pen)
                     canvas.drawLine(5f, 16f, 10f, 16f, pen)
                     canvas.drawLine(22f, 16f, 27f, 16f, pen)
+                }
+                Category.GAMES -> {
+                    canvas.drawRoundRect(5f, 6f, 27f, 26f, 4f, 4f, pen)
+                    canvas.drawCircle(11f, 12f, 1f, pen)
+                    canvas.drawCircle(21f, 20f, 1f, pen)
+                    canvas.drawCircle(16f, 16f, 1f, pen)
+                }
+                Category.MOTORING -> {
+                    canvas.drawRoundRect(4f, 14f, 28f, 24f, 3f, 3f, pen)
+                    canvas.drawLine(7f, 14f, 11f, 7f, pen)
+                    canvas.drawLine(11f, 7f, 22f, 7f, pen)
+                    canvas.drawLine(22f, 7f, 26f, 14f, pen)
+                    canvas.drawCircle(9f, 25f, 2f, pen)
+                    canvas.drawCircle(23f, 25f, 2f, pen)
+                }
+                Category.CHESS -> {
+                    canvas.drawCircle(16f, 8f, 4f, pen)
+                    canvas.drawLine(12f, 12f, 12f, 18f, pen)
+                    canvas.drawLine(20f, 12f, 20f, 18f, pen)
+                    canvas.drawLine(12f, 18f, 8f, 26f, pen)
+                    canvas.drawLine(20f, 18f, 24f, 26f, pen)
+                    canvas.drawLine(8f, 26f, 24f, 26f, pen)
+                }
+                Category.DEVOTIONAL -> {
+                    canvas.drawArc(10f, 5f, 27f, 24f, 70f, 270f, false, pen)
+                    canvas.drawLine(6f, 19f, 6f, 27f, pen)
+                    canvas.drawLine(4f, 24f, 9f, 24f, pen)
                 }
                 Category.SERIES -> {
                     canvas.drawRoundRect(4f, 10f, 24f, 26f, 2f, 2f, pen)

@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="games">مافیا و مسابقه</string>
+    <string name="cinema">سینما و فانتزی</string>
+    <string name="motoring">دنیای خودرو</string>
+    <string name="chess">شطرنج</string>
+    <string name="devotional">آیین و مداحی</string>
+    <string name="home_live">تلویزیون زنده</string>
+    <string name="home_entertainment">سرگرمی و سلیقه‌ها</string>
+    <string name="home_discover">کشف جهان</string>
+    <string name="home_archives">آرشیو و آیین</string>
+    <string name="home_series_detail">انتخاب سریال، قسمت و ادامهٔ تماشا</string>
+    <string name="choose_series">انتخاب سریال</string>
     <string name="iranian_series">سریال‌های ایرانی</string>
     <string name="series_empty">فعلاً سریالی در دسترس نیست.</string>
     <string name="series_episode">قسمت %1$s</string>
@@ -51,7 +62,7 @@
     <string name="update_release_link">برای دریافت نسخهٔ جدید، این نشانی را روی تلفن یا رایانه باز کنید:\n%1$s</string>
     <string name="home_tagline">تلویزیون زنده، فیلم، سریال و مستند</string>
     <string name="theme_button">رنگ‌ها</string>
-    <string name="theme_title">رنگ برنامه</string>
+    <string name="theme_title">دنیای خود را انتخاب کنید</string>
     <string name="theme_hint">یکی را انتخاب کنید و OK را بزنید</string>
     <string name="line_domestic">شبکه‌های سراسری و استانی</string>
     <string name="line_news">اخبار ایران و جهان</string>
