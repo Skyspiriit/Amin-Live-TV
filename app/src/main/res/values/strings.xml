@@ -7,6 +7,10 @@
     <string name="series_continue">ادامهٔ تماشا · %1$s</string>
     <string name="series_continue_title">ادامهٔ تماشا · %1$s · %2$s</string>
     <string name="series_next_episode">قسمت بعد</string>
+    <string name="series_next_available">قسمت موجود بعدی</string>
+    <string name="series_episode_list">فهرست قسمت‌ها</string>
+    <string name="series_partial">قسمت‌های موجود</string>
+    <string name="series_ongoing">در حال پخش</string>
     <string name="series_play_pause">پخش / مکث</string>
     <string name="series_restart">از ابتدا</string>
     <string name="series_embed_blocked">پخش در برنامه مجاز نیست. تماشا در یوتیوب با ذخیرهٔ زمان همراه نیست.</string>

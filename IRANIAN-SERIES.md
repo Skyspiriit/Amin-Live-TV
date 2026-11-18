@@ -1,5 +1,7 @@
 # Persian series sources and verification
 
+See the [expanded Persian series inventory](docs/persian-series-inventory.md) for the 3.6.0 catalogue. This page records the original five-series rollout.
+
 Checked 18 November 2026. All 119 selected videos came from the [official SHEYDA channel](https://www.youtube.com/channel/UC3_wFuKt0PT2Fj7gunthcYw), whose description states it licenses its catalogue. Its rights-management partner confirms distribution on YouTube and specifically identifies the official SHEYDA channel for Shahrzad. [ZigZag partnership](https://t.me/zigzagnetworkfa/1311) · [Shahrzad rights announcement](https://t.me/s/zigzagnetworkfa?q=%23Copyright)
 
 | Title | Full episodes | Episode length | Publisher’s YouTube archive |

@@ -18,6 +18,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.TextView
@@ -28,6 +29,7 @@ class IranianSeriesActivity : Activity() {
     private lateinit var progress: SeriesProgress
     private val ui = Handler(Looper.getMainLooper())
     private val updates = Executors.newSingleThreadExecutor()
+    private val thumbnails = Logos()
     private var series: IranianSeries? = null
     private var episode: Episode? = null
     private var player: YouTubePlayer? = null
@@ -38,13 +40,14 @@ class IranianSeriesActivity : Activity() {
     private var reachedStart = false
     private var active = false
     private var finished = false
+    private var unavailable = false
     private lateinit var nextButton: TextView
     private val sampleTick = object : Runnable {
         override fun run() {
             val current = player ?: return
-            if (!active || finished) return
+            if (!active || finished || unavailable) return
             current.sampleEpisode { value ->
-                if (player === current && active) {
+                if (player === current && active && !unavailable) {
                     value?.let(::recordSample)
                     ui.removeCallbacks(this)
                     if (!finished) ui.postDelayed(this, SAMPLE_INTERVAL)
@@ -76,7 +79,12 @@ class IranianSeriesActivity : Activity() {
         if (title != null) showEpisodes(title, episodeId) else showLibrary(seriesId)
     }
 
-    private data class Choice(val label: String, val action: () -> Unit)
+    private data class Choice(
+        val label: String,
+        val thumbnail: String? = null,
+        val status: Int? = null,
+        val action: () -> Unit
+    )
 
     private fun showLibrary(focusId: String? = null) {
         series = null
@@ -90,7 +98,9 @@ class IranianSeriesActivity : Activity() {
                 play(title, episode)
             }
         }
-        val choices = listOfNotNull(resume) + titles.map { title -> Choice(title.title) { showEpisodes(title) } }
+        val choices = listOfNotNull(resume) + titles.map { title ->
+            Choice(title.title, title.thumbnail, statusLabel(title)) { showEpisodes(title) }
+        }
         val focus = titles.indexOfFirst { it.id == focusId }.let { if (it < 0) 0 else it + if (resume == null) 0 else 1 }
         showList(getString(R.string.iranian_series), choices, focus)
     }
@@ -112,13 +122,20 @@ class IranianSeriesActivity : Activity() {
         }
         val focus = title.episodes.indexOfFirst { it.id == focusId }
             .let { if (it < 0) 0 else it + if (resume == null) 0 else 1 }
-        showList(title.title, choices, focus)
+        showList(title.title, choices, focus, statusLabel(title))
     }
 
-    private fun showList(title: String, choices: List<Choice>, selected: Int) {
+    private fun statusLabel(title: IranianSeries): Int? = when (title.availability) {
+        SeriesAvailability.COMPLETE -> null
+        SeriesAvailability.PARTIAL -> R.string.series_partial
+        SeriesAvailability.ONGOING -> R.string.series_ongoing
+    }
+
+    private fun showList(title: String, choices: List<Choice>, selected: Int, status: Int? = null) {
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         val content = column(dp(32))
         content.addView(label(title, 32), LinearLayout.LayoutParams(-1, dp(59)))
+        status?.let { content.addView(label(getString(it), 20), LinearLayout.LayoutParams(-1, dp(36))) }
         if (choices.isEmpty()) {
             content.addView(label(getString(R.string.series_empty), 24), LinearLayout.LayoutParams(-1, -1))
         } else {
@@ -129,12 +146,8 @@ class IranianSeriesActivity : Activity() {
                 selector = outline(Color.TRANSPARENT, ACCENT)
                 adapter = object : ArrayAdapter<Choice>(this@IranianSeriesActivity, 0, choices) {
                     override fun getView(position: Int, recycled: View?, parent: ViewGroup): View {
-                        val row = recycled as? TextView ?: label("", 25).apply {
-                            minHeight = dp(54)
-                            background = outline(TILE)
-                            setPadding(dp(12), dp(5), dp(12), dp(5))
-                        }
-                        row.text = getItem(position)?.label
+                        val row = recycled as? ChoiceRow ?: ChoiceRow()
+                        getItem(position)?.let(row::bind)
                         return row
                     }
                 }
@@ -149,6 +162,38 @@ class IranianSeriesActivity : Activity() {
         display(content)
     }
 
+    private inner class ChoiceRow : LinearLayout(this@IranianSeriesActivity) {
+        private val thumbnail = ImageView(context).apply {
+            scaleType = ImageView.ScaleType.FIT_CENTER
+            importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+        }
+        private val title = label("", 25)
+        private val status = label("", 19)
+
+        init {
+            gravity = Gravity.CENTER_VERTICAL
+            minimumHeight = dp(54)
+            background = outline(TILE)
+            setPadding(dp(12), dp(5), dp(12), dp(5))
+            addView(thumbnail, LayoutParams(dp(144), dp(81)).apply { marginEnd = dp(14) })
+            addView(LinearLayout(context).apply {
+                orientation = VERTICAL
+                addView(title, LayoutParams(-1, -2))
+                addView(status, LayoutParams(-1, -2))
+            }, LayoutParams(0, -2, 1f))
+        }
+
+        fun bind(choice: Choice) {
+            title.text = choice.label
+            title.gravity = if (choice.thumbnail == null) Gravity.CENTER else Gravity.START
+            status.gravity = title.gravity
+            status.visibility = if (choice.status == null) View.GONE else View.VISIBLE
+            choice.status?.let(status::setText)
+            thumbnail.visibility = if (choice.thumbnail == null) View.GONE else View.VISIBLE
+            thumbnails.load(choice.thumbnail, thumbnail)
+        }
+    }
+
     private fun play(title: IranianSeries, selected: Episode, restart: Boolean = false) {
         closePlayer()
         if (restart) progress.clear(title, selected)
@@ -157,6 +202,7 @@ class IranianSeriesActivity : Activity() {
         lastSample = null
         lastSaved = null
         finished = false
+        unavailable = false
         savedAt = SystemClock.elapsedRealtime()
         resumeSeconds = progress.position(title, selected)?.takeUnless { it.completed }?.seconds ?: 0.0
         reachedStart = resumeSeconds == 0.0
@@ -168,7 +214,13 @@ class IranianSeriesActivity : Activity() {
         val controls = LinearLayout(this).apply { gravity = Gravity.CENTER }
         val pause = controls.action(R.string.series_play_pause) { player?.togglePause() }
         val restartButton = controls.action(R.string.series_restart) { play(title, selected, restart = true) }
-        nextButton = controls.action(R.string.series_next_episode) {
+        val episodesButton = controls.action(R.string.series_episode_list) {
+            closePlayer()
+            showEpisodesOrLibrary(title.id, selected.id)
+        }
+        val nextLabel = if (title.availability == SeriesAvailability.PARTIAL) R.string.series_next_available
+            else R.string.series_next_episode
+        nextButton = controls.action(nextLabel) {
             title.after(selected)?.let { play(title, it) }
         }.apply { visibility = View.GONE }
         val outside = controls.action(R.string.series_open_youtube) {
@@ -182,10 +234,12 @@ class IranianSeriesActivity : Activity() {
             status.visibility = if (message == null) View.GONE else View.VISIBLE
             if (message != null) status.setText(message)
             val blocked = message == R.string.series_embed_blocked
+            unavailable = blocked || message == R.string.programme_unavailable
             outside.visibility = if (blocked) View.VISIBLE else View.GONE
-            pause.visibility = if (blocked) View.GONE else View.VISIBLE
+            pause.visibility = if (unavailable) View.GONE else View.VISIBLE
             restartButton.visibility = if (blocked) View.GONE else View.VISIBLE
             if (blocked) outside.requestFocus()
+            if (unavailable && !blocked) episodesButton.requestFocus()
         }, ::openYouTube)
         player = embed
         content.addView(embed.view, LinearLayout.LayoutParams(-1, 0, 1f))
@@ -286,6 +340,7 @@ class IranianSeriesActivity : Activity() {
         closePlayer()
         ui.removeCallbacksAndMessages(null)
         updates.shutdownNow()
+        thumbnails.close()
         super.onDestroy()
     }
 

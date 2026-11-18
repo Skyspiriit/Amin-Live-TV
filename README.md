@@ -1,10 +1,10 @@
 # Amin Live TV
 
-Amin Live TV 3.5.1 is a standalone Persian-language live television app for Android TV 8.0 and later. It runs under `com.enigma.aminlivetv`, upgrades earlier signed releases in place and can be installed alongside Amin Player.
+Amin Live TV 3.6.0 is a standalone Persian-language live television app for Android TV 8.0 and later. It runs under `com.enigma.aminlivetv`, upgrades earlier signed releases in place and can be installed alongside Amin Player.
 
 ## Install on a Xiaomi Android TV Box
 
-1. Copy `Amin-Live-TV-v3.5.1.apk` to a USB drive and plug it into the box.
+1. Copy `Amin-Live-TV-v3.6.0.apk` to a USB drive and plug it into the box.
 2. Open the drive from the box’s file manager and select the APK. If Android asks, allow the file manager to install unknown apps, then return to the APK and select **Install**. The setting’s name varies by model and firmware.
 3. Open **Amin Live TV** from **Apps**. Choose **شبکه‌های داخلی**, **شبکه‌های خبری**, **شبکه‌های ورزشی** or **فیلم و سریال**, or one of the groups below them (**مستند**, **حیات وحش**, **طبیعت**, **علم و فضا**, **فیلم سینمایی**, **سریال کامل**), and press OK on a tile.
 4. While watching, press Up for the previous station and Down for the next one. Press OK to show or hide the channel strip. Left and Right switch stations while the strip is visible. Back returns to the grid. **ادامهٔ تماشا** on the home screen resumes the last station that played successfully when it is still available.
@@ -13,7 +13,7 @@ If the box cannot open the USB file, install with [Android Platform Tools](https
 
 ```sh
 adb devices
-adb -s <tv-device-id> install -r --user 0 Amin-Live-TV-v3.5.1.apk
+adb -s <tv-device-id> install -r --user 0 Amin-Live-TV-v3.6.0.apk
 ```
 
 Always pass `--user 0`. Without it, ADB installs the app into every Android user, including the hidden work profile on Xiaomi boxes. That second copy then hides the main copy's switch in **Install unknown apps**, and in-app updates can't be allowed. See [UPDATE-PERMISSION-3.3.md](UPDATE-PERMISSION-3.3.md).
@@ -22,9 +22,9 @@ See [Xiaomi’s APK installation guide](https://www.mi.com/uk/support/article/KA
 
 ## Persian series
 
-Open **سریال‌های ایرانی** on the home screen and select a title and episode. **ادامهٔ تماشا** opens the saved episode. Use **از ابتدا** to restart it, Back to choose a different episode, or **قسمت بعد** when an episode ends. Amin Live TV stores positions from the embedded YouTube player on the device. If YouTube blocks embedding, the **تماشا در یوتیوب** button opens the episode in the official YouTube TV app, where Amin Live TV cannot track position.
+Open **سریال‌های ایرانی** on the home screen and select a title and episode. **ادامهٔ تماشا** opens the saved episode. Choose **از ابتدا** to restart, **فهرست قسمت‌ها** to choose a different episode, or **قسمت بعد** when an episode ends. **قسمت‌های موجود** marks titles with some episodes unavailable. Amin Live TV stores positions from the embedded YouTube player on the device. If YouTube blocks embedding, **تماشا در یوتیوب** opens the episode in the official YouTube TV app, where Amin Live TV cannot track position.
 
-The existing remote catalogue includes an optional `iranianSeries` list. Each entry has a stable `id`, a Persian `title` and an `episodes` array. Each episode has a stable `id`, a numeric `season` and `number`, and the exact YouTube `videoId`. Keep IDs stable across catalogue refreshes. If an upload is replaced, the saved timestamp for the old video will not be applied to the replacement. [Series sources and checks](IRANIAN-SERIES.md)
+The remote catalogue lists complete, consecutive runs under `iranianSeries`. Each entry has a stable `id`, a Persian `title` and an `episodes` array. Each episode has a stable `id`, a numeric `season` and `number`, and the exact YouTube `videoId`. Use `iranianSeriesInProgress` for a free, verified subset of a finished series (`"status": "partial"`) or an ongoing series (`"status": "ongoing"`). The app keeps the original episode numbers for those titles even when some are missing. Move a title to `iranianSeries` once the complete run is verified. Keep IDs stable when editing or moving a series. A replaced YouTube video starts from the beginning. [Series inventory and sources](docs/persian-series-inventory.md)
 
 ## App updates
 

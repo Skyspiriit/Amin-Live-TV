@@ -3,8 +3,16 @@ package com.enigma.aminlivetv
 import android.content.Context
 import org.json.JSONObject
 
-internal data class IranianSeries(val id: String, val title: String, val episodes: List<Episode>) {
+internal enum class SeriesAvailability { COMPLETE, PARTIAL, ONGOING }
+
+internal data class IranianSeries(
+    val id: String,
+    val title: String,
+    val episodes: List<Episode>,
+    val availability: SeriesAvailability = SeriesAvailability.COMPLETE
+) {
     val multipleSeasons = episodes.last().season > 1
+    val thumbnail = "https://i.ytimg.com/vi/${episodes.first().videoId}/mqdefault.jpg"
     fun after(episode: Episode): Episode? =
         episodes.indexOf(episode).takeIf { it >= 0 }?.let { episodes.getOrNull(it + 1) }
 }
@@ -17,17 +25,34 @@ private val seriesIdPattern = Regex("[a-z0-9][a-z0-9-]{0,63}")
 private val episodeVideoPattern = Regex("[A-Za-z0-9_-]{11}")
 
 internal fun parseIranianSeries(document: JSONObject): List<IranianSeries> {
-    if (!document.has("iranianSeries")) return emptyList()
-    val entries = document.getJSONArray("iranianSeries")
-    require(entries.length() <= 100)
     val seriesIds = HashSet<String>()
     val videos = HashSet<String>()
+    // Older releases understand only complete, consecutive episode lists.
+    return parseSeriesSection(document, "iranianSeries", complete = true, seriesIds, videos) +
+        parseSeriesSection(document, "iranianSeriesInProgress", complete = false, seriesIds, videos)
+}
+
+private fun parseSeriesSection(
+    document: JSONObject,
+    key: String,
+    complete: Boolean,
+    seriesIds: MutableSet<String>,
+    videos: MutableSet<String>
+): List<IranianSeries> {
+    if (!document.has(key)) return emptyList()
+    val entries = document.getJSONArray(key)
+    require(seriesIds.size + entries.length() <= 100)
     return (0 until entries.length()).map { index ->
         val item = entries.getJSONObject(index)
         val id = item.get("id") as String
         val title = item.get("title") as String
         require(seriesIdPattern.matches(id) && seriesIds.add(id))
         require(title.isNotBlank() && title.length <= 100)
+        val availability = if (complete) SeriesAvailability.COMPLETE else when (item.getString("status")) {
+            "partial" -> SeriesAvailability.PARTIAL
+            "ongoing" -> SeriesAvailability.ONGOING
+            else -> throw IllegalArgumentException("Unknown series status")
+        }
         val items = item.getJSONArray("episodes")
         require(items.length() in 1..500)
         val episodeIds = HashSet<String>()
@@ -42,12 +67,15 @@ internal fun parseIranianSeries(document: JSONObject): List<IranianSeries> {
             require(episodeVideoPattern.matches(videoId) && videos.add(videoId))
             Episode(episodeId, season, number, videoId)
         }.sortedWith(compareBy(Episode::season, Episode::number))
-        require(episodes.first().season == 1 && episodes.first().number == 1)
-        require(episodes.zipWithNext().all { (from, to) ->
-            (to.season == from.season && to.number == from.number + 1) ||
-                (to.season == from.season + 1 && to.number == 1)
-        })
-        IranianSeries(id, title, episodes)
+        require(episodes.distinctBy { it.season to it.number }.size == episodes.size)
+        if (complete) {
+            require(episodes.first().season == 1 && episodes.first().number == 1)
+            require(episodes.zipWithNext().all { (from, to) ->
+                (to.season == from.season && to.number == from.number + 1) ||
+                    (to.season == from.season + 1 && to.number == 1)
+            })
+        }
+        IranianSeries(id, title, episodes, availability)
     }
 }
 
