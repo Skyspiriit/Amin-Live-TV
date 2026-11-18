@@ -503,7 +503,8 @@ class MainActivity : Activity() {
         content.isFocusableInTouchMode = true
         content.requestFocus()
         ui.postDelayed(hideChannelName, 4000)
-        player.play(youtube)
+        // Documentary, film and series groups get Persian subtitles; live news and TV stay as they are.
+        player.play(youtube, persianSubtitles = currentList[index].categories.any { !it.main })
     }
 
     // Opens one specific broadcast or playlist in the official YouTube TV app. Back there returns here.

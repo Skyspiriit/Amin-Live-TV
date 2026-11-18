@@ -1,10 +1,10 @@
 # Amin Live TV
 
-Amin Live TV 0.3.2 is a standalone Persian-language live television app for Android TV 8.0 and later. It runs under `com.enigma.aminlivetv`, upgrades earlier signed releases in place and can be installed alongside Amin Player.
+Amin Live TV 0.3.3 is a standalone Persian-language live television app for Android TV 8.0 and later. It runs under `com.enigma.aminlivetv`, upgrades earlier signed releases in place and can be installed alongside Amin Player.
 
 ## Install on a Xiaomi Android TV Box
 
-1. Copy `Amin-Live-TV-v0.3.2.apk` to a USB drive and plug it into the box.
+1. Copy `Amin-Live-TV-v0.3.3.apk` to a USB drive and plug it into the box.
 2. Open the drive from the box’s file manager and select the APK. If Android asks, allow the file manager to install unknown apps, then return to the APK and select **Install**. The setting’s name varies by model and firmware.
 3. Open **Amin Live TV** from **Apps**. Choose **شبکه‌های داخلی**, **شبکه‌های خبری**, **شبکه‌های ورزشی** or **فیلم و سریال**, or one of the groups below them (**مستند**, **حیات وحش**, **طبیعت**, **علم و فضا**, **فیلم سینمایی**, **سریال کامل**), and press OK on a tile.
 4. While watching, press Up for the previous station and Down for the next one. Press OK to show or hide the channel strip. Left and Right switch stations while the strip is visible. Back returns to the grid. **ادامهٔ تماشا** on the home screen resumes the last station that played successfully when it is still available.
@@ -13,7 +13,7 @@ If the box cannot open the USB file, install with [Android Platform Tools](https
 
 ```sh
 adb devices
-adb -s <tv-device-id> install -r Amin-Live-TV-v0.3.2.apk
+adb -s <tv-device-id> install -r Amin-Live-TV-v0.3.3.apk
 ```
 
 See [Xiaomi’s APK installation guide](https://www.mi.com/uk/support/article/KA-06405/).
@@ -49,6 +49,8 @@ https://raw.githubusercontent.com/Skyspiriit/Amin-Live-TV/main/channels.json
 The public GitHub endpoint requires no credentials on the TV.
 
 **Official YouTube playback.** Tiles marked «یوتیوب رسمی» play a broadcaster's own YouTube live broadcast or playlist in YouTube's embedded player inside the app. OK pauses, Up and Down change programme, and Back returns to the grid. When the owner doesn't allow embedding, the app opens that exact broadcast, or the playlist's newest video, in the official YouTube TV app instead. Back there returns to Amin Live TV. Tiles marked «سایت رسمی» open the broadcaster's live page in a browser. This only happens in apps older than 0.3.0, which don't read the YouTube fields. Unmarked tiles are native Media3 streams. No rehosted stream or copied token is used. See [VERIFICATION-0.3.0.md](VERIFICATION-0.3.0.md).
+
+**Persian subtitles (0.3.3 and later).** Tiles in the documentary, wildlife, nature, science, movies and series groups turn on subtitles automatically. The app uses the video's own Persian captions if it has them. Otherwise it asks YouTube's player to translate the video's English captions into Persian, preferring human-written captions over automatic ones. YouTube's player translates and draws the subtitles with the original timing, so nothing is downloaded or translated by the app. A video without English or Persian captions plays without subtitles. Live news and TV channels are unchanged. See [SUBTITLES-0.3.3.md](SUBTITLES-0.3.3.md).
 
 - Increment `revision` for each published edit. Keep `schemaVersion` at 1 for this app.
 - Keep existing IDs stable. Updates must retain every existing channel ID. To withdraw a channel with an expired feed, give it `unavailable` status, clear its stream list and record the check date.
