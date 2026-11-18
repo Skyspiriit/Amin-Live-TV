@@ -73,6 +73,7 @@ class MainActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppTheme.load(this)
         immersive()
         store = CatalogueStore(this)
         logos = Logos()
@@ -171,16 +172,43 @@ class MainActivity : Activity() {
         monitor.setEnabled(foreground)
         scheduleUpdates()
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        val content = column().apply { setPadding(dp(52), dp(26), dp(52), dp(22)) }
-        val heading = FrameLayout(this)
-        heading.addView(text(getString(R.string.title_fa), 34, bold = true), frame(-1, -2))
-        heading.addView(
-            text("v${BuildConfig.VERSION_NAME}", 13, MUTED).apply {
-                gravity = Gravity.CENTER_VERTICAL
-                textDirection = View.TEXT_DIRECTION_LTR
-            }, frame(-2, -1, Gravity.END)
-        )
-        content.addView(heading, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(14) })
+        val content = column().apply {
+            setPadding(dp(48), dp(22), dp(48), dp(18))
+            clipChildren = false
+            clipToPadding = false
+        }
+
+        // Header: app badge and name on the right, colour button, clock and date on the left.
+        val header = LinearLayout(this).apply { gravity = Gravity.CENTER_VERTICAL }
+        header.addView(AppBadge(this), LinearLayout.LayoutParams(dp(54), dp(54)))
+        header.addView(column().apply {
+            gravity = Gravity.START or Gravity.CENTER_VERTICAL
+            addView(text(getString(R.string.title_fa), 32, bold = true).apply { gravity = Gravity.START })
+            addView(text(getString(R.string.home_tagline), 15, MUTED).apply { gravity = Gravity.START })
+        }, LinearLayout.LayoutParams(0, -2, 1f).apply { marginStart = dp(16) })
+        val themeButton = LinearLayout(this).apply {
+            gravity = Gravity.CENTER
+            setPadding(dp(18), 0, dp(18), 0)
+            background = focusSurface()
+            isFocusable = true
+            isClickable = true
+            tag = THEME_TAG
+            contentDescription = getString(R.string.theme_button)
+            addView(PaletteIcon(this@MainActivity), LinearLayout.LayoutParams(dp(26), dp(26)))
+            addView(text(getString(R.string.theme_button), 18, bold = true), LinearLayout.LayoutParams(-2, -2).apply { marginStart = dp(8) })
+            setOnClickListener { showThemePicker() }
+            liftOnFocus()
+        }
+        header.addView(themeButton, LinearLayout.LayoutParams(-2, dp(50)).apply { marginEnd = dp(22) })
+        val clock = column().apply { gravity = Gravity.END or Gravity.CENTER_VERTICAL }
+        clockTime = text("", 30, bold = true).apply { gravity = Gravity.END }
+        clockDate = text("", 15, MUTED).apply { gravity = Gravity.END }
+        clock.addView(clockTime)
+        clock.addView(clockDate)
+        header.addView(clock, LinearLayout.LayoutParams(-2, -2))
+        content.addView(header, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(10) })
+        tickClock()
+
         var categoryFocus: View? = null
         val focusedCategory = restoreFocus as? Category ?: category
         // Two rows of main categories, then one smaller row of documentary groups.
@@ -188,40 +216,23 @@ class MainActivity : Activity() {
         (main.chunked(2) + listOf(groups.filter { catalogue.inCategory(it).isNotEmpty() })).forEach { items ->
             if (items.isEmpty()) return@forEach
             val small = !items.first().main
-            val row = LinearLayout(this).apply { layoutDirection = View.LAYOUT_DIRECTION_RTL }
+            val row = LinearLayout(this).apply {
+                layoutDirection = View.LAYOUT_DIRECTION_RTL
+                clipChildren = false
+                clipToPadding = false
+            }
             items.forEachIndexed { index, item ->
-                val tile = LinearLayout(this).apply {
-                    gravity = Gravity.CENTER
-                    // A small tile puts its icon beside the label, unless six share the row.
-                    val beside = small && items.size <= 4
-                    orientation = if (beside) LinearLayout.HORIZONTAL else LinearLayout.VERTICAL
-                    background = focusSurface()
-                    isFocusable = true
-                    isClickable = true
-                    tag = item
-                    contentDescription = getString(item.title)
-                    val icon = dp(if (small) 32 else 38)
-                    addView(CategoryIcon(this@MainActivity, item), LinearLayout.LayoutParams(icon, icon))
-                    val size = when {
-                        !small -> 26
-                        items.size > 4 -> 21
-                        else -> 24
-                    }
-                    addView(text(getString(item.title), size, bold = true), LinearLayout.LayoutParams(-2, -2).apply {
-                        if (beside) marginStart = dp(10) else topMargin = dp(if (small) 2 else 6)
-                    })
-                    setOnClickListener { openCategory(item) }
-                }
+                val tile = if (small) groupTile(item, items.size) else mainTile(item)
                 if (item == focusedCategory) categoryFocus = tile
                 row.addView(tile, LinearLayout.LayoutParams(0, -1, 1f).apply {
-                    if (index < items.size - 1) marginEnd = dp(14)
+                    if (index < items.size - 1) marginEnd = dp(if (small) 12 else 18)
                 })
             }
-            content.addView(row, LinearLayout.LayoutParams(-1, 0, if (small) 0.62f else 1f).apply { topMargin = dp(14) })
+            content.addView(row, LinearLayout.LayoutParams(-1, 0, if (small) 0.6f else 1f).apply { topMargin = dp(if (small) 16 else 14) })
         }
 
-        val viewingActions = LinearLayout(this)
-        val iranianSeries = button(getString(R.string.iranian_series), 24).apply {
+        val viewingActions = LinearLayout(this).apply { clipChildren = false }
+        val iranianSeries = actionButton(getString(R.string.iranian_series), 22, highlighted = true).apply {
             tag = IRANIAN_SERIES_TAG
             setOnClickListener {
                 startActivity(Intent(this@MainActivity, IranianSeriesActivity::class.java))
@@ -236,7 +247,7 @@ class MainActivity : Activity() {
             it.id == lastId && it.listedInApp && history.isVisible(it, now)
         }
         val resume = last?.let { channel ->
-            button(getString(R.string.resume_channel, channel.name), 20).apply {
+            actionButton(getString(R.string.resume_channel, channel.name), 20).apply {
                 tag = RESUME_TAG
                 setOnClickListener {
                     val targetCategory = lastCategory?.takeIf(channel::belongsTo)
@@ -246,10 +257,10 @@ class MainActivity : Activity() {
                     val index = currentList.indexOfFirst { it.id == channel.id }
                     if (index >= 0) beginPlayback(index) else showGrid(null)
                 }
-                viewingActions.addView(this, LinearLayout.LayoutParams(0, -1, 1f).apply { marginStart = dp(14) })
+                viewingActions.addView(this, LinearLayout.LayoutParams(0, -1, 1f).apply { marginStart = dp(18) })
             }
         }
-        content.addView(viewingActions, LinearLayout.LayoutParams(-1, dp(53)).apply { topMargin = dp(12) })
+        content.addView(viewingActions, LinearLayout.LayoutParams(-1, dp(56)).apply { topMargin = dp(16) })
         val update = latestRelease?.let { tag ->
             val ready = readyUpdate
             val label = when {
@@ -257,7 +268,7 @@ class MainActivity : Activity() {
                 downloadingRelease == tag -> getString(R.string.update_downloading, tag)
                 else -> getString(R.string.update_available, tag)
             }
-            button(label, 18).apply {
+            actionButton(label, 18, highlighted = ready != null).apply {
                 this.tag = UPDATE_TAG
                 setOnClickListener {
                     when {
@@ -268,14 +279,163 @@ class MainActivity : Activity() {
                 content.addView(this, LinearLayout.LayoutParams(-1, dp(48)).apply { topMargin = dp(12) })
             }
         }
+        content.addView(text("v${BuildConfig.VERSION_NAME}", 12, MUTED).apply {
+            gravity = Gravity.START
+            textDirection = View.TEXT_DIRECTION_LTR
+            alpha = 0.7f
+        }, LinearLayout.LayoutParams(-1, -2).apply { topMargin = dp(6) })
         install(content)
         val restored = when (restoreFocus) {
             RESUME_TAG -> resume
             UPDATE_TAG -> update
             IRANIAN_SERIES_TAG -> iranianSeries
+            THEME_TAG -> themeButton
             else -> null
         }
         (restored ?: categoryFocus)?.requestFocus()
+    }
+
+    // A main category: coloured gradient card with an icon badge, name and a short description.
+    private fun mainTile(item: Category) = LinearLayout(this).apply {
+        gravity = Gravity.CENTER_VERTICAL
+        setPadding(dp(26), dp(14), dp(26), dp(14))
+        background = cardSurface()
+        isFocusable = true
+        isClickable = true
+        tag = item
+        contentDescription = getString(item.title)
+        addView(FrameLayout(this@MainActivity).apply {
+            background = GradientDrawable().apply { shape = GradientDrawable.OVAL; setColor(ACCENT) }
+            addView(CategoryIcon(this@MainActivity, item, AppTheme.current.backgroundDeep), frame(dp(40), dp(40)))
+        }, LinearLayout.LayoutParams(dp(74), dp(74)))
+        addView(column().apply {
+            gravity = Gravity.START or Gravity.CENTER_VERTICAL
+            addView(text(getString(item.title), 28, bold = true).apply { gravity = Gravity.START })
+            categoryLine(item)?.let { addView(text(getString(it), 16, MUTED).apply { gravity = Gravity.START }) }
+        }, LinearLayout.LayoutParams(0, -2, 1f).apply { marginStart = dp(20) })
+        setOnClickListener { openCategory(item) }
+        liftOnFocus()
+    }
+
+    // A documentary group: smaller card with the icon above or beside the name.
+    private fun groupTile(item: Category, count: Int) = LinearLayout(this).apply {
+        gravity = Gravity.CENTER
+        val beside = count <= 4
+        orientation = if (beside) LinearLayout.HORIZONTAL else LinearLayout.VERTICAL
+        background = focusSurface()
+        isFocusable = true
+        isClickable = true
+        tag = item
+        contentDescription = getString(item.title)
+        addView(CategoryIcon(this@MainActivity, item, ACCENT), LinearLayout.LayoutParams(dp(32), dp(32)))
+        addView(text(getString(item.title), if (count > 4) 21 else 24, bold = true), LinearLayout.LayoutParams(-2, -2).apply {
+            if (beside) marginStart = dp(10) else topMargin = dp(2)
+        })
+        setOnClickListener { openCategory(item) }
+        liftOnFocus()
+    }
+
+    private fun categoryLine(item: Category) = when (item) {
+        Category.DOMESTIC -> R.string.line_domestic
+        Category.NEWS -> R.string.line_news
+        Category.SPORTS -> R.string.line_sports
+        Category.FILM -> R.string.line_film
+        else -> null
+    }
+
+    private fun actionButton(label: String, size: Int, highlighted: Boolean = false) = text(label, size, bold = true).apply {
+        isFocusable = true
+        isClickable = true
+        background = StateListDrawable().apply {
+            addState(intArrayOf(android.R.attr.state_focused), surface(SELECTED, ACCENT))
+            addState(intArrayOf(), if (highlighted) surface(SURFACE, (ACCENT and 0x00FFFFFF) or (0x80 shl 24)) else surface(SURFACE))
+        }
+        liftOnFocus()
+    }
+
+    private fun View.liftOnFocus() {
+        setOnFocusChangeListener { view, focused ->
+            val scale = if (focused) 1.04f else 1f
+            view.animate().scaleX(scale).scaleY(scale).setDuration(140).start()
+        }
+    }
+
+    private fun cardSurface() = StateListDrawable().apply {
+        val theme = AppTheme.current
+        addState(intArrayOf(android.R.attr.state_focused), GradientDrawable(
+            GradientDrawable.Orientation.TL_BR, intArrayOf(theme.selected, theme.tileStart)
+        ).apply { cornerRadius = dp(20).toFloat(); setStroke(dp(3), theme.accent) })
+        addState(intArrayOf(), GradientDrawable(
+            GradientDrawable.Orientation.TL_BR, intArrayOf(theme.tileStart, theme.tileEnd)
+        ).apply { cornerRadius = dp(20).toFloat() })
+    }
+
+    private val clockTick = Runnable { tickClock() }
+    private var clockTime: TextView? = null
+    private var clockDate: TextView? = null
+
+    // Time and Persian (solar hijri) date, refreshed while the home screen is showing. Fixed
+    // patterns on purpose: always Persian digits and month names, whatever the TV's language.
+    @android.annotation.SuppressLint("SimpleDateFormat")
+    private fun tickClock() {
+        ui.removeCallbacks(clockTick)
+        if (screen != Screen.HOME) return
+        val locale = android.icu.util.ULocale("fa_IR@calendar=persian")
+        val now = java.util.Date()
+        clockTime?.text = android.icu.text.SimpleDateFormat("HH:mm", locale).format(now)
+        clockDate?.text = android.icu.text.SimpleDateFormat("EEEE d MMMM", locale).format(now)
+        ui.postDelayed(clockTick, 20_000)
+    }
+
+    // Lets the viewer pick one of the colour themes; the home screen redraws in the new colours.
+    private fun showThemePicker() {
+        val dialog = android.app.Dialog(this, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen)
+        val dim = FrameLayout(this).apply { setBackgroundColor(Color.argb(200, 0, 0, 0)) }
+        val panel = column().apply {
+            gravity = Gravity.CENTER_HORIZONTAL
+            setPadding(dp(36), dp(28), dp(36), dp(30))
+            background = surface(AppTheme.current.background, AppTheme.current.selected)
+            clipChildren = false
+            clipToPadding = false
+        }
+        panel.addView(text(getString(R.string.theme_title), 26, bold = true))
+        panel.addView(text(getString(R.string.theme_hint), 16, MUTED), LinearLayout.LayoutParams(-2, -2).apply { topMargin = dp(4) })
+        val row = LinearLayout(this).apply { clipChildren = false; clipToPadding = false }
+        var focus: View? = null
+        AppTheme.palettes.forEachIndexed { index, palette ->
+            val swatch = column().apply {
+                gravity = Gravity.CENTER
+                setPadding(dp(14), dp(16), dp(14), dp(14))
+                isFocusable = true
+                isClickable = true
+                contentDescription = palette.name
+                background = StateListDrawable().apply {
+                    addState(intArrayOf(android.R.attr.state_focused), surface(palette.surface, palette.accent))
+                    addState(intArrayOf(), surface(palette.background))
+                }
+                addView(View(this@MainActivity).apply {
+                    background = GradientDrawable(GradientDrawable.Orientation.TL_BR, intArrayOf(palette.accent, palette.tileStart)).apply {
+                        shape = GradientDrawable.OVAL
+                        setStroke(dp(2), palette.ink)
+                    }
+                }, LinearLayout.LayoutParams(dp(70), dp(70)))
+                addView(text(palette.name, 20, palette.ink, bold = true), LinearLayout.LayoutParams(-2, -2).apply { topMargin = dp(10) })
+                setOnClickListener {
+                    AppTheme.select(this@MainActivity, palette)
+                    dialog.dismiss()
+                    showHome(THEME_TAG)
+                }
+                liftOnFocus()
+            }
+            if (palette == AppTheme.current) focus = swatch
+            row.addView(swatch, LinearLayout.LayoutParams(dp(132), -2).apply { if (index > 0) marginStart = dp(14) })
+        }
+        panel.addView(row, LinearLayout.LayoutParams(-2, -2).apply { topMargin = dp(22) })
+        dim.addView(panel, frame(-2, -2))
+        dim.layoutDirection = View.LAYOUT_DIRECTION_RTL
+        dialog.setContentView(dim)
+        dialog.show()
+        focus?.requestFocus()
     }
 
     // Downloads and checks a newer release in the background; the home button then installs it.
@@ -748,7 +908,10 @@ class MainActivity : Activity() {
 
     private fun install(content: View) {
         content.layoutDirection = View.LAYOUT_DIRECTION_RTL
-        content.setBackgroundColor(if (watching) Color.BLACK else BACKGROUND)
+        if (watching) content.setBackgroundColor(Color.BLACK)
+        else content.background = GradientDrawable(
+            GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(AppTheme.current.background, AppTheme.current.backgroundDeep)
+        )
         setContentView(content)
         immersive()
     }
@@ -786,9 +949,9 @@ class MainActivity : Activity() {
 
     private fun dp(value: Int): Int = (value * resources.displayMetrics.density + 0.5f).toInt()
 
-    private class CategoryIcon(context: Context, private val category: Category) : View(context) {
+    private class CategoryIcon(context: Context, private val category: Category, tint: Int = ACCENT) : View(context) {
         private val pen = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = ACCENT
+            color = tint
             style = Paint.Style.STROKE
             strokeWidth = 1.65f
             strokeCap = Paint.Cap.ROUND
@@ -869,6 +1032,53 @@ class MainActivity : Activity() {
         }
     }
 
+    // Rounded accent square with a small TV: the app's mark in the header.
+    private class AppBadge(context: Context) : View(context) {
+        private val fill = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = AppTheme.current.accent }
+        private val pen = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = AppTheme.current.backgroundDeep
+            style = Paint.Style.STROKE
+            strokeWidth = 2.2f
+            strokeCap = Paint.Cap.ROUND
+            strokeJoin = Paint.Join.ROUND
+        }
+
+        override fun onDraw(canvas: Canvas) {
+            super.onDraw(canvas)
+            canvas.save()
+            canvas.scale(width / 32f, height / 32f)
+            canvas.drawRoundRect(0f, 0f, 32f, 32f, 9f, 9f, fill)
+            canvas.drawRoundRect(7f, 9f, 25f, 21f, 2.5f, 2.5f, pen)
+            canvas.drawLine(12f, 25f, 20f, 25f, pen)
+            canvas.drawLine(13f, 6f, 16f, 9f, pen)
+            canvas.drawLine(19f, 6f, 16f, 9f, pen)
+            canvas.restore()
+        }
+    }
+
+    // Painter's palette: the colour-theme button's icon.
+    private class PaletteIcon(context: Context) : View(context) {
+        private val pen = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = INK
+            style = Paint.Style.STROKE
+            strokeWidth = 1.8f
+        }
+        private val dot = Paint(Paint.ANTI_ALIAS_FLAG)
+
+        override fun onDraw(canvas: Canvas) {
+            super.onDraw(canvas)
+            canvas.save()
+            canvas.scale(width / 32f, height / 32f)
+            canvas.drawCircle(16f, 16f, 12.5f, pen)
+            val colours = AppTheme.palettes.map { it.accent }
+            listOf(10f to 12f, 16f to 8.5f, 22f to 12f, 22.5f to 19f).forEachIndexed { i, (x, y) ->
+                dot.color = colours[i % colours.size]
+                canvas.drawCircle(x, y, 2.6f, dot)
+            }
+            canvas.restore()
+        }
+    }
+
     private companion object {
         val DOCUMENTARY_GROUPS = setOf(Category.DOCUMENTARY, Category.WILDLIFE, Category.NATURE)
         const val RESUME_TAG = "resume"
@@ -877,12 +1087,14 @@ class MainActivity : Activity() {
         const val UPDATE_TAG = "release"
         const val CATALOGUE_INTERVAL = 15 * 60_000L
         const val RELEASE_INTERVAL = 6 * 60 * 60_000L
-        val BACKGROUND = Color.rgb(13, 22, 25)
-        val SURFACE = Color.rgb(26, 40, 44)
-        val SELECTED = Color.rgb(46, 68, 62)
-        val PANEL = Color.argb(235, 18, 28, 31)
-        val INK = Color.rgb(247, 250, 244)
-        val MUTED = Color.rgb(177, 197, 191)
-        val ACCENT = Color.rgb(193, 241, 163)
+        const val THEME_TAG = "theme"
+        // Colours come from the theme the viewer picked (AppTheme).
+        val BACKGROUND get() = AppTheme.current.background
+        val SURFACE get() = AppTheme.current.surface
+        val SELECTED get() = AppTheme.current.selected
+        val PANEL get() = (AppTheme.current.backgroundDeep and 0x00FFFFFF) or (235 shl 24)
+        val INK get() = AppTheme.current.ink
+        val MUTED get() = AppTheme.current.muted
+        val ACCENT get() = AppTheme.current.accent
     }
 }

@@ -59,6 +59,7 @@ class IranianSeriesActivity : Activity() {
 
     override fun onCreate(state: Bundle?) {
         super.onCreate(state)
+        AppTheme.load(this)
         val store = CatalogueStore(this)
         catalogue = store.load()
         progress = SeriesProgress(this)
@@ -422,9 +423,9 @@ class IranianSeriesActivity : Activity() {
     private fun dp(value: Int): Int = (value * resources.displayMetrics.density + 0.5f).toInt()
 
     private companion object {
-        val BACKGROUND = Color.rgb(13, 22, 25)
-        val TILE = Color.rgb(26, 40, 44)
-        val ACCENT = Color.rgb(193, 241, 163)
+        val BACKGROUND get() = AppTheme.current.background
+        val TILE get() = AppTheme.current.surface
+        val ACCENT get() = AppTheme.current.accent
         const val SAMPLE_INTERVAL = 1000L
         const val SAVE_INTERVAL = 5000L
         const val SEEK_TOLERANCE = 6.0

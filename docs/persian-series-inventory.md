@@ -17,6 +17,44 @@ Checked **18 November 2026**. The review covers **152 distinct titles** across t
 - The بامداد خمار playlist labels season 2 episode 14 the finale. The 14-part اهل ایران anthology has three installments whose Persian narrative titles supply the identity while the release order supplies the numbers. The aired مو به مو episode guide ends with 12 despite earlier planned counts. گنج مظفر matches the numbering of the released series. [اهل ایران release order](https://thetvdb.com/series/hl-yrn-2026/allseasons/official) · [مو به مو episode guide](https://thetvdb.com/series/mo-be-mo/seasons/official/1) · [گنج مظفر release guide](https://www.pakhshfilm.com/ganje-mozaffar/)
 - Broadcaster archives confirm the original counts for several held classics. [iFilm · یوسف پیامبر](https://fa2.ifilmtv.ir/News/Content/59448/) · [iFilm · هزاردستان](https://fa2.ifilmtv.ir/Series/Content/49256) · [iFilm · در چشم باد](https://www.ifilmtv.ir/News/Content/83470/) · [iFilm · مختارنامه](https://www.ifilmtv.ir/Iran/Content/63695/) · [زخم کاری season guide](https://fa.wikipedia.org/wiki/زخم_کاری)
 
+## Added in 3.7.0 (catalogue revision 10)
+
+Checked 18 November 2026 under the content rule the owner agreed for this private, non-commercial family app:
+
+- **Rule.** A series may be added when its full episodes are public on YouTube and allow embedding. They play only through YouTube's official embedded player; nothing is downloaded or rehosted. Blocks and memberships are never bypassed. Anything YouTube removes or blocks is removed from the catalogue.
+- **Exclusions.** Titles whose rights holder publicly claims exclusive international rights (11 FILM's catalogue, for example خون سرد) and channels that obviously re-upload paid-platform rips stay out.
+
+**Checks.** Every episode's video was checked with YouTube's public oEmbed endpoint, which confirms it exists and allows embedding. The first, middle and last episode of every season were also checked on their watch pages: public playback in Portugal, not members-only. Episode 1 of one series from each channel was played inside the app's own embedded player on the Android TV emulator. *Daftar Yaddasht* S1E1 and *Paytakht* S2E1 played through the series screen with their positions saved.
+
+| Title | Source playlists | Episodes | Count | Section |
+| --- | --- | --- | ---: | --- |
+| قهوه پدری | [@NetFilmaChannel S1](https://www.youtube.com/playlist?list=PLwEK_3ZauMeTYRnE_gpfUjjbHm5-tHps2) | S1: 1–17 (17) | 17 | Complete |
+| شهرک کلیله و دمنه | [@NetFilmaChannel S1](https://www.youtube.com/playlist?list=PLwEK_3ZauMeQ1XCad44B0ZpRL8CHPelkP) | S1: 1–11 (11) | 11 | Complete |
+| دفتر یادداشت | [@NetFilmaChannel S1](https://www.youtube.com/playlist?list=PLwEK_3ZauMeS1BhmqNZ9n5HFDYSLbxdnT) | S1: 1–16 (16) | 16 | Complete |
+| جان سخت | [@NetFilmaChannel S1](https://www.youtube.com/playlist?list=PLwEK_3ZauMeQNRqYqNhcBb_LndUB0WpOw) | S1: 1–19 (19) | 19 | Complete |
+| گردن‌زنی | [@NetFilmaChannel S1](https://www.youtube.com/playlist?list=PLwEK_3ZauMeQoSrHgCoG-L_yl54MNxWvK) | S1: 1–15 (15) | 15 | Complete |
+| مختارنامه | [@DigiStudio S1](https://www.youtube.com/playlist?list=PL-cLVzR4FQLNa73RSBUhsV4Bx22QxHw65) | S1: 1–40 (40) | 40 | Complete |
+| یوسف پیامبر | [@DigiStudio S1](https://www.youtube.com/playlist?list=PL-cLVzR4FQLMdVhte6Ix6cNNHwf0EPkIH) | S1: 1–45 (45) | 45 | Complete |
+| وضعیت سفید | [@FilmyOfficialCH S1](https://www.youtube.com/playlist?list=PLJpSLHG1ojAk7acfMtsfPZXft67Wim9cm) | S1: 1–22 (22) | 22 | Complete |
+| مرد دو هزار چهره | [@VODLAND S1](https://www.youtube.com/playlist?list=PLt2FnRTUJZac5tThO-bMqSrn34F4sEil3) | S1: 1–13 (13) | 13 | Complete |
+| پایتخت | [@VODLAND S2](https://www.youtube.com/playlist?list=PLt2FnRTUJZac5xotda1G5QELJwJl2MwUt) · [@VODLAND S3](https://www.youtube.com/playlist?list=PLt2FnRTUJZaeucp7LKgzuCm82bxy-aIDz) · [@VODLAND S4](https://www.youtube.com/playlist?list=PLt2FnRTUJZadg8rBgQpCXwmllCMxcXtAO) | S2: 1–15 (15), S3: 1–13 (13), S4: 1–22 (22) | 50 | Partial |
+| نون خ | [@ShahreFarangs S2](https://www.youtube.com/playlist?list=PLIjpzhpD-OSl75TWvI2asCtYi0TiAMnDY) · [@ShahreFarangs S3](https://www.youtube.com/playlist?list=PLIjpzhpD-OSmSppfJ9zcQEqC3cECgLO6_) · [@ShahreFarangs S4](https://www.youtube.com/playlist?list=PLIjpzhpD-OSk_Mkq_KJCUy31JCLrR8lcA) · [@ShahreFarangs S5](https://www.youtube.com/playlist?list=PLIjpzhpD-OSmudKxw8IwWHuN7IuyFs_yr) | S2: 1–14 (13), S3: 1–16 (16), S4: 1–21 (21), S5: 1–24 (24) | 74 | Partial |
+| ساختمان پزشکان | [@KhandeBazi S1](https://www.youtube.com/playlist?list=PLRoQDkfIa_DIi0ZXQzVb9Yy3yqISf7YRq) | S1: 1–57 (55) | 55 | Partial |
+| بچه مهندس | [@MovieNightCh S2](https://www.youtube.com/playlist?list=PLjRHZHJCJgTYgTS2WeNogx5lwVnGHm658) · [@MovieNightCh S3](https://www.youtube.com/playlist?list=PLjRHZHJCJgTaBwjMfXfCTAMygsmkKEraD) · [@MovieNightCh S4](https://www.youtube.com/playlist?list=PLjRHZHJCJgTaLo4s7Hj3G0ZnQam4Z8Kd1) | S2: 1–32 (32), S3: 1–36 (36), S4: 1–30 (30) | 98 | Partial |
+| زیر آسمان شهر | [@KhandeBazi S2](https://www.youtube.com/playlist?list=PLRoQDkfIa_DJvc-aUTPdP5D5fiwd6tp_0) · [@KhandeBazi S3](https://www.youtube.com/playlist?list=PLRoQDkfIa_DL5B6tPPDhcamVWQ4M75lMn) | S2: 1–62 (62), S3: 1–49 (49) | 111 | Partial |
+| ستایش | [@NegarkhanehCH S2](https://www.youtube.com/playlist?list=PLEn5KQibCwD6GvB9enwC-2qm2f_dNi7f1) · [@NegarkhanehCH S3](https://www.youtube.com/playlist?list=PLEn5KQibCwD7vmZlGLoqbnV1yEWUXnJg6) | S2: 1–26 (26), S3: 1–41 (41) | 67 | Partial |
+| سرزمین مادری | [@GhasedakChannel S2](https://www.youtube.com/playlist?list=PLMXtUTi-xNy9jjZMS8ewuOII86vrYraV2) · [@GhasedakChannel S3](https://www.youtube.com/playlist?list=PLMXtUTi-xNy_jI6kRw8C9gt1GRLGLCAbo) | S2: 1–19 (19), S3: 1–26 (26) | 45 | Partial |
+| حکایت‌های کمال | [@CafeMediaCH S2](https://www.youtube.com/playlist?list=PL3jqlVYHtDcPHKO-ck6GWImZvc5q_I2aN) | S2: 1–37 (37) | 37 | Partial |
+| دودکش | [@Namano S2](https://www.youtube.com/playlist?list=PLDdXiAIOJTMF4uHZ1h77cKkjEuPTSxgfd) | S2: 1–29 (29) | 29 | Partial |
+| قهوه ترک | [@NetFilmaChannel S1](https://www.youtube.com/playlist?list=PLwEK_3ZauMeQkB5S-Hs8f7jzZFeRkwysq) | S1: 2–18 (17) | 17 | Partial |
+
+**Left out:**
+- متهم گریخت, خانه به دوش and سه در چهار (Namano), and مرد هزار چهره (VODLAND): embedding disabled.
+- قهوه تلخ (Honar Aval): early episodes have embedding disabled.
+- ویلای من (NetFilma): sampled later episodes are members-only.
+- قهوه ترک: episode 1 has embedding disabled, so it is listed as partial from episode 2.
+- پرسونا and رباط صلیبی (SHEYDA): fully playable, but a talk show and a reality show, not drama series.
+
 ## Published and individually checked
 
 | Persian title / season | Category / genre | Publisher and source | Expected | Verified playable | Missing | Complete | Status and restrictions | Checked |
