@@ -37,6 +37,13 @@ internal object ReleaseCheck {
 
     fun page(tag: String): String = "https://github.com/$REPOSITORY/releases/tag/$tag"
 
+    // The release APK. Test builds read it from the local test server next to the catalogue.
+    fun apkUrl(tag: String): String = if (BuildConfig.TEST_CATALOG) {
+        URI(BuildConfig.CATALOG_URL).resolve("Amin-Live-TV-$tag.apk").toString()
+    } else {
+        "https://github.com/$REPOSITORY/releases/download/$tag/Amin-Live-TV-$tag.apk"
+    }
+
     private fun hasApk(release: JSONObject): Boolean {
         val tag = release.optString("tag_name")
         val name = "Amin-Live-TV-$tag.apk"

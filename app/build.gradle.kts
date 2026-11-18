@@ -11,8 +11,8 @@ android {
         applicationId = "com.enigma.aminlivetv"
         minSdk = 26
         targetSdk = 35
-        versionCode = 5
-        versionName = "0.3.0"
+        versionCode = 6
+        versionName = "0.3.1"
         buildConfigField(
             "String", "CATALOG_URL",
             "\"https://raw.githubusercontent.com/Skyspiriit/Amin-Live-TV/main/channels.json\""

@@ -62,6 +62,9 @@ class MainActivity : Activity() {
     private var overlay = false
     private var showRetry = false
     private var latestRelease: String? = null
+    private lateinit var appUpdate: AppUpdate
+    private var readyUpdate: java.io.File? = null
+    private var downloadingRelease: String? = null
     private var nextCatalogueCheck = 0L
     private var nextReleaseCheck = 0L
     private var foreground = false
@@ -72,13 +75,20 @@ class MainActivity : Activity() {
         immersive()
         store = CatalogueStore(this)
         logos = Logos()
+        appUpdate = AppUpdate(this) { runOnUiThread { latestRelease?.let(::showUpdateFailed) } }
         val timings = ScanTimings(BuildConfig.TEST_CATALOG)
         history = ChannelHistory(this, timings)
         monitor = ChannelMonitor(this, history, timings, ::onVisibilityChanged)
         catalogue = store.load()
         category = savedCategory("category") ?: Category.DOMESTIC
         showHome()
+        appUpdate.handle(intent)
         if (BuildConfig.TEST_CATALOG) Log.i("AminMonitor", "Local home rendered")
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        appUpdate.handle(intent)
     }
 
     private fun scheduleUpdates() {
@@ -111,6 +121,7 @@ class MainActivity : Activity() {
                     runOnUiThread {
                         if (isDestroyed || latestRelease == tag) return@runOnUiThread
                         latestRelease = tag
+                        if (tag != null) downloadRelease(tag)
                         if (screen == Screen.HOME) showHome(currentFocus?.tag)
                     }
                 }.onFailure {
@@ -222,10 +233,20 @@ class MainActivity : Activity() {
             }
         }
         val update = latestRelease?.let { tag ->
-            val label = getString(R.string.update_available, tag)
+            val ready = readyUpdate
+            val label = when {
+                ready != null -> getString(R.string.update_ready, tag)
+                downloadingRelease == tag -> getString(R.string.update_downloading, tag)
+                else -> getString(R.string.update_available, tag)
+            }
             button(label, 18).apply {
                 this.tag = UPDATE_TAG
-                setOnClickListener { openRelease(tag, label) }
+                setOnClickListener {
+                    when {
+                        ready != null -> appUpdate.install(ready)
+                        downloadingRelease == null -> downloadRelease(tag)
+                    }
+                }
                 content.addView(this, LinearLayout.LayoutParams(-1, dp(48)).apply { topMargin = dp(12) })
             }
         }
@@ -237,6 +258,25 @@ class MainActivity : Activity() {
         }
         (restored ?: categoryFocus)?.requestFocus()
     }
+
+    // Downloads and checks a newer release in the background; the home button then installs it.
+    private fun downloadRelease(tag: String) {
+        if (downloadingRelease != null || readyUpdate?.name == "Amin-Live-TV-$tag.apk") return
+        downloadingRelease = tag
+        readyUpdate = null
+        updates.execute {
+            val apk = appUpdate.download(tag)
+            runOnUiThread {
+                if (isDestroyed) return@runOnUiThread
+                downloadingRelease = null
+                readyUpdate = apk
+                if (screen == Screen.HOME) showHome(currentFocus?.tag)
+            }
+        }
+        if (screen == Screen.HOME) showHome(currentFocus?.tag)
+    }
+
+    private fun showUpdateFailed(tag: String) = openRelease(tag, getString(R.string.update_available, tag))
 
     private fun openRelease(tag: String, label: String) {
         val page = ReleaseCheck.page(tag)

@@ -96,3 +96,8 @@ Google TV image, Android 11 (API 30, like the box), 1920×1080 at 320 dpi.
 ## Screenshots
 
 These are unedited emulator captures in [`docs/verification/v0.3.0`](docs/verification/v0.3.0). `03-persiana-docs-native.png` was captured with an earlier 0.3.0 test build that used the same native playback path. `14-bbc-persian-handoff-youtube-app-emulator.png` shows the emulator's YouTube app refusing to play after a correct hand-off.
+
+## Update, 18 November 2026: Xiaomi box and 0.3.1
+
+- **Xiaomi box (MiTV-AFKR0, Android 11).** The published 0.3.0 APK installed over 0.2.2 with `adb install -r`, and the resume button kept its last station. BBC Persian handed off to the YouTube app, and the YouTube media session reported `state=3` (playing). It took four Back presses to get from YouTube back to Amin Live TV. Screenshots of the YouTube app on the box are blank, because the box protects that video layer.
+- **0.3.1 in-app updates (emulator).** A test build found a newer test release on a local server, downloaded and verified it, and showed «نسخهٔ … آماده است». OK opened Android's confirmation. On first use, Android showed its "install unknown apps" prompt. After the permission was turned on, Android closed the app. When reopened, the update installed (versionCode 6 → 7, and later 7 → 8) and kept its data. Android 11 blocked the app from reopening itself after the update ("Abort background activity starts"), so the TV returns to its home screen. An APK for a different package was rejected, and the button offered a retry.
