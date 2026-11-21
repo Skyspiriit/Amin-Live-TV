@@ -51,7 +51,7 @@ ui key DPAD_UP; ui expect-focus "مستند"
 ui key DPAD_LEFT; ui expect-focus "حیات وحش"
 ui key DPAD_CENTER; ui shot 21-wildlife-tab; ui texts
 ui key BACK; ui expect-focus "مستند و طبیعت"
-ui open "مستند و طبیعت"; ui key DPAD_UP; ui expect-focus "حیات وحش"; ui shot 22-reopens-last-tab
+ui open "مستند و طبیعت"; ui expect-text "آفریقای وحشی"; ui key DPAD_UP; ui expect-focus "حیات وحش"; ui shot 22-reopens-last-tab
 ui key DPAD_DOWN; ui key DPAD_CENTER; sleep 25; ui shot 23-wildlife-playing; ui texts
 ui key BACK; ui focus; ui key BACK; ui expect-focus "مستند و طبیعت"
 

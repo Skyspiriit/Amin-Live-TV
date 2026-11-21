@@ -615,12 +615,16 @@ class MainActivity : Activity() {
         })
         // Tabs for the other categories of the same home tile. Up from the grid reaches them.
         val tabs = hub?.members?.filter { it == category || hasContent(it) }.orEmpty()
+        var currentTab = View.NO_ID
         if (tabs.size > 1) {
             val row = LinearLayout(this).apply { clipChildren = false; clipToPadding = false }
             for ((index, tab) in tabs.withIndex()) {
                 row.addView(actionButton(getString(tab.title), 20, highlighted = tab == category).apply {
                     this.tag = tab
                     setPadding(dp(22), 0, dp(22), 0)
+                    id = View.generateViewId()
+                    nextFocusDownId = GRID_ID
+                    if (tab == category) currentTab = id
                     setOnClickListener { if (tab != category) openCategory(tab) }
                 }, LinearLayout.LayoutParams(-2, dp(52)).apply { if (index > 0) marginStart = dp(12) })
             }
@@ -635,6 +639,9 @@ class MainActivity : Activity() {
             return
         }
         val grid = GridView(this).apply {
+            id = GRID_ID
+            // Up from the top row goes to the tab that is showing, not the nearest one.
+            nextFocusUpId = currentTab
             layoutDirection = View.LAYOUT_DIRECTION_RTL
             numColumns = GridView.AUTO_FIT
             columnWidth = dp(152)
@@ -1234,6 +1241,7 @@ class MainActivity : Activity() {
         const val RESUME_TAG = "resume"
         const val IRANIAN_SERIES_TAG = "iranian-series"
         const val FOREIGN_SERIES_TAG = "foreign-series"
+        val GRID_ID = View.generateViewId()
         const val TURKISH_SERIES_TAG = "turkish-series"
         const val RESUME_SERIES_TAG = "resume-series"
         val LIVE = listOf(Category.DOMESTIC, Category.NEWS, Category.SPORTS, Category.FILM)
