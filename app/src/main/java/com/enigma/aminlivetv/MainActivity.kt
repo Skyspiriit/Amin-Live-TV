@@ -35,7 +35,19 @@ import java.util.concurrent.Executors
 
 @OptIn(UnstableApi::class)
 class MainActivity : Activity() {
-    private enum class Screen { HOME, GRID, PLAYER, YOUTUBE }
+    private enum class Screen { HOME, SERIES_CHOICE, GRID, PLAYER, YOUTUBE }
+
+    // Related categories that share one home tile. Their grid shows a tab for each one with content.
+    private enum class Hub(val key: String, val title: Int, val members: List<Category>) {
+        DOCUMENTARIES("documentaries", R.string.home_documentaries,
+            listOf(Category.DOCUMENTARY, Category.WILDLIFE, Category.NATURE)),
+        OTHER_TOPICS("other-topics", R.string.home_other_topics,
+            listOf(Category.GAMES, Category.CINEMA, Category.MOTORING, Category.CHESS, Category.DEVOTIONAL));
+
+        companion object {
+            fun of(category: Category): Hub? = entries.firstOrNull { category in it.members }
+        }
+    }
 
     private lateinit var store: CatalogueStore
     private lateinit var catalogue: Catalogue
@@ -69,6 +81,8 @@ class MainActivity : Activity() {
     private var nextCatalogueCheck = 0L
     private var nextReleaseCheck = 0L
     private var foreground = false
+    private var homeStale = false
+    private val seriesProgress by lazy { SeriesProgress(this) }
     private val watching get() = screen == Screen.PLAYER || screen == Screen.YOUTUBE
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,7 +97,7 @@ class MainActivity : Activity() {
         monitor = ChannelMonitor(this, history, timings, ::onVisibilityChanged)
         catalogue = store.load()
         category = savedCategory("category") ?: Category.DOMESTIC
-        showHome(IRANIAN_SERIES_TAG)
+        showHome(RESUME_TAG)
         appUpdate.handle(intent)
         if (BuildConfig.TEST_CATALOG) Log.i("AminMonitor", "Local home rendered")
     }
@@ -142,6 +156,7 @@ class MainActivity : Activity() {
         if (pendingCatalogue == null) return
         when (screen) {
             Screen.HOME -> showHome(currentFocus?.tag)
+            Screen.SERIES_CHOICE -> showForeignSeries(currentFocus?.tag)
             Screen.GRID -> showGrid(savedPosition())
             Screen.PLAYER, Screen.YOUTUBE -> Unit
         }
@@ -159,15 +174,18 @@ class MainActivity : Activity() {
                 if (channel.id == preferences.getString("watched-channel", null)) showHome(currentFocus?.tag)
             }
             Screen.GRID -> if (channel.belongsTo(category)) showGrid(savedPosition())
-            Screen.PLAYER, Screen.YOUTUBE -> Unit
+            Screen.SERIES_CHOICE, Screen.PLAYER, Screen.YOUTUBE -> Unit
         }
     }
 
     private fun savedCategory(key: String): Category? =
         Category.entries.firstOrNull { it.key == preferences.getString(key, null) }
 
+    // Home: header, «ادامهٔ تماشا», then three sections in a fixed order: live TV, films and
+    // documentaries, series. Related categories share one tile; their grid shows tabs.
     private fun showHome(restoreFocus: Any? = null) {
         screen = Screen.HOME
+        homeStale = false
         applyPendingCatalogue()
         monitor.setEnabled(foreground)
         scheduleUpdates()
@@ -197,36 +215,25 @@ class MainActivity : Activity() {
         content.addView(header, LinearLayout.LayoutParams(-1, dp(48)))
         tickClock()
 
-        val hero = FrameLayout(this).apply {
+        // «ادامهٔ تماشا» over the theme's artwork: the last station and the latest series episode.
+        val band = FrameLayout(this).apply {
             background = surface(AppTheme.current.backgroundDeep)
             clipToOutline = true
         }
-        hero.addView(ImageView(this).apply {
+        band.addView(ImageView(this).apply {
             setImageResource(AppTheme.current.artwork)
             scaleType = ImageView.ScaleType.CENTER_CROP
             importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
         }, frame(-1, -1))
-        hero.addView(View(this).apply {
+        band.addView(View(this).apply {
             background = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT,
                 intArrayOf(Color.TRANSPARENT, Color.argb(220, 5, 10, 20)))
         }, frame(-1, -1))
-        val heroCopy = column().apply {
+        val bandCopy = column().apply {
             gravity = Gravity.CENTER_VERTICAL
-            setPadding(dp(26), dp(16), dp(26), dp(16))
+            setPadding(dp(24), dp(12), dp(24), dp(12))
         }
-        heroCopy.addView(text(getString(R.string.iranian_series), 31, bold = true).apply { gravity = Gravity.START })
-        heroCopy.addView(text(getString(R.string.home_series_detail), 18, MUTED).apply {
-            gravity = Gravity.START
-        }, LinearLayout.LayoutParams(-1, -2).apply { topMargin = dp(6) })
-        val iranianSeries = actionButton(getString(R.string.choose_series), 20, highlighted = true).apply {
-            tag = IRANIAN_SERIES_TAG
-            contentDescription = getString(R.string.iranian_series)
-            setOnClickListener { startActivity(Intent(this@MainActivity, IranianSeriesActivity::class.java)) }
-        }
-        heroCopy.addView(iranianSeries, LinearLayout.LayoutParams(dp(224), dp(48)).apply { topMargin = dp(16) })
-        hero.addView(heroCopy, frame(dp(420), -1, Gravity.START))
-        content.addView(hero, LinearLayout.LayoutParams(-1, dp(174)).apply { topMargin = dp(16) })
-
+        val resumeRow = LinearLayout(this)
         val lastCategory = savedCategory("watched-category")
         val lastId = preferences.getString("watched-channel", null)
         val now = System.currentTimeMillis()
@@ -234,8 +241,9 @@ class MainActivity : Activity() {
             it.id == lastId && it.listedInApp && history.isVisible(it, now)
         }
         val resume = last?.let { channel ->
-            actionButton(getString(R.string.resume_channel, channel.name), 20).apply {
+            actionButton(getString(R.string.resume_live, channel.name), 20, highlighted = true).apply {
                 tag = RESUME_TAG
+                maxLines = 1
                 setOnClickListener {
                     val targetCategory = lastCategory?.takeIf(channel::belongsTo)
                         ?: channel.categories.first(channel::belongsTo)
@@ -244,32 +252,60 @@ class MainActivity : Activity() {
                     val index = currentList.indexOfFirst { it.id == channel.id }
                     if (index >= 0) beginPlayback(index) else showGrid(null)
                 }
-                content.addView(this, LinearLayout.LayoutParams(-1, dp(48)).apply { topMargin = dp(12) })
             }
         }
-        val focusableCategories = LinkedHashMap<Category, View>()
-        val shelves = listOf(
-            R.string.home_live to listOf(Category.DOMESTIC, Category.NEWS, Category.SPORTS, Category.FILM),
-            R.string.home_entertainment to listOf(Category.GAMES, Category.CINEMA, Category.MOTORING, Category.CHESS),
-            R.string.home_discover to listOf(Category.DOCUMENTARY, Category.WILDLIFE, Category.NATURE, Category.SCIENCE),
-            R.string.home_archives to listOf(Category.MOVIES, Category.SERIES, Category.DEVOTIONAL)
-        )
-        for ((heading, categories) in shelves) {
-            val available = categories.filter { catalogue.inCategory(it).isNotEmpty() }
-            if (available.isEmpty()) continue
-            content.addView(text(getString(heading), 19, MUTED, bold = true).apply {
+        val resumeSeries = latestSeries()?.let { (title, turkish) ->
+            actionButton(getString(R.string.resume_series, title.title), 20, highlighted = true).apply {
+                tag = RESUME_SERIES_TAG
+                maxLines = 1
+                setOnClickListener { openSeries(turkish, resume = true) }
+            }
+        }
+        listOfNotNull(resume, resumeSeries).forEachIndexed { index, button ->
+            resumeRow.addView(button, LinearLayout.LayoutParams(0, dp(52), 1f).apply { if (index > 0) marginStart = dp(12) })
+        }
+        if (resumeRow.childCount > 0) {
+            bandCopy.addView(text(getString(R.string.continue_watching), 22, bold = true).apply { gravity = Gravity.START })
+            bandCopy.addView(resumeRow, LinearLayout.LayoutParams(-1, -2).apply { topMargin = dp(10) })
+        } else {
+            bandCopy.addView(text(getString(R.string.home_tagline), 24, bold = true).apply { gravity = Gravity.START })
+        }
+        band.addView(bandCopy, frame(dp(if (resumeRow.childCount > 1) 640 else 420), -1, Gravity.START))
+        content.addView(band, LinearLayout.LayoutParams(-1, dp(if (resumeRow.childCount > 0) 128 else 96)).apply { topMargin = dp(16) })
+
+        // Each category is reachable from exactly one tile; focus returns to that tile.
+        val tiles = LinkedHashMap<Any, View>()
+        val byCategory = HashMap<Category, View>()
+        fun section(heading: Int, entries: List<HomeTile>) {
+            if (entries.isEmpty()) return
+            content.addView(text(getString(heading), 22, ACCENT, bold = true).apply {
                 gravity = Gravity.START
-            }, LinearLayout.LayoutParams(-1, dp(30)).apply { topMargin = dp(14) })
+            }, LinearLayout.LayoutParams(-1, dp(34)).apply { topMargin = dp(16) })
             val row = LinearLayout(this).apply { clipChildren = false }
-            for ((index, item) in available.withIndex()) {
-                val tile = homeCategory(item)
-                focusableCategories[item] = tile
-                row.addView(tile, LinearLayout.LayoutParams(0, dp(78), 1f).apply {
-                    if (index < available.lastIndex) marginEnd = dp(12)
+            for ((index, entry) in entries.withIndex()) {
+                val tile = homeTile(entry)
+                tiles[entry.tag] = tile
+                entry.covers.forEach { byCategory[it] = tile }
+                row.addView(tile, LinearLayout.LayoutParams(0, dp(84), 1f).apply {
+                    if (index < entries.lastIndex) marginEnd = dp(12)
                 })
             }
             content.addView(row, LinearLayout.LayoutParams(-1, -2))
         }
+        section(R.string.home_live, LIVE.filter(::hasContent).map(::categoryTile))
+        section(R.string.home_films_docs, listOfNotNull(
+            categoryTile(Category.MOVIES).takeIf { hasContent(Category.MOVIES) },
+            hubTile(Hub.DOCUMENTARIES, Category.DOCUMENTARY),
+            categoryTile(Category.SCIENCE).takeIf { hasContent(Category.SCIENCE) },
+            hubTile(Hub.OTHER_TOPICS, Category.GAMES)
+        ))
+        section(R.string.home_series, listOfNotNull(
+            HomeTile(IRANIAN_SERIES_TAG, R.string.iranian_series, Category.SERIES) { openSeries(turkish = false) }
+                .takeIf { catalogue.iranianSeries.isNotEmpty() },
+            HomeTile(FOREIGN_SERIES_TAG, R.string.foreign_series, Category.CINEMA, listOf(Category.SERIES)) { openForeignSeries() }
+                .takeIf { catalogue.turkishSeries.isNotEmpty() || hasContent(Category.SERIES) }
+        ))
+
         val update = latestRelease?.let { tag ->
             val ready = readyUpdate
             val label = when {
@@ -285,7 +321,7 @@ class MainActivity : Activity() {
                         downloadingRelease == null -> downloadRelease(tag)
                     }
                 }
-                content.addView(this, LinearLayout.LayoutParams(-1, dp(48)).apply { topMargin = dp(16) })
+                content.addView(this, LinearLayout.LayoutParams(-1, dp(48)).apply { topMargin = dp(18) })
             }
         }
         val scroll = android.widget.ScrollView(this).apply {
@@ -296,30 +332,108 @@ class MainActivity : Activity() {
         }
         install(scroll)
         val restored = when (restoreFocus) {
-            RESUME_TAG -> resume
+            RESUME_TAG -> resume ?: resumeSeries
+            RESUME_SERIES_TAG -> resumeSeries
             UPDATE_TAG -> update
             THEME_TAG -> themeButton
-            IRANIAN_SERIES_TAG -> iranianSeries
-            else -> focusableCategories[restoreFocus as? Category ?: category]
+            is Category -> byCategory[restoreFocus]
+            null -> byCategory[category]
+            else -> restoreFocus?.let(tiles::get)
         }
-        (restored ?: iranianSeries).requestFocus()
+        (restored ?: byCategory[category] ?: tiles.values.firstOrNull() ?: themeButton).requestFocus()
     }
 
-    private fun homeCategory(item: Category) = LinearLayout(this).apply {
+    // One home tile: its tag restores focus, `covers` lists the categories it leads to.
+    private class HomeTile(
+        val tag: Any,
+        val label: Int,
+        val icon: Category,
+        val covers: List<Category> = emptyList(),
+        val open: () -> Unit
+    )
+
+    private fun categoryTile(item: Category) = HomeTile(item, item.title, item, listOf(item)) { openCategory(item) }
+
+    private fun hubTile(hub: Hub, icon: Category): HomeTile? {
+        if (hub.members.none(::hasContent)) return null
+        return HomeTile(hub, hub.title, icon, hub.members) { openHub(hub) }
+    }
+
+    private fun homeTile(entry: HomeTile) = LinearLayout(this).apply {
         gravity = Gravity.CENTER_VERTICAL
         setPadding(dp(16), dp(8), dp(14), dp(8))
         background = cardSurface()
         isFocusable = true
         isClickable = true
-        tag = item
-        contentDescription = getString(item.title)
-        addView(CategoryIcon(this@MainActivity, item, ACCENT), LinearLayout.LayoutParams(dp(30), dp(30)))
-        addView(text(getString(item.title), 21, bold = true).apply {
+        tag = entry.tag
+        contentDescription = getString(entry.label)
+        addView(CategoryIcon(this@MainActivity, entry.icon, ACCENT), LinearLayout.LayoutParams(dp(32), dp(32)))
+        addView(text(getString(entry.label), 22, bold = true).apply {
             gravity = Gravity.START or Gravity.CENTER_VERTICAL
             maxLines = 2
         }, LinearLayout.LayoutParams(0, -1, 1f).apply { marginStart = dp(12) })
-        setOnClickListener { openCategory(item) }
+        setOnClickListener { entry.open() }
         liftOnFocus()
+    }
+
+    // A category is shown only when it has something to play, so no tile opens an empty screen.
+    private fun hasContent(item: Category): Boolean = visibleIn(item).isNotEmpty()
+
+    // Opens the group's last-used category that has content, else its first.
+    private fun openHub(hub: Hub) {
+        val saved = savedCategory("hub-${hub.key}")?.takeIf { it in hub.members && hasContent(it) }
+        openCategory(saved ?: hub.members.firstOrNull(::hasContent) ?: return)
+    }
+
+    private fun openSeries(turkish: Boolean, resume: Boolean = false) {
+        val intent = Intent(this, IranianSeriesActivity::class.java).putExtra(EXTRA_RESUME, resume)
+        if (turkish) intent.putExtra(EXTRA_LIBRARY, LIBRARY_TURKISH)
+        startActivity(intent)
+    }
+
+    // The latest Iranian or Turkish episode to continue, and whether it is Turkish.
+    private fun latestSeries(): Pair<IranianSeries, Boolean>? {
+        fun latest(library: List<IranianSeries>, turkish: Boolean) = seriesProgress.latest(library)?.let { (series) ->
+            Triple(series, turkish, seriesProgress.resumable(series)?.second?.updated ?: 0L)
+        }
+        return listOfNotNull(latest(catalogue.iranianSeries, false), latest(catalogue.turkishSeries, true))
+            .maxByOrNull { it.third }?.let { (series, turkish) -> series to turkish }
+    }
+
+    private fun foreignChoices(): List<HomeTile> = listOfNotNull(
+        HomeTile(TURKISH_SERIES_TAG, R.string.turkish_series, Category.SERIES) { openSeries(turkish = true) }
+            .takeIf { catalogue.turkishSeries.isNotEmpty() },
+        categoryTile(Category.SERIES).takeIf { hasContent(Category.SERIES) }
+    )
+
+    // «سریال خارجی» opens its only collection directly, or offers «سریال ترکی» and «سایر سریال‌ها».
+    private fun openForeignSeries() {
+        val choices = foreignChoices()
+        if (choices.size == 1) choices.single().open() else if (choices.isNotEmpty()) showForeignSeries()
+    }
+
+    private fun showForeignSeries(restoreFocus: Any? = null) {
+        val choices = foreignChoices()
+        if (choices.size < 2) return showHome(FOREIGN_SERIES_TAG)
+        screen = Screen.SERIES_CHOICE
+        applyPendingCatalogue()
+        monitor.setEnabled(foreground)
+        scheduleUpdates()
+        val content = column().apply {
+            gravity = Gravity.CENTER_HORIZONTAL
+            setPadding(dp(46), dp(24), dp(46), dp(22))
+        }
+        content.addView(text(getString(R.string.foreign_series), 30, bold = true), LinearLayout.LayoutParams(-1, -2))
+        val row = LinearLayout(this).apply { clipChildren = false }
+        var focus: View? = null
+        for ((index, choice) in choices.withIndex()) {
+            val tile = homeTile(choice)
+            if (choice.tag == restoreFocus || focus == null) focus = tile
+            row.addView(tile, LinearLayout.LayoutParams(dp(300), dp(110)).apply { if (index > 0) marginStart = dp(18) })
+        }
+        content.addView(row, LinearLayout.LayoutParams(-2, -2).apply { topMargin = dp(48) })
+        install(content)
+        focus?.requestFocus()
     }
 
     private fun actionButton(label: String, size: Int, highlighted: Boolean = false) = text(label, size, bold = true).apply {
@@ -465,12 +579,16 @@ class MainActivity : Activity() {
 
     private fun selectCategory(selected: Category) {
         category = selected
-        preferences.edit().putString("category", category.key).apply()
+        val edit = preferences.edit().putString("category", category.key)
+        Hub.of(selected)?.let { edit.putString("hub-${it.key}", selected.key) }
+        edit.apply()
     }
 
-    private fun visibleChannels(): List<Channel> {
+    private fun visibleChannels(): List<Channel> = visibleIn(category)
+
+    private fun visibleIn(item: Category): List<Channel> {
         val now = System.currentTimeMillis()
-        return catalogue.inCategory(category).filter {
+        return catalogue.inCategory(item).filter {
             it.youtube != null || it.officialLiveUrl != null || history.isVisible(it, now)
         }
     }
@@ -491,9 +609,23 @@ class MainActivity : Activity() {
         scheduleUpdates()
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         val content = column().apply { setPadding(dp(46), dp(24), dp(46), dp(22)) }
-        content.addView(text(getString(category.title), 30, bold = true), LinearLayout.LayoutParams(-1, -2).apply {
+        val hub = Hub.of(category)
+        content.addView(text(getString(hub?.title ?: category.title), 30, bold = true), LinearLayout.LayoutParams(-1, -2).apply {
             bottomMargin = dp(14)
         })
+        // Tabs for the other categories of the same home tile. Up from the grid reaches them.
+        val tabs = hub?.members?.filter { it == category || hasContent(it) }.orEmpty()
+        if (tabs.size > 1) {
+            val row = LinearLayout(this).apply { clipChildren = false; clipToPadding = false }
+            for ((index, tab) in tabs.withIndex()) {
+                row.addView(actionButton(getString(tab.title), 20, highlighted = tab == category).apply {
+                    this.tag = tab
+                    setPadding(dp(22), 0, dp(22), 0)
+                    setOnClickListener { if (tab != category) openCategory(tab) }
+                }, LinearLayout.LayoutParams(-2, dp(52)).apply { if (index > 0) marginStart = dp(12) })
+            }
+            content.addView(row, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(16) })
+        }
         if (currentList.isEmpty()) {
             content.addView(
                 text(getString(R.string.no_channels), 23, MUTED),
@@ -694,7 +826,8 @@ class MainActivity : Activity() {
         val documentary = if (category in DOCUMENTARY_GROUPS) {
             youtube.playlist?.let { DocumentaryQueue(this, selected.id, it) }
         } else null
-        player.play(youtube, persianSubtitles = selected.categories.any { !it.main }, queue = documentary)
+        val subtitles = SubtitlePolicy.forChannel(selected, PlayerKind.YOUTUBE)
+        player.play(youtube, persianSubtitles = subtitles == SubtitleMode.PERSIAN_WHEN_AVAILABLE, queue = documentary)
     }
 
     // Opens one specific broadcast or playlist in the official YouTube TV app. Back there returns here.
@@ -838,7 +971,10 @@ class MainActivity : Activity() {
                 closePlayer()
                 showGrid(currentList[currentIndex].id)
             }
-            Screen.GRID -> showHome()
+            Screen.GRID ->
+                if (category == Category.SERIES && foreignChoices().size > 1) showForeignSeries(Category.SERIES)
+                else showHome()
+            Screen.SERIES_CHOICE -> showHome(FOREIGN_SERIES_TAG)
             Screen.HOME -> super.onBackPressed()
         }
     }
@@ -846,6 +982,12 @@ class MainActivity : Activity() {
     override fun onStart() {
         super.onStart()
         foreground = true
+        // Back from the series screens: «ادامهٔ تماشا» may now name a different episode.
+        if (homeStale && pendingCatalogue == null) when (screen) {
+            Screen.HOME -> showHome(currentFocus?.tag)
+            Screen.SERIES_CHOICE -> showForeignSeries(currentFocus?.tag)
+            else -> Unit
+        }
         showPendingCatalogue()
         monitor.setEnabled(!watching)
         scheduleUpdates()
@@ -856,6 +998,7 @@ class MainActivity : Activity() {
 
     override fun onStop() {
         foreground = false
+        homeStale = true
         ui.removeCallbacks(fetchUpdates)
         monitor.setEnabled(false)
         closePlayer()
@@ -1090,6 +1233,10 @@ class MainActivity : Activity() {
         val DOCUMENTARY_GROUPS = setOf(Category.DOCUMENTARY, Category.WILDLIFE, Category.NATURE)
         const val RESUME_TAG = "resume"
         const val IRANIAN_SERIES_TAG = "iranian-series"
+        const val FOREIGN_SERIES_TAG = "foreign-series"
+        const val TURKISH_SERIES_TAG = "turkish-series"
+        const val RESUME_SERIES_TAG = "resume-series"
+        val LIVE = listOf(Category.DOMESTIC, Category.NEWS, Category.SPORTS, Category.FILM)
         const val YOUTUBE_TV = "com.google.android.youtube.tv"
         const val UPDATE_TAG = "release"
         const val CATALOGUE_INTERVAL = 15 * 60_000L

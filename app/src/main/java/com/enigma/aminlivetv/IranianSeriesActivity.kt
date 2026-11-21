@@ -43,6 +43,10 @@ class IranianSeriesActivity : Activity() {
     private var unavailable = false
     private var leavingEpisode = false
     private lateinit var nextButton: TextView
+    // The same screens serve the Iranian and the Turkish library. Turkish episodes ask YouTube's
+    // player for Persian subtitles (the episode's own, or translated captions) unless turned off.
+    private val turkish by lazy { intent.getStringExtra(EXTRA_LIBRARY) == LIBRARY_TURKISH }
+    private val library get() = if (turkish) catalogue.turkishSeries else library
     private val sampleTick = object : Runnable {
         override fun run() {
             val current = player ?: return
@@ -64,6 +68,10 @@ class IranianSeriesActivity : Activity() {
         catalogue = store.load()
         progress = SeriesProgress(this)
         showLibrary()
+        // «ادامهٔ تماشا» on the home screen opens the latest saved episode directly.
+        if (state == null && intent.getBooleanExtra(EXTRA_RESUME, false)) {
+            progress.latest(library)?.let { (title, selected) -> play(title, selected) }
+        }
         val current = catalogue
         updates.execute {
             val latest = store.refresh(current) ?: return@execute
@@ -77,7 +85,7 @@ class IranianSeriesActivity : Activity() {
     }
 
     private fun showEpisodesOrLibrary(seriesId: String?, episodeId: String? = null) {
-        val title = catalogue.iranianSeries.find { it.id == seriesId }
+        val title = library.find { it.id == seriesId }
         if (title != null) showEpisodes(title, episodeId) else showLibrary(seriesId)
     }
 
@@ -91,7 +99,7 @@ class IranianSeriesActivity : Activity() {
     private fun showLibrary(focusId: String? = null) {
         series = null
         episode = null
-        val titles = catalogue.iranianSeries
+        val titles = library
         val latest = titles.mapNotNull { title ->
             continuation(title)?.let { (episode, position) -> Triple(title, episode, position) }
         }.maxByOrNull { it.third.updated }
@@ -104,14 +112,10 @@ class IranianSeriesActivity : Activity() {
             Choice(title.title, title.thumbnail, statusLabel(title)) { showEpisodes(title) }
         }
         val focus = titles.indexOfFirst { it.id == focusId }.let { if (it < 0) 0 else it + if (resume == null) 0 else 1 }
-        showList(getString(R.string.iranian_series), choices, focus)
+        showList(getString(if (turkish) R.string.turkish_series else R.string.iranian_series), choices, focus)
     }
 
-    private fun continuation(title: IranianSeries): Pair<Episode, EpisodePosition>? {
-        val (last, position) = progress.continuation(title) ?: return null
-        val target = if (position.completed) title.after(last) ?: return null else last
-        return target to position
-    }
+    private fun continuation(title: IranianSeries): Pair<Episode, EpisodePosition>? = progress.resumable(title)
 
     private fun showEpisodes(title: IranianSeries, focusId: String? = null) {
         series = title
@@ -196,7 +200,7 @@ class IranianSeriesActivity : Activity() {
         }
     }
 
-    private fun play(title: IranianSeries, selected: Episode, restart: Boolean = false, captions: Boolean = false) {
+    private fun play(title: IranianSeries, selected: Episode, restart: Boolean = false, captions: Boolean = turkish) {
         closePlayer()
         if (restart) progress.clear(title, selected)
         series = title
@@ -251,7 +255,9 @@ class IranianSeriesActivity : Activity() {
         content.addView(controls, LinearLayout.LayoutParams(-1, dp(56)))
         display(content)
         pause.requestFocus()
-        embed.playEpisode(selected, resumeSeconds, captions)
+        val subtitles = SubtitlePolicy.forEpisode(turkish, captions)
+        embed.playEpisode(selected, resumeSeconds, captions = subtitles != SubtitleMode.OFF,
+            persianSubtitles = subtitles == SubtitleMode.PERSIAN_WHEN_AVAILABLE)
         if (BuildConfig.DEBUG) Log.i("AminSeries", "Open ${title.id}/${selected.id} at $resumeSeconds")
         ui.post(sampleTick)
     }

@@ -21,15 +21,31 @@ internal data class Episode(val id: String, val season: Int, val number: Int, va
     val watchUrl: String get() = "https://www.youtube.com/watch?v=$videoId"
 }
 
+// Intent extras for IranianSeriesActivity.
+internal const val EXTRA_LIBRARY = "library"
+internal const val LIBRARY_TURKISH = "turkish"
+internal const val EXTRA_RESUME = "resume"
+
 private val seriesIdPattern = Regex("[a-z0-9][a-z0-9-]{0,63}")
 private val episodeVideoPattern = Regex("[A-Za-z0-9_-]{11}")
 
-internal fun parseIranianSeries(document: JSONObject): List<IranianSeries> {
-    val seriesIds = HashSet<String>()
+internal fun parseIranianSeries(document: JSONObject): List<IranianSeries> =
+    parseSeriesLibraries(document).first
+
+// Iranian and Turkish series use the same episode format and progress store,
+// so a series ID may appear in only one of the two libraries. Releases before 3.9 ignore the
+// Turkish keys.
+internal fun parseSeriesLibraries(document: JSONObject): Pair<List<IranianSeries>, List<IranianSeries>> {
     val videos = HashSet<String>()
+    val iranianIds = HashSet<String>()
     // Older releases understand only complete, consecutive episode lists.
-    return parseSeriesSection(document, "iranianSeries", complete = true, seriesIds, videos) +
-        parseSeriesSection(document, "iranianSeriesInProgress", complete = false, seriesIds, videos)
+    val iranian = parseSeriesSection(document, "iranianSeries", complete = true, iranianIds, videos) +
+        parseSeriesSection(document, "iranianSeriesInProgress", complete = false, iranianIds, videos)
+    val turkishIds = HashSet<String>()
+    val turkish = parseSeriesSection(document, "turkishSeries", complete = true, turkishIds, videos) +
+        parseSeriesSection(document, "turkishSeriesInProgress", complete = false, turkishIds, videos)
+    require(turkishIds.none { it in iranianIds })
+    return iranian to turkish
 }
 
 private fun parseSeriesSection(
@@ -100,6 +116,18 @@ internal class SeriesProgress(context: Context) {
     fun continuation(series: IranianSeries): Pair<Episode, EpisodePosition>? =
         series.episodes.mapNotNull { episode -> position(series, episode)?.let { episode to it } }
             .maxByOrNull { (_, position) -> position.updated }
+
+    // The episode «ادامهٔ تماشا» opens: the saved one, or the next one once it was finished.
+    fun resumable(series: IranianSeries): Pair<Episode, EpisodePosition>? {
+        val (last, position) = continuation(series) ?: return null
+        val target = if (position.completed) series.after(last) ?: return null else last
+        return target to position
+    }
+
+    // The most recently watched series in a library that still has an episode to continue.
+    fun latest(library: List<IranianSeries>): Pair<IranianSeries, Episode>? =
+        library.mapNotNull { series -> resumable(series)?.let { (episode, position) -> Triple(series, episode, position) } }
+            .maxByOrNull { it.third.updated }?.let { (series, episode) -> series to episode }
 
     fun save(series: IranianSeries, episode: Episode, seconds: Double, completed: Boolean) {
         val entry = JSONObject().put("seriesId", series.id).put("episodeId", episode.id)
