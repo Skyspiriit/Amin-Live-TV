@@ -156,7 +156,12 @@ elif step == "expect-no-text":
     expect(f"«{args[0]}» not shown", not any(t.startswith(args[0]) for t in visible))
 elif step == "order":
     # The section headings must appear top to bottom in this order.
-    nodes = [(int(re.findall(r"\d+", n.get("bounds"))[1]), label(n)) for n in dump().iter("node") if label(n) in args]
+    nodes = [(int(re.findall(r"\d+", n.get("bounds"))[1]), label(n)) for n in dump().iter("node")
+             if label(n) in args and n.get("focusable") != "true" and n.get("clickable") != "true"
+             and not any(c.get("focusable") == "true" for c in [n])]
+    # Skip the top-menu labels, which repeat the section names inside focusable buttons.
+    menu = {label(b) for b in dump().iter("node") if b.get("focusable") == "true"}
+    nodes = [(y, name) for y, name in nodes if not (name in menu and y < 200)]
     seen = [name for _, name in sorted(nodes)]
     expect("sections in order " + " → ".join(args), seen == list(args), f"found {seen}")
 elif step == "texts":

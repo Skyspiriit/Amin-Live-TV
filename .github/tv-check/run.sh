@@ -45,8 +45,8 @@ ui expect-text "تنظیمات"
 
 echo "== Top menu"
 ui go "فیلم و مستند"; ui key DPAD_CENTER; ui expect-focus "فیلم سینمایی"; ui shot 12-menu-films
-ui go "سریال‌ها"; ui key DPAD_CENTER; ui expect-focus "سریال ایرانی"
-ui go "پخش زنده"; ui key DPAD_CENTER; ui expect-focus "شبکه‌های ایرانی"
+ui key DPAD_UP 4; ui go "سریال‌ها"; ui key DPAD_CENTER; ui expect-focus "سریال ایرانی"
+ui key DPAD_UP 6; ui go "پخش زنده"; ui key DPAD_CENTER; ui expect-focus "شبکه‌های ایرانی"
 ui launch
 
 echo "== D-pad walk down the home screen"
@@ -99,5 +99,7 @@ adb shell input keyevent HOME; sleep 4; ui shot 70-launcher
 echo "== Saved data after the run"
 adb shell run-as $PKG cat shared_prefs/viewing.xml | tee -a $OUT/report.txt
 adb shell run-as $PKG cat shared_prefs/iranian-series-progress.xml | tee -a $OUT/report.txt
-adb logcat -d -s AminMonitor AminYouTube AminSeries AminCatalogue AndroidRuntime > $OUT/logcat.txt
+adb logcat -d -s AminIntro AminMonitor AminYouTube AminSeries AminCatalogue AndroidRuntime > $OUT/logcat.txt
+grep "AminIntro" $OUT/logcat.txt | tee -a $OUT/report.txt
+if grep -q "FATAL EXCEPTION" $OUT/logcat.txt; then echo "FAIL app crashed" | tee -a $OUT/report.txt; else echo "PASS no crash" | tee -a $OUT/report.txt; fi
 echo "FAIL count: $(grep -c '^FAIL' $OUT/report.txt)"
