@@ -1,21 +1,29 @@
 # Amin Live TV
 
-Amin Live TV 3.8.0 is a standalone Persian-language live television app for Android TV 8.0 and later. It runs under `com.enigma.aminlivetv`, upgrades earlier signed releases in place and can be installed alongside Amin Player.
+Amin Live TV 3.9.0 is a standalone Persian-language live television app for Android TV 8.0 and later. It runs under `com.enigma.aminlivetv`, upgrades earlier signed releases in place and can be installed alongside Amin Player.
 
-**Fantasy home screen (3.8.0).** The illustrated home screen groups live TV, games, cinema and fantasy, cars, chess, documentaries and devotional programmes into clear rows. Press «رنگ‌ها» to preview six fantasy themes based on a Persian garden, a floating palace and a desert palace. The selected setting and colours are saved on the TV. The large series action opens «سریال‌های ایرانی». See [new content and source checks](docs/entertainment-sources.md) and [artwork and design notes](docs/home-artwork.md).
+**Home screen (3.9.0).** Below the header, «ادامهٔ تماشا» resumes the last station and the latest series episode. Three sections follow, always in this order:
+
+- **پخش زنده**: شبکه‌های ایرانی، اخبار جهان، ورزش، فیلم و سرگرمی.
+- **فیلم و مستند**: فیلم سینمایی، مستند و طبیعت، علم و فضا، موضوعات دیگر.
+- **سریال‌ها**: سریال ایرانی، سریال خارجی.
+
+«مستند و طبیعت» and «موضوعات دیگر» open a grid with a tab for each group (مستند، حیات وحش، طبیعت, and مافیا و مسابقه، سینما و فانتزی، دنیای خودرو، شطرنج، آیین و مداحی). Press Up from the grid to reach the tabs. Tiles without anything to play are hidden.
+
+Press «رنگ‌ها» to preview the six fantasy themes. The selected setting and colours are saved on the TV. See the [3.9 home screen and source review](docs/home-3.9.md), [earlier content checks](docs/entertainment-sources.md) and [artwork and design notes](docs/home-artwork.md).
 
 ## Install on a Xiaomi Android TV Box
 
-1. Copy `Amin-Live-TV-v3.8.0.apk` to a USB drive and plug it into the box.
+1. Copy `Amin-Live-TV-v3.9.0.apk` to a USB drive and plug it into the box.
 2. Open the drive from the box’s file manager and select the APK. If Android asks, allow the file manager to install unknown apps, then return to the APK and select **Install**. The setting’s name varies by model and firmware.
-3. Open **Amin Live TV** from **Apps**. Choose **شبکه‌های داخلی**, **شبکه‌های خبری**, **شبکه‌های ورزشی** or **فیلم و سریال**, or one of the groups below them (**مستند**, **حیات وحش**, **طبیعت**, **علم و فضا**, **فیلم سینمایی**, **سریال کامل**), and press OK on a tile.
+3. Open **Amin Live TV** from **Apps**. Choose a tile under **پخش زنده**, **فیلم و مستند** or **سریال‌ها**, and press OK.
 4. While watching, press Up for the previous station and Down for the next one. Press OK to show or hide the channel strip. Left and Right switch stations while the strip is visible. Back returns to the grid. **ادامهٔ تماشا** on the home screen resumes the last station that played successfully when it is still available.
 
 If the box cannot open the USB file, install with [Android Platform Tools](https://developer.android.com/tools/releases/platform-tools) and [Xiaomi’s developer-options instructions](https://www.mi.com/global/support/article/KA-06513/). Connect only to your own TV on your local network. Confirm the pairing prompt on the TV.
 
 ```sh
 adb devices
-adb -s <tv-device-id> install -r --user 0 Amin-Live-TV-v3.8.0.apk
+adb -s <tv-device-id> install -r --user 0 Amin-Live-TV-v3.9.0.apk
 ```
 
 Always pass `--user 0`. Without it, ADB installs the app into every Android user, including the hidden work profile on Xiaomi boxes. That second copy then hides the main copy's switch in **Install unknown apps**, and in-app updates can't be allowed. See [UPDATE-PERMISSION-3.3.md](UPDATE-PERMISSION-3.3.md).
@@ -24,9 +32,11 @@ See [Xiaomi’s APK installation guide](https://www.mi.com/uk/support/article/KA
 
 ## Persian series
 
-Open **سریال‌های ایرانی** on the home screen and select a title and episode. **ادامهٔ تماشا** opens the saved episode. Choose **از ابتدا** to restart, **فهرست قسمت‌ها** to choose a different episode, or **قسمت بعد** when an episode ends. **قسمت‌های موجود** marks titles with some episodes unavailable. Amin Live TV stores positions from the embedded YouTube player on the device. If YouTube blocks embedding, **تماشا در یوتیوب** opens the episode in the official YouTube TV app, where Amin Live TV cannot track position.
+Open **سریال ایرانی** on the home screen and select a title and episode. **ادامهٔ تماشا** opens the saved episode. Choose **از ابتدا** to restart, **فهرست قسمت‌ها** to choose a different episode, or **قسمت بعد** when an episode ends. **قسمت‌های موجود** marks titles with some episodes unavailable. Amin Live TV stores positions from the embedded YouTube player on the device. If YouTube blocks embedding, **تماشا در یوتیوب** opens the episode in the official YouTube TV app, where Amin Live TV cannot track position.
 
 The remote catalogue lists complete, consecutive runs under `iranianSeries`. Each entry has a stable `id`, a Persian `title` and an `episodes` array. Each episode has a stable `id`, a numeric `season` and `number`, and the exact YouTube `videoId`. Use `iranianSeriesInProgress` for a free, verified subset of a finished series (`"status": "partial"`) or an ongoing series (`"status": "ongoing"`). The app keeps the original episode numbers for those titles even when some are missing. Move a title to `iranianSeries` once the complete run is verified. Keep IDs stable when editing or moving a series. A replaced YouTube video starts from the beginning. [Series inventory and sources](docs/persian-series-inventory.md)
+
+**Turkish series (3.9 and later).** `turkishSeries` and `turkishSeriesInProgress` use the same format and rules. Their IDs must not repeat an Iranian series ID. They appear under **سریال خارجی** › **سریال ترکی**, in the same episode screens, with Persian subtitles requested from YouTube's player. Older releases ignore them. The bundled catalogue has none yet. See the [source review](docs/home-3.9.md#turkish-series).
 
 ## App updates
 
