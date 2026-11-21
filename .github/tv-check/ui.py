@@ -29,11 +29,46 @@ def label(node):
     return node.get("content-desc") or node.get("text") or ""
 
 
-def focused():
-    for node in dump().iter("node"):
+def bounds(node):
+    x1, y1, x2, y2 = map(int, re.findall(r"\d+", node.get("bounds")))
+    return (x1 + x2) / 2, (y1 + y2) / 2
+
+
+def focused_node(root=None):
+    for node in (root or dump()).iter("node"):
         if node.get("focused") == "true":
-            return label(node)
-    return ""
+            return node
+    return None
+
+
+def focused():
+    node = focused_node()
+    return label(node) if node is not None else ""
+
+
+def go(name):
+    """Moves focus to the item called `name` with D-pad keys only, as a remote would."""
+    for _ in range(20):
+        root = dump()
+        now = focused_node(root)
+        target = None
+        for node in root.iter("node"):
+            if label(node).startswith(name) and node.get("focusable") == "true":
+                target = node
+                break
+        if target is None:
+            report(f"FAIL go: no focusable «{name}»")
+            return False
+        if now is not None and now is target or (now is not None and label(now).startswith(name)):
+            return True
+        fx, fy = bounds(now) if now is not None else (0, 0)
+        tx, ty = bounds(target)
+        if abs(ty - fy) > 30:
+            key("DPAD_DOWN" if ty > fy else "DPAD_UP")
+        else:
+            key("DPAD_LEFT" if tx < fx else "DPAD_RIGHT")
+    report(f"FAIL go: could not reach «{name}», focus «{focused()}»")
+    return False
 
 
 def texts():
@@ -99,6 +134,15 @@ elif step == "key":
     report(f"key {args[0]}×{args[1] if len(args) > 1 else 1} → focus «{focused()}»")
 elif step == "tap":
     tap(args[0])
+elif step == "go":
+    if go(args[0]):
+        report(f"focus reached «{args[0]}»")
+elif step == "open":
+    # Focus with the D-pad, then OK.
+    if go(args[0]):
+        key("DPAD_CENTER")
+        time.sleep(2)
+        report(f"opened «{args[0]}»")
 elif step == "shot":
     shot(args[0])
 elif step == "expect-focus":
