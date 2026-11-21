@@ -32,17 +32,26 @@ ui launch; ui shot 01-old-home-with-data; ui texts
 echo "== Upgrade to 3.9.0 in place"
 adb install -r new.apk
 adb shell dumpsys package $PKG | grep -E "versionName|versionCode" | tee -a $OUT/report.txt
-ui launch; ui shot 10-home; ui texts
+adb shell am force-stop $PKG
+adb shell am start -n $PKG/.MainActivity; sleep 1.2; ui shot 09-intro; sleep 9
+ui shot 10-home; ui texts
 ui order "ادامهٔ تماشا" "پخش زنده" "فیلم و مستند" "سریال‌ها"
 ui expect-text "پخش زنده · پرشیانا خانواده"
 ui expect-text "سریال · هزارتو"
 ui expect-focus "پخش زنده · پرشیانا خانواده"
 for t in "شبکه‌های ایرانی" "اخبار جهان" "ورزش" "فیلم و سرگرمی" "فیلم سینمایی" "مستند و طبیعت" "علم و فضا" "موضوعات دیگر" "سریال ایرانی" "سریال خارجی"; do ui expect-text "$t"; done
-for t in "مافیا و مسابقه" "حیات وحش" "شطرنج" "آیین و مداحی" "سریال ترکی"; do ui expect-no-text "$t"; done
+for t in "مافیا و مسابقه" "حیات وحش" "شطرنج" "آیین و مداحی" "سریال ترکی" "سایر سریال‌ها"; do ui expect-no-text "$t"; done
+ui expect-text "تنظیمات"
+
+echo "== Top menu"
+ui go "فیلم و مستند"; ui key DPAD_CENTER; ui expect-focus "فیلم سینمایی"; ui shot 12-menu-films
+ui go "سریال‌ها"; ui key DPAD_CENTER; ui expect-focus "سریال ایرانی"
+ui go "پخش زنده"; ui key DPAD_CENTER; ui expect-focus "شبکه‌های ایرانی"
+ui launch
 
 echo "== D-pad walk down the home screen"
 ui key DPAD_DOWN; ui key DPAD_DOWN; ui key DPAD_DOWN; ui key DPAD_DOWN; ui key DPAD_DOWN; ui shot 11-home-bottom
-ui key DPAD_UP 5; ui focus
+ui key DPAD_UP 6; ui focus
 
 echo "== Documentaries tile and tabs"
 ui open "مستند و طبیعت"; ui shot 20-documentaries; ui texts
@@ -61,7 +70,7 @@ for t in "مافیا و مسابقه" "سینما و فانتزی" "دنیای �
 ui key BACK; ui expect-focus "موضوعات دیگر"
 
 echo "== Series"
-ui open "سریال خارجی"; ui shot 40-foreign; ui expect-text "سایر سریال‌ها"
+ui open "سریال خارجی"; ui shot 40-foreign; ui texts
 ui key BACK; ui expect-focus "سریال خارجی"
 ui open "سریال ایرانی"; ui shot 41-iranian-library; ui expect-text "ادامهٔ تماشا · هزارتو"
 ui key BACK; ui expect-focus "سریال ایرانی"
@@ -75,10 +84,18 @@ ui open "فیلم و سرگرمی"; ui shot 51-film-order; ui texts; ui key BACK
 ui open "پخش زنده · "; sleep 25; ui shot 52-resumed-live; ui texts
 ui key BACK; ui focus; ui key BACK; ui focus
 
-echo "== Theme persists"
-ui launch; ui open "رنگ‌ها"; ui key DPAD_LEFT 2; ui key DPAD_CENTER; ui shot 60-theme
-ui launch; ui shot 61-theme-after-restart
+echo "== Settings: theme and intro switches persist"
+ui launch; ui open "تنظیمات"; ui shot 60-settings; ui texts
+ui expect-focus "سینمای طلایی"
+ui key DPAD_LEFT 3; ui expect-focus "قصر لاجورد"; ui key DPAD_CENTER; ui shot 61-lapis
+ui open "تنظیمات"; ui open "انیمیشن آغاز برنامه"; ui expect-text "انیمیشن آغاز برنامه: خاموش"; ui key BACK
 adb shell run-as $PKG cat shared_prefs/appearance.xml | tee -a $OUT/report.txt
+adb shell am force-stop $PKG
+adb shell am start -n $PKG/.MainActivity; sleep 1.2; ui shot 62-no-intro-after-restart; sleep 4
+ui expect-focus "پخش زنده · "
+ui open "تنظیمات"; ui open "انیمیشن آغاز برنامه"; ui expect-text "انیمیشن آغاز برنامه: روشن"; ui key BACK
+echo "== Launcher"
+adb shell input keyevent HOME; sleep 4; ui shot 70-launcher
 echo "== Saved data after the run"
 adb shell run-as $PKG cat shared_prefs/viewing.xml | tee -a $OUT/report.txt
 adb shell run-as $PKG cat shared_prefs/iranian-series-progress.xml | tee -a $OUT/report.txt

@@ -13,8 +13,6 @@
     <string name="continue_watching">ادامهٔ تماشا</string>
     <string name="resume_live">پخش زنده · %1$s</string>
     <string name="resume_series">سریال · %1$s</string>
-    <string name="foreign_series">سریال خارجی</string>
-    <string name="turkish_series">سریال ترکی</string>
     <string name="iranian_series">سریال ایرانی</string>
     <string name="series_empty">فعلاً سریالی در دسترس نیست.</string>
     <string name="series_episode">قسمت %1$s</string>
@@ -45,7 +43,7 @@
     <string name="nature">طبیعت</string>
     <string name="science">علم و فضا</string>
     <string name="movies">فیلم سینمایی</string>
-    <string name="series">سایر سریال‌ها</string>
+    <string name="series">سریال خارجی</string>
     <string name="source_youtube">یوتیوب رسمی</string>
     <string name="programme_unavailable">این برنامه الان در دسترس نیست.</string>
     <string name="source_official_site">سایت رسمی</string>
@@ -64,8 +62,11 @@
     <string name="update_permission_off">اجازهٔ نصب برای امین تی‌وی روشن نشد. دوباره OK را بزنید، کلید امین تی‌وی را روشن کنید و Back را بزنید. اگر کنار نام برنامه نشان کیف کوچکی هست، آن نسخهٔ دیگری است و این تلویزیون به کمک خانواده نیاز دارد.</string>
     <string name="update_release_link">برای دریافت نسخهٔ جدید، این نشانی را روی تلفن یا رایانه باز کنید:\n%1$s</string>
     <string name="home_tagline">تلویزیون زنده، فیلم، سریال و مستند</string>
-    <string name="theme_button">رنگ‌ها</string>
-    <string name="theme_title">دنیای خود را انتخاب کنید</string>
+    <string name="settings">تنظیمات</string>
+    <string name="intro_animation">انیمیشن آغاز برنامه: %1$s</string>
+    <string name="intro_sound">صدای آغاز برنامه: %1$s</string>
+    <string name="switch_on">روشن</string>
+    <string name="switch_off">خاموش</string>
     <string name="theme_hint">یکی را انتخاب کنید و OK را بزنید</string>
     <string name="line_domestic">شبکه‌های سراسری و استانی</string>
     <string name="line_news">اخبار ایران و جهان</string>

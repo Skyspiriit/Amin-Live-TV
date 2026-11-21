@@ -20,7 +20,7 @@ internal data class Palette(
 ) {
     val artwork: Int get() = when (key) {
         "lapis", "violet" -> R.drawable.fantasy_palace
-        "ruby", "saffron" -> R.drawable.fantasy_desert
+        "ruby", "saffron", "golden" -> R.drawable.fantasy_desert
         else -> R.drawable.fantasy_garden
     }
     val sceneName: String get() = when (key) {
@@ -29,12 +29,18 @@ internal data class Palette(
         "lapis" -> "قصر لاجورد"
         "violet" -> "کهکشان بنفشه"
         "ruby" -> "شفق یاقوت"
+        "golden" -> "سینمای طلایی"
         else -> "کویر زعفران"
     }
 }
 
 internal object AppTheme {
+    // «سینمای طلایی» is Amin Player's charcoal and gold. It is the default for a TV that never picked
+    // a theme; a saved choice is kept.
     val palettes = listOf(
+        Palette("golden", "طلایی", Color.rgb(20, 17, 20), Color.rgb(11, 9, 11), Color.rgb(42, 35, 31),
+            Color.rgb(78, 59, 31), Color.rgb(64, 48, 27), Color.rgb(31, 25, 23), Color.rgb(242, 181, 68),
+            ink = Color.rgb(250, 244, 232), muted = Color.rgb(208, 194, 170)),
         Palette("emerald", "زمرد", Color.rgb(10, 27, 23), Color.rgb(4, 13, 11), Color.rgb(22, 48, 42),
             Color.rgb(31, 74, 63), Color.rgb(20, 84, 66), Color.rgb(11, 40, 33), Color.rgb(126, 226, 184)),
         Palette("turquoise", "فیروزه", Color.rgb(7, 26, 34), Color.rgb(3, 12, 17), Color.rgb(18, 48, 59),
@@ -62,7 +68,16 @@ internal object AppTheme {
         prefs(context).edit().putString(KEY, palette.key).apply()
     }
 
+    // The startup intro and its sound, both on unless the viewer turns them off in «تنظیمات».
+    fun introAnimation(context: Context) = prefs(context).getBoolean(INTRO_ANIMATION, true)
+    fun introSound(context: Context) = prefs(context).getBoolean(INTRO_SOUND, true)
+    fun setIntro(context: Context, animation: Boolean, sound: Boolean) {
+        prefs(context).edit().putBoolean(INTRO_ANIMATION, animation).putBoolean(INTRO_SOUND, sound).apply()
+    }
+
     private fun prefs(context: Context) = context.getSharedPreferences("appearance", Context.MODE_PRIVATE)
 
     private const val KEY = "theme"
+    private const val INTRO_ANIMATION = "intro-animation"
+    private const val INTRO_SOUND = "intro-sound"
 }

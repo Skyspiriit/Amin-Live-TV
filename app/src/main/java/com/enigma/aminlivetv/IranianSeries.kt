@@ -21,31 +21,18 @@ internal data class Episode(val id: String, val season: Int, val number: Int, va
     val watchUrl: String get() = "https://www.youtube.com/watch?v=$videoId"
 }
 
-// Intent extras for IranianSeriesActivity.
-internal const val EXTRA_LIBRARY = "library"
-internal const val LIBRARY_TURKISH = "turkish"
+// Intent extra for IranianSeriesActivity: open the latest saved episode directly.
 internal const val EXTRA_RESUME = "resume"
 
 private val seriesIdPattern = Regex("[a-z0-9][a-z0-9-]{0,63}")
 private val episodeVideoPattern = Regex("[A-Za-z0-9_-]{11}")
 
-internal fun parseIranianSeries(document: JSONObject): List<IranianSeries> =
-    parseSeriesLibraries(document).first
-
-// Iranian and Turkish series use the same episode format and progress store,
-// so a series ID may appear in only one of the two libraries. Releases before 3.9 ignore the
-// Turkish keys.
-internal fun parseSeriesLibraries(document: JSONObject): Pair<List<IranianSeries>, List<IranianSeries>> {
+internal fun parseIranianSeries(document: JSONObject): List<IranianSeries> {
+    val seriesIds = HashSet<String>()
     val videos = HashSet<String>()
-    val iranianIds = HashSet<String>()
     // Older releases understand only complete, consecutive episode lists.
-    val iranian = parseSeriesSection(document, "iranianSeries", complete = true, iranianIds, videos) +
-        parseSeriesSection(document, "iranianSeriesInProgress", complete = false, iranianIds, videos)
-    val turkishIds = HashSet<String>()
-    val turkish = parseSeriesSection(document, "turkishSeries", complete = true, turkishIds, videos) +
-        parseSeriesSection(document, "turkishSeriesInProgress", complete = false, turkishIds, videos)
-    require(turkishIds.none { it in iranianIds })
-    return iranian to turkish
+    return parseSeriesSection(document, "iranianSeries", complete = true, seriesIds, videos) +
+        parseSeriesSection(document, "iranianSeriesInProgress", complete = false, seriesIds, videos)
 }
 
 private fun parseSeriesSection(

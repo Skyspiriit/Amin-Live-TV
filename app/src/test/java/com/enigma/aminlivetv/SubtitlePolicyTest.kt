@@ -16,10 +16,8 @@ class SubtitlePolicyTest {
         assertEquals(SubtitleMode.SOURCE_DEFAULT, SubtitlePolicy.forChannel(channel(Category.MOVIES), PlayerKind.EXTERNAL))
     }
 
-    @Test fun iranianEpisodesKeepTheirCaptionsAndTurkishOnesAskForPersian() {
-        assertEquals(SubtitleMode.SOURCE_DEFAULT, SubtitlePolicy.forEpisode(turkish = false, viewerWantsCaptions = true))
-        assertEquals(SubtitleMode.OFF, SubtitlePolicy.forEpisode(turkish = false, viewerWantsCaptions = false))
-        assertEquals(SubtitleMode.PERSIAN_WHEN_AVAILABLE, SubtitlePolicy.forEpisode(turkish = true, viewerWantsCaptions = true))
-        assertEquals(SubtitleMode.OFF, SubtitlePolicy.forEpisode(turkish = true, viewerWantsCaptions = false))
+    @Test fun iranianEpisodesShowTheirOwnCaptionsOnlyWhenAsked() {
+        assertEquals(SubtitleMode.SOURCE_DEFAULT, SubtitlePolicy.forEpisode(viewerWantsCaptions = true))
+        assertEquals(SubtitleMode.OFF, SubtitlePolicy.forEpisode(viewerWantsCaptions = false))
     }
 }

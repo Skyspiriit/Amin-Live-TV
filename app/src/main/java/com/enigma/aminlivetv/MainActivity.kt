@@ -5,12 +5,15 @@ import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.StateListDrawable
+import android.media.AudioAttributes
+import android.media.SoundPool
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -35,7 +38,7 @@ import java.util.concurrent.Executors
 
 @OptIn(UnstableApi::class)
 class MainActivity : Activity() {
-    private enum class Screen { HOME, SERIES_CHOICE, GRID, PLAYER, YOUTUBE }
+    private enum class Screen { HOME, GRID, PLAYER, YOUTUBE }
 
     // Related categories that share one home tile. Their grid shows a tab for each one with content.
     private enum class Hub(val key: String, val title: Int, val members: List<Category>) {
@@ -82,6 +85,10 @@ class MainActivity : Activity() {
     private var nextReleaseCheck = 0L
     private var foreground = false
     private var homeStale = false
+    private var intro: IntroView? = null
+    private var introSound: SoundPool? = null
+    private var introSoundId = 0
+    @Volatile private var introSoundReady = false
     private val seriesProgress by lazy { SeriesProgress(this) }
     private val watching get() = screen == Screen.PLAYER || screen == Screen.YOUTUBE
 
@@ -98,8 +105,45 @@ class MainActivity : Activity() {
         catalogue = store.load()
         category = savedCategory("category") ?: Category.DOMESTIC
         showHome(RESUME_TAG)
+        // The intro plays once per fresh launch, never when Android recreates the screen.
+        if (savedInstanceState == null && AppTheme.introAnimation(this)) startIntro()
         appUpdate.handle(intent)
         if (BuildConfig.TEST_CATALOG) Log.i("AminMonitor", "Local home rendered")
+    }
+
+    // Amin Player's startup intro over the home screen, which is already built underneath. It sits on
+    // the window's decor, so screens drawn meanwhile (a catalogue refresh) stay below it.
+    private fun startIntro() {
+        val mark = runCatching { BitmapFactory.decodeResource(resources, R.drawable.intro_mark) }.getOrNull() ?: return
+        if (AppTheme.introSound(this)) {
+            // Media stream: follows the TV's media volume and is silent when it is muted.
+            introSound = SoundPool.Builder().setMaxStreams(1).setAudioAttributes(AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_MEDIA)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build()).build().apply {
+                setOnLoadCompleteListener { _, _, state -> introSoundReady = state == 0 }
+                introSoundId = load(this@MainActivity, R.raw.intro_forge, 1)
+            }
+        }
+        val view = IntroView(this, mark, reducedMotion = false, onImpact = {
+            if (introSoundReady && foreground) introSound?.play(introSoundId, INTRO_VOLUME, INTRO_VOLUME, 1, 0, 1f)
+        }, onFormed = { endIntro() })
+        intro = view
+        (window.decorView as ViewGroup).addView(view, ViewGroup.LayoutParams(-1, -1))
+    }
+
+    // Fades the intro into the home screen; a key press or leaving the app ends it early.
+    private fun endIntro(immediate: Boolean = false) {
+        val view = intro ?: return
+        intro = null
+        val finish: () -> Unit = {
+            (window.decorView as ViewGroup).removeView(view)
+            introSound?.release()
+            introSound = null
+        }
+        if (immediate) {
+            introSound?.autoPause()
+            finish()
+        } else view.fadeOut(finish)
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -156,7 +200,6 @@ class MainActivity : Activity() {
         if (pendingCatalogue == null) return
         when (screen) {
             Screen.HOME -> showHome(currentFocus?.tag)
-            Screen.SERIES_CHOICE -> showForeignSeries(currentFocus?.tag)
             Screen.GRID -> showGrid(savedPosition())
             Screen.PLAYER, Screen.YOUTUBE -> Unit
         }
@@ -174,7 +217,7 @@ class MainActivity : Activity() {
                 if (channel.id == preferences.getString("watched-channel", null)) showHome(currentFocus?.tag)
             }
             Screen.GRID -> if (channel.belongsTo(category)) showGrid(savedPosition())
-            Screen.SERIES_CHOICE, Screen.PLAYER, Screen.YOUTUBE -> Unit
+            Screen.PLAYER, Screen.YOUTUBE -> Unit
         }
     }
 
@@ -195,24 +238,44 @@ class MainActivity : Activity() {
             clipChildren = false
             clipToPadding = false
         }
-        val header = LinearLayout(this).apply { gravity = Gravity.CENTER_VERTICAL }
-        header.addView(AppBadge(this), LinearLayout.LayoutParams(dp(40), dp(40)))
-        header.addView(text(getString(R.string.title_fa), 28, bold = true).apply {
+        // Top menu, as in Amin Player: the gold mark and name, one button per section with the same
+        // icon set as the tiles, and «تنظیمات». A section button jumps to that section's first tile.
+        val sectionStarts = HashMap<Int, Pair<View, View>>()
+        val scroll = android.widget.ScrollView(this)
+        val header = LinearLayout(this).apply { gravity = Gravity.CENTER_VERTICAL; clipChildren = false }
+        header.addView(ImageView(this).apply {
+            setImageResource(R.drawable.intro_mark)
+            importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+        }, LinearLayout.LayoutParams(dp(44), dp(44)))
+        header.addView(text(getString(R.string.title_fa), 24, bold = true).apply {
             gravity = Gravity.START
-        }, LinearLayout.LayoutParams(0, -2, 1f).apply { marginStart = dp(12) })
-        val themeButton = actionButton(getString(R.string.theme_button), 18).apply {
+            maxLines = 1
+        }, LinearLayout.LayoutParams(0, -2, 1f).apply { marginStart = dp(10) })
+        val tiles = LinkedHashMap<Any, View>()
+        for ((heading, icon) in listOf(R.string.home_live to Category.DOMESTIC, R.string.home_films_docs to Category.MOVIES,
+                R.string.home_series to Category.SERIES)) {
+            header.addView(menuButton(getString(heading), CategoryIcon(this, icon, ACCENT)).apply {
+                tag = "menu-$heading"
+                tiles[tag] = this
+                setOnClickListener {
+                    val (title, first) = sectionStarts[heading] ?: return@setOnClickListener
+                    first.requestFocus()
+                    scroll.post { scroll.smoothScrollTo(0, (title.top - dp(8)).coerceAtLeast(0)) }
+                }
+            }, LinearLayout.LayoutParams(-2, dp(46)).apply { marginEnd = dp(8) })
+        }
+        val themeButton = menuButton(getString(R.string.settings), PaletteIcon(this)).apply {
             tag = THEME_TAG
-            setPadding(dp(18), 0, dp(18), 0)
             setOnClickListener { showThemePicker() }
         }
-        header.addView(themeButton, LinearLayout.LayoutParams(-2, dp(44)).apply { marginEnd = dp(22) })
+        header.addView(themeButton, LinearLayout.LayoutParams(-2, dp(46)).apply { marginEnd = dp(18) })
         val clock = column().apply { gravity = Gravity.END or Gravity.CENTER_VERTICAL }
         clockTime = text("", 25, bold = true).apply { gravity = Gravity.END }
         clockDate = text("", 14, MUTED).apply { gravity = Gravity.END }
         clock.addView(clockTime)
         clock.addView(clockDate)
         header.addView(clock, LinearLayout.LayoutParams(-2, -2))
-        content.addView(header, LinearLayout.LayoutParams(-1, dp(48)))
+        content.addView(header, LinearLayout.LayoutParams(-1, dp(50)))
         tickClock()
 
         // «ادامهٔ تماشا» over the theme's artwork: the last station and the latest series episode.
@@ -254,11 +317,11 @@ class MainActivity : Activity() {
                 }
             }
         }
-        val resumeSeries = latestSeries()?.let { (title, turkish) ->
+        val resumeSeries = seriesProgress.latest(catalogue.iranianSeries)?.let { (title) ->
             actionButton(getString(R.string.resume_series, title.title), 20, highlighted = true).apply {
                 tag = RESUME_SERIES_TAG
                 maxLines = 1
-                setOnClickListener { openSeries(turkish, resume = true) }
+                setOnClickListener { openSeries(resume = true) }
             }
         }
         listOfNotNull(resume, resumeSeries).forEachIndexed { index, button ->
@@ -274,18 +337,17 @@ class MainActivity : Activity() {
         content.addView(band, LinearLayout.LayoutParams(-1, dp(if (resumeRow.childCount > 0) 128 else 96)).apply { topMargin = dp(16) })
 
         // Each category is reachable from exactly one tile; focus returns to that tile.
-        val tiles = LinkedHashMap<Any, View>()
         val byCategory = HashMap<Category, View>()
         fun section(heading: Int, entries: List<HomeTile>) {
             if (entries.isEmpty()) return
-            content.addView(text(getString(heading), 22, ACCENT, bold = true).apply {
-                gravity = Gravity.START
-            }, LinearLayout.LayoutParams(-1, dp(34)).apply { topMargin = dp(16) })
+            val title = text(getString(heading), 22, ACCENT, bold = true).apply { gravity = Gravity.START }
+            content.addView(title, LinearLayout.LayoutParams(-1, dp(34)).apply { topMargin = dp(16) })
             val row = LinearLayout(this).apply { clipChildren = false }
             for ((index, entry) in entries.withIndex()) {
                 val tile = homeTile(entry)
                 tiles[entry.tag] = tile
                 entry.covers.forEach { byCategory[it] = tile }
+                if (index == 0) sectionStarts[heading] = title to tile
                 row.addView(tile, LinearLayout.LayoutParams(0, dp(84), 1f).apply {
                     if (index < entries.lastIndex) marginEnd = dp(12)
                 })
@@ -300,10 +362,10 @@ class MainActivity : Activity() {
             hubTile(Hub.OTHER_TOPICS, Category.GAMES)
         ))
         section(R.string.home_series, listOfNotNull(
-            HomeTile(IRANIAN_SERIES_TAG, R.string.iranian_series, Category.SERIES) { openSeries(turkish = false) }
+            HomeTile(IRANIAN_SERIES_TAG, R.string.iranian_series, Category.SERIES) { openSeries() }
                 .takeIf { catalogue.iranianSeries.isNotEmpty() },
-            HomeTile(FOREIGN_SERIES_TAG, R.string.foreign_series, Category.CINEMA, listOf(Category.SERIES)) { openForeignSeries() }
-                .takeIf { catalogue.turkishSeries.isNotEmpty() || hasContent(Category.SERIES) }
+            HomeTile(Category.SERIES, R.string.series, Category.CINEMA, listOf(Category.SERIES)) { openCategory(Category.SERIES) }
+                .takeIf { hasContent(Category.SERIES) }
         ))
 
         val update = latestRelease?.let { tag ->
@@ -324,7 +386,7 @@ class MainActivity : Activity() {
                 content.addView(this, LinearLayout.LayoutParams(-1, dp(48)).apply { topMargin = dp(18) })
             }
         }
-        val scroll = android.widget.ScrollView(this).apply {
+        scroll.apply {
             isFillViewport = true
             isVerticalScrollBarEnabled = false
             clipToPadding = false
@@ -385,55 +447,24 @@ class MainActivity : Activity() {
         openCategory(saved ?: hub.members.firstOrNull(::hasContent) ?: return)
     }
 
-    private fun openSeries(turkish: Boolean, resume: Boolean = false) {
-        val intent = Intent(this, IranianSeriesActivity::class.java).putExtra(EXTRA_RESUME, resume)
-        if (turkish) intent.putExtra(EXTRA_LIBRARY, LIBRARY_TURKISH)
-        startActivity(intent)
+    private fun openSeries(resume: Boolean = false) {
+        startActivity(Intent(this, IranianSeriesActivity::class.java).putExtra(EXTRA_RESUME, resume))
     }
 
-    // The latest Iranian or Turkish episode to continue, and whether it is Turkish.
-    private fun latestSeries(): Pair<IranianSeries, Boolean>? {
-        fun latest(library: List<IranianSeries>, turkish: Boolean) = seriesProgress.latest(library)?.let { (series) ->
-            Triple(series, turkish, seriesProgress.resumable(series)?.second?.updated ?: 0L)
+    // A top-menu button: icon and label, with the theme's focus outline.
+    private fun menuButton(label: String, icon: View) = LinearLayout(this).apply {
+        gravity = Gravity.CENTER_VERTICAL
+        setPadding(dp(12), 0, dp(14), 0)
+        isFocusable = true
+        isClickable = true
+        contentDescription = label
+        background = StateListDrawable().apply {
+            addState(intArrayOf(android.R.attr.state_focused), surface(SELECTED, ACCENT))
+            addState(intArrayOf(), surface(Color.TRANSPARENT))
         }
-        return listOfNotNull(latest(catalogue.iranianSeries, false), latest(catalogue.turkishSeries, true))
-            .maxByOrNull { it.third }?.let { (series, turkish) -> series to turkish }
-    }
-
-    private fun foreignChoices(): List<HomeTile> = listOfNotNull(
-        HomeTile(TURKISH_SERIES_TAG, R.string.turkish_series, Category.SERIES) { openSeries(turkish = true) }
-            .takeIf { catalogue.turkishSeries.isNotEmpty() },
-        categoryTile(Category.SERIES).takeIf { hasContent(Category.SERIES) }
-    )
-
-    // «سریال خارجی» opens its only collection directly, or offers «سریال ترکی» and «سایر سریال‌ها».
-    private fun openForeignSeries() {
-        val choices = foreignChoices()
-        if (choices.size == 1) choices.single().open() else if (choices.isNotEmpty()) showForeignSeries()
-    }
-
-    private fun showForeignSeries(restoreFocus: Any? = null) {
-        val choices = foreignChoices()
-        if (choices.size < 2) return showHome(FOREIGN_SERIES_TAG)
-        screen = Screen.SERIES_CHOICE
-        applyPendingCatalogue()
-        monitor.setEnabled(foreground)
-        scheduleUpdates()
-        val content = column().apply {
-            gravity = Gravity.CENTER_HORIZONTAL
-            setPadding(dp(46), dp(24), dp(46), dp(22))
-        }
-        content.addView(text(getString(R.string.foreign_series), 30, bold = true), LinearLayout.LayoutParams(-1, -2))
-        val row = LinearLayout(this).apply { clipChildren = false }
-        var focus: View? = null
-        for ((index, choice) in choices.withIndex()) {
-            val tile = homeTile(choice)
-            if (choice.tag == restoreFocus || focus == null) focus = tile
-            row.addView(tile, LinearLayout.LayoutParams(dp(300), dp(110)).apply { if (index > 0) marginStart = dp(18) })
-        }
-        content.addView(row, LinearLayout.LayoutParams(-2, -2).apply { topMargin = dp(48) })
-        install(content)
-        focus?.requestFocus()
+        addView(icon, LinearLayout.LayoutParams(dp(24), dp(24)))
+        addView(text(label, 18, bold = true).apply { maxLines = 1 }, LinearLayout.LayoutParams(-2, -2).apply { marginStart = dp(8) })
+        liftOnFocus()
     }
 
     private fun actionButton(label: String, size: Int, highlighted: Boolean = false) = text(label, size, bold = true).apply {
@@ -491,10 +522,10 @@ class MainActivity : Activity() {
             clipChildren = false
             clipToPadding = false
         }
-        panel.addView(text(getString(R.string.theme_title), 26, bold = true))
+        panel.addView(text(getString(R.string.settings), 26, bold = true))
         panel.addView(text(getString(R.string.theme_hint), 16, MUTED), LinearLayout.LayoutParams(-2, -2).apply { topMargin = dp(4) })
         var focus: View? = null
-        for (palettes in AppTheme.palettes.chunked(3)) {
+        for (palettes in AppTheme.palettes.chunked(4)) {
             val row = LinearLayout(this).apply { clipChildren = false; clipToPadding = false }
             palettes.forEachIndexed { index, palette ->
                 val swatch = column().apply {
@@ -511,7 +542,7 @@ class MainActivity : Activity() {
                         setImageResource(palette.artwork)
                         scaleType = ImageView.ScaleType.CENTER_CROP
                         importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
-                    }, LinearLayout.LayoutParams(dp(184), dp(76)))
+                    }, LinearLayout.LayoutParams(dp(168), dp(70)))
                     addView(text(palette.sceneName, 19, palette.ink, bold = true), LinearLayout.LayoutParams(-2, -2).apply { topMargin = dp(8) })
                     setOnClickListener {
                         AppTheme.select(this@MainActivity, palette)
@@ -521,10 +552,27 @@ class MainActivity : Activity() {
                     liftOnFocus()
                 }
                 if (palette == AppTheme.current) focus = swatch
-                row.addView(swatch, LinearLayout.LayoutParams(dp(200), -2).apply { if (index > 0) marginStart = dp(14) })
+                row.addView(swatch, LinearLayout.LayoutParams(dp(184), -2).apply { if (index > 0) marginStart = dp(14) })
             }
             panel.addView(row, LinearLayout.LayoutParams(-2, -2).apply { topMargin = dp(14) })
         }
+        // Startup intro and its sound, as in Amin Player's settings.
+        val switches = LinearLayout(this)
+        var animation = AppTheme.introAnimation(this)
+        var sound = AppTheme.introSound(this)
+        fun state(on: Boolean) = getString(if (on) R.string.switch_on else R.string.switch_off)
+        val animationButton = actionButton("", 18)
+        val soundButton = actionButton("", 18)
+        fun refresh() {
+            animationButton.text = getString(R.string.intro_animation, state(animation))
+            soundButton.text = getString(R.string.intro_sound, state(sound))
+        }
+        refresh()
+        animationButton.setOnClickListener { animation = !animation; AppTheme.setIntro(this, animation, sound); refresh() }
+        soundButton.setOnClickListener { sound = !sound; AppTheme.setIntro(this, animation, sound); refresh() }
+        switches.addView(animationButton, LinearLayout.LayoutParams(dp(300), dp(48)))
+        switches.addView(soundButton, LinearLayout.LayoutParams(dp(300), dp(48)).apply { marginStart = dp(14) })
+        panel.addView(switches, LinearLayout.LayoutParams(-2, -2).apply { topMargin = dp(20) })
         dim.addView(panel, frame(-2, -2))
         dim.layoutDirection = View.LAYOUT_DIRECTION_RTL
         dialog.setContentView(dim)
@@ -928,6 +976,10 @@ class MainActivity : Activity() {
     }
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+        if (intro != null) {
+            if (event.action == KeyEvent.ACTION_UP) endIntro()
+            return true
+        }
         val isOk = event.keyCode in setOf(KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_NUMPAD_ENTER)
         if (screen == Screen.YOUTUBE) {
             if (documentaryControls?.isShown == true) {
@@ -978,10 +1030,7 @@ class MainActivity : Activity() {
                 closePlayer()
                 showGrid(currentList[currentIndex].id)
             }
-            Screen.GRID ->
-                if (category == Category.SERIES && foreignChoices().size > 1) showForeignSeries(Category.SERIES)
-                else showHome()
-            Screen.SERIES_CHOICE -> showHome(FOREIGN_SERIES_TAG)
+            Screen.GRID -> showHome()
             Screen.HOME -> super.onBackPressed()
         }
     }
@@ -990,11 +1039,7 @@ class MainActivity : Activity() {
         super.onStart()
         foreground = true
         // Back from the series screens: «ادامهٔ تماشا» may now name a different episode.
-        if (homeStale && pendingCatalogue == null) when (screen) {
-            Screen.HOME -> showHome(currentFocus?.tag)
-            Screen.SERIES_CHOICE -> showForeignSeries(currentFocus?.tag)
-            else -> Unit
-        }
+        if (homeStale && pendingCatalogue == null && screen == Screen.HOME) showHome(currentFocus?.tag)
         showPendingCatalogue()
         monitor.setEnabled(!watching)
         scheduleUpdates()
@@ -1006,6 +1051,7 @@ class MainActivity : Activity() {
     override fun onStop() {
         foreground = false
         homeStale = true
+        endIntro(immediate = true)
         ui.removeCallbacks(fetchUpdates)
         monitor.setEnabled(false)
         closePlayer()
@@ -1189,31 +1235,7 @@ class MainActivity : Activity() {
         }
     }
 
-    // Rounded accent square with a small TV: the app's mark in the header.
-    private class AppBadge(context: Context) : View(context) {
-        private val fill = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = AppTheme.current.accent }
-        private val pen = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = AppTheme.current.backgroundDeep
-            style = Paint.Style.STROKE
-            strokeWidth = 2.2f
-            strokeCap = Paint.Cap.ROUND
-            strokeJoin = Paint.Join.ROUND
-        }
-
-        override fun onDraw(canvas: Canvas) {
-            super.onDraw(canvas)
-            canvas.save()
-            canvas.scale(width / 32f, height / 32f)
-            canvas.drawRoundRect(0f, 0f, 32f, 32f, 9f, 9f, fill)
-            canvas.drawRoundRect(7f, 9f, 25f, 21f, 2.5f, 2.5f, pen)
-            canvas.drawLine(12f, 25f, 20f, 25f, pen)
-            canvas.drawLine(13f, 6f, 16f, 9f, pen)
-            canvas.drawLine(19f, 6f, 16f, 9f, pen)
-            canvas.restore()
-        }
-    }
-
-    // Painter's palette: the colour-theme button's icon.
+    // Painter's palette: the «تنظیمات» button's icon.
     private class PaletteIcon(context: Context) : View(context) {
         private val pen = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             color = INK
@@ -1240,9 +1262,7 @@ class MainActivity : Activity() {
         val DOCUMENTARY_GROUPS = setOf(Category.DOCUMENTARY, Category.WILDLIFE, Category.NATURE)
         const val RESUME_TAG = "resume"
         const val IRANIAN_SERIES_TAG = "iranian-series"
-        const val FOREIGN_SERIES_TAG = "foreign-series"
         val GRID_ID = View.generateViewId()
-        const val TURKISH_SERIES_TAG = "turkish-series"
         const val RESUME_SERIES_TAG = "resume-series"
         val LIVE = listOf(Category.DOMESTIC, Category.NEWS, Category.SPORTS, Category.FILM)
         const val YOUTUBE_TV = "com.google.android.youtube.tv"
@@ -1250,6 +1270,7 @@ class MainActivity : Activity() {
         const val CATALOGUE_INTERVAL = 15 * 60_000L
         const val RELEASE_INTERVAL = 6 * 60 * 60_000L
         const val THEME_TAG = "theme"
+        const val INTRO_VOLUME = 0.7f
         // Colours come from the theme the viewer picked (AppTheme).
         val BACKGROUND get() = AppTheme.current.background
         val SURFACE get() = AppTheme.current.surface

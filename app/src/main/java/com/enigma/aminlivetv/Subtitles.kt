@@ -22,17 +22,15 @@ internal enum class SubtitleMode {
 
 internal object SubtitlePolicy {
     // Live news keeps the source's default: YouTube doesn't translate live captions. Documentary,
-    // film, series and topic tiles, and Turkish episodes, ask for Persian subtitles.
+    // film, series and topic tiles ask for Persian subtitles.
     fun forChannel(channel: Channel, kind: PlayerKind): SubtitleMode = when {
         kind != PlayerKind.YOUTUBE -> SubtitleMode.SOURCE_DEFAULT
         channel.categories.any { !it.main } -> SubtitleMode.PERSIAN_WHEN_AVAILABLE
         else -> SubtitleMode.SOURCE_DEFAULT
     }
 
-    // Iranian episodes start with captions off (the speech is Persian); Turkish ones in Persian.
-    fun forEpisode(turkish: Boolean, viewerWantsCaptions: Boolean): SubtitleMode = when {
-        !viewerWantsCaptions -> SubtitleMode.OFF
-        turkish -> SubtitleMode.PERSIAN_WHEN_AVAILABLE
-        else -> SubtitleMode.SOURCE_DEFAULT
-    }
+    // Iranian episodes start with captions off (the speech is Persian); the viewer can show the
+    // video's own captions.
+    fun forEpisode(viewerWantsCaptions: Boolean): SubtitleMode =
+        if (viewerWantsCaptions) SubtitleMode.SOURCE_DEFAULT else SubtitleMode.OFF
 }

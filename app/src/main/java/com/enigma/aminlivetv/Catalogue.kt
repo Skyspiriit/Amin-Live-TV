@@ -75,8 +75,7 @@ internal data class Channel(
 internal data class Catalogue(
     val revision: Int,
     val channels: List<Channel>,
-    val iranianSeries: List<IranianSeries> = emptyList(),
-    val turkishSeries: List<IranianSeries> = emptyList()
+    val iranianSeries: List<IranianSeries> = emptyList()
 ) {
     fun inCategory(category: Category): List<Channel> {
         val matching = channels.filter { it.belongsTo(category) }
@@ -219,8 +218,7 @@ internal class CatalogueStore(context: Context) {
         require(channels.any { it.id == Channel.BBC_PERSIAN && it.belongsTo(Category.NEWS) })
         val programmes = parseProgrammes(json.optJSONArray("programmes"), channels, ids) +
             parseProgrammes(json.optJSONArray("programmes2"), channels, ids)
-        val (iranian, turkish) = parseSeriesLibraries(json)
-        return Catalogue(revision, channels + programmes, iranian, turkish)
+        return Catalogue(revision, channels + programmes, parseIranianSeries(json))
     }
 
     // Documentary, movie and series groups. Each programme plays a catalogue channel natively

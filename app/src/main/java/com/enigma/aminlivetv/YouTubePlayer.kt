@@ -92,13 +92,11 @@ internal class YouTubePlayer(
         if (usingPlaylist && queue != null) beginDocumentaries() else load()
     }
 
-    // `captions` shows the episode's own captions; `persianSubtitles` (Turkish series) also picks
-    // Persian ones the same way documentaries do.
-    fun playEpisode(selected: Episode, seconds: Double, captions: Boolean, persianSubtitles: Boolean = false) {
+    fun playEpisode(selected: Episode, seconds: Double, captions: Boolean) {
         episode = selected
         initialSeconds = seconds.toInt()
-        subtitles = persianSubtitles
-        suppressEpisodeCaptions = !captions && !persianSubtitles
+        subtitles = false
+        suppressEpisodeCaptions = !captions
         load()
     }
 
