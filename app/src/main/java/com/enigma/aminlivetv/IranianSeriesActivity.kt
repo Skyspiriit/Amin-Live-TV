@@ -46,7 +46,7 @@ class IranianSeriesActivity : Activity() {
     // The same screens serve the Iranian and the Turkish library. Turkish episodes ask YouTube's
     // player for Persian subtitles (the episode's own, or translated captions) unless turned off.
     private val turkish by lazy { intent.getStringExtra(EXTRA_LIBRARY) == LIBRARY_TURKISH }
-    private val library get() = if (turkish) catalogue.turkishSeries else library
+    private val library: List<IranianSeries> get() = if (turkish) catalogue.turkishSeries else catalogue.iranianSeries
     private val sampleTick = object : Runnable {
         override fun run() {
             val current = player ?: return
