@@ -2,7 +2,7 @@
 
 Amin Live TV 3.9.0 is a standalone Persian-language live television app for Android TV 8.0 and later. It runs under `com.enigma.aminlivetv`, upgrades earlier signed releases in place and can be installed alongside Amin Player.
 
-**Home screen (3.9.0).** Below the header, «ادامهٔ تماشا» resumes the last station and the latest series episode. Three sections follow, always in this order:
+**Home screen (3.9.0).** The app now matches Amin Player: a gold TV mark on the launcher icon and banner, the same startup intro and sound, and a top menu with «پخش زنده», «فیلم و مستند», «سریال‌ها» and «تنظیمات». Below the menu, «ادامهٔ تماشا» resumes the last station and the latest series episode. Three sections follow, always in this order:
 
 - **پخش زنده**: شبکه‌های ایرانی، اخبار جهان، ورزش، فیلم و سرگرمی.
 - **فیلم و مستند**: فیلم سینمایی، مستند و طبیعت، علم و فضا، موضوعات دیگر.
@@ -10,7 +10,7 @@ Amin Live TV 3.9.0 is a standalone Persian-language live television app for Andr
 
 «مستند و طبیعت» and «موضوعات دیگر» open a grid with a tab for each group (مستند، حیات وحش، طبیعت, and مافیا و مسابقه، سینما و فانتزی، دنیای خودرو، شطرنج، آیین و مداحی). Press Up from the grid to reach the tabs. Tiles without anything to play are hidden.
 
-Press «رنگ‌ها» to preview the six fantasy themes. The selected setting and colours are saved on the TV. See the [3.9 home screen and source review](docs/home-3.9.md), [earlier content checks](docs/entertainment-sources.md) and [artwork and design notes](docs/home-artwork.md).
+Press «تنظیمات» to choose a theme, «سینمای طلایی» (the default, as in Amin Player) or one of the six fantasy themes, and to turn the startup intro or its sound off. The choices are saved on the TV. Any key skips the intro. See the [3.9 home screen and source review](docs/home-3.9.md), [earlier content checks](docs/entertainment-sources.md) and [artwork and design notes](docs/home-artwork.md).
 
 ## Install on a Xiaomi Android TV Box
 
@@ -35,8 +35,6 @@ See [Xiaomi’s APK installation guide](https://www.mi.com/uk/support/article/KA
 Open **سریال ایرانی** on the home screen and select a title and episode. **ادامهٔ تماشا** opens the saved episode. Choose **از ابتدا** to restart, **فهرست قسمت‌ها** to choose a different episode, or **قسمت بعد** when an episode ends. **قسمت‌های موجود** marks titles with some episodes unavailable. Amin Live TV stores positions from the embedded YouTube player on the device. If YouTube blocks embedding, **تماشا در یوتیوب** opens the episode in the official YouTube TV app, where Amin Live TV cannot track position.
 
 The remote catalogue lists complete, consecutive runs under `iranianSeries`. Each entry has a stable `id`, a Persian `title` and an `episodes` array. Each episode has a stable `id`, a numeric `season` and `number`, and the exact YouTube `videoId`. Use `iranianSeriesInProgress` for a free, verified subset of a finished series (`"status": "partial"`) or an ongoing series (`"status": "ongoing"`). The app keeps the original episode numbers for those titles even when some are missing. Move a title to `iranianSeries` once the complete run is verified. Keep IDs stable when editing or moving a series. A replaced YouTube video starts from the beginning. [Series inventory and sources](docs/persian-series-inventory.md)
-
-**Turkish series (3.9 and later).** `turkishSeries` and `turkishSeriesInProgress` use the same format and rules. Their IDs must not repeat an Iranian series ID. They appear under **سریال خارجی** › **سریال ترکی**, in the same episode screens, with Persian subtitles requested from YouTube's player. Older releases ignore them. The bundled catalogue has none yet. See the [source review](docs/home-3.9.md#turkish-series).
 
 ## App updates
 
