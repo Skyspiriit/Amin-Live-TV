@@ -37,13 +37,21 @@ def focused():
 
 
 def texts():
-    return [label(n) for n in dump().iter("node") if label(n)]
+    found = []
+    for n in dump().iter("node"):
+        for v in (n.get("content-desc"), n.get("text")):
+            if v and v not in found:
+                found.append(v)
+    return found
 
 
 def find(name):
-    for node in dump().iter("node"):
-        if label(node) == name or label(node).startswith(name):
-            return node
+    nodes = list(dump().iter("node"))
+    names = lambda n: [n.get("content-desc") or "", n.get("text") or ""]
+    for test in (lambda v: v == name, lambda v: v.startswith(name)):
+        for node in nodes:
+            if any(test(v) for v in names(node) if v):
+                return node
     return None
 
 
