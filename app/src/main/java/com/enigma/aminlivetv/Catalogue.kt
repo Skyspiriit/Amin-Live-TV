@@ -12,8 +12,8 @@ import java.net.HttpURLConnection
 import java.net.URI
 import java.time.LocalDate
 
-// The four main categories come from `channels`. The others are documentary groups that only
-// `programmes` use, so older apps, which reject unknown channel categories, keep updating.
+// The four main categories come from `channels`. Additional groups live in `programmes`;
+// new Sports collections use `programmes2` so older clients can safely skip them.
 internal enum class Category(val key: String, val title: Int, val main: Boolean = true) {
     DOMESTIC("domestic", R.string.domestic),
     NEWS("news", R.string.news),
@@ -32,9 +32,8 @@ internal enum class Category(val key: String, val title: Int, val main: Boolean 
     DEVOTIONAL("devotional", R.string.devotional, false)
 }
 
-// Official YouTube playback: the channel's current live broadcast, its playlist, or the live
-// broadcast with the playlist as the fallback when nothing is live.
-internal data class YouTube(val channel: String?, val playlist: String?)
+// Official YouTube playback: live channel, playlist (also a live fallback), or reviewed video IDs.
+internal data class YouTube(val channel: String?, val playlist: String?, val videos: List<String> = emptyList())
 
 internal data class Stream(
     val url: String,
@@ -92,13 +91,13 @@ internal class CatalogueStore(context: Context) {
     private val cache = AtomicFile(File(context.filesDir, "channels.json"))
 
     fun load(): Catalogue {
-        val bundled = assets.open("channels.json").use { parse(it.readLimited(MAX_BYTES)) }
+        val bundled = assets.open("channels.json").use { CatalogueParser.parse(it.readLimited(MAX_BYTES)) }
         val cached = synchronized(cacheLock) { readCache() }
         return cached?.takeIf { it.canReplace(bundled) } ?: bundled
     }
 
     private fun readCache(): Catalogue? =
-        runCatching { cache.openRead().use { parse(it.readLimited(MAX_BYTES)) } }.getOrNull()
+        runCatching { cache.openRead().use { CatalogueParser.parse(it.readLimited(MAX_BYTES)) } }.getOrNull()
 
     fun refresh(current: Catalogue): Catalogue? = runCatching {
         val connection = URI(BuildConfig.CATALOG_URL).toURL().openConnection() as HttpURLConnection
@@ -109,9 +108,9 @@ internal class CatalogueStore(context: Context) {
             connection.setRequestProperty("Accept", "application/json, text/plain")
             if (connection.responseCode != HttpURLConnection.HTTP_OK) return null
             val bytes = connection.inputStream.use { it.readLimited(MAX_BYTES) }
-            val document = readDocument(bytes)
+            val document = CatalogueParser.readDocument(bytes)
             if ((document.get("revision") as Int) <= current.revision) return null
-            val candidate = parse(document)
+            val candidate = CatalogueParser.parse(document)
             if (!candidate.canReplace(current)) return null
 
             synchronized(cacheLock) {
@@ -143,16 +142,23 @@ internal class CatalogueStore(context: Context) {
         return other.channels.all { it.id in ids }
     }
 
-    private fun parse(bytes: ByteArray): Catalogue = parse(readDocument(bytes))
+    private companion object {
+        val cacheLock = Any()
+        const val MAX_BYTES = 2 * 1024 * 1024
+    }
+}
 
-    private fun readDocument(bytes: ByteArray): JSONObject {
+internal object CatalogueParser {
+    fun parse(bytes: ByteArray): Catalogue = parse(readDocument(bytes))
+
+    fun readDocument(bytes: ByteArray): JSONObject {
         val tokenizer = JSONTokener(bytes.toString(Charsets.UTF_8))
         val json = tokenizer.nextValue() as JSONObject
         require(tokenizer.nextClean() == '\u0000')
         return json
     }
 
-    private fun parse(json: JSONObject): Catalogue {
+    fun parse(json: JSONObject): Catalogue {
         require(json.get("schemaVersion") == 1)
         val revision = json.get("revision") as Int
         require(revision > 0)
@@ -211,7 +217,7 @@ internal class CatalogueStore(context: Context) {
             require(streams.map { it.url }.distinct().size == streams.size)
             if (status == "verified") require(streams.isNotEmpty())
             if (status == "restricted" || status == "unavailable") require(streams.isEmpty())
-            val youtube = entry.youtube()?.also { require(Category.NEWS in categories && it.playlist == null) }
+            val youtube = entry.youtube()?.also { require(Category.NEWS in categories && it.playlist == null && it.videos.isEmpty()) }
             Channel(id, name, categories, logo, streams, origin, status, verifiedAt, filmOrder, officialLiveUrl, youtube)
         }
         require(Category.entries.filter { it.main }.all { category -> channels.any { it.belongsTo(category) } })
@@ -234,10 +240,16 @@ internal class CatalogueStore(context: Context) {
             require(ID.matches(id) && ids.add(id))
             val name = entry.requiredText("name", 100)
             val groupKey = entry.requiredText("group", 16)
-            val group = Category.entries.firstOrNull { !it.main && it.key == groupKey } ?: return@mapNotNull null
+            val legacyGroup = Category.entries.firstOrNull { (!it.main || it == Category.SPORTS) && it.key == groupKey }
+                ?: return@mapNotNull null
+            // Keep the original group in the JSON for older apps; route the same stable ID in new ones.
+            val override = if (entry.isNull("displayGroup")) null else entry.requiredText("displayGroup", 16)
+            require(override == null || override == Category.SPORTS.key)
+            val group = if (override == Category.SPORTS.key) Category.SPORTS else legacyGroup
             entry.getJSONArray("sourceAttribution").strings().also { require(it.isNotEmpty()) }.forEach { publicUrl(it) }
             val reference = if (entry.isNull("channelRef")) null else entry.requiredText("channelRef", 80)
             val youtube = entry.youtube()
+            require(youtube == null || youtube.videos.isEmpty() || group == Category.SPORTS)
             require((reference == null) != (youtube == null))
             if (reference != null) {
                 val base = channels.first { it.id == reference }
@@ -252,10 +264,15 @@ internal class CatalogueStore(context: Context) {
     private fun JSONObject.youtube(): YouTube? {
         val channel = if (isNull("youtubeChannel")) null else requiredText("youtubeChannel", 24)
         val playlist = if (isNull("youtubePlaylist")) null else requiredText("youtubePlaylist", 64)
-        if (channel == null && playlist == null) return null
+        val videos = if (isNull("youtubeVideos")) emptyList() else getJSONArray("youtubeVideos").strings().also { ids ->
+            require(ids.size in 1..25 && ids.distinct().size == ids.size)
+            require(ids.all { YOUTUBE_VIDEO.matches(it) })
+            require(playlist == null && channel == null)
+        }
+        if (channel == null && playlist == null && videos.isEmpty()) return null
         channel?.let { require(YOUTUBE_CHANNEL.matches(it)) }
         playlist?.let { require(YOUTUBE_PLAYLIST.matches(it)) }
-        return YouTube(channel, playlist)
+        return YouTube(channel, playlist, videos)
     }
 
     private fun publicUrl(value: String): String {
@@ -274,18 +291,15 @@ internal class CatalogueStore(context: Context) {
     private fun JSONObject.requiredText(key: String, maxLength: Int): String =
         (get(key) as String).also { require(it.isNotBlank() && it.length <= maxLength) }
 
-    private companion object {
-        val cacheLock = Any()
-        val ID = Regex("[a-z0-9][a-z0-9_-]*")
-        val YOUTUBE_CHANNEL = Regex("UC[A-Za-z0-9_-]{22}")
-        val YOUTUBE_PLAYLIST = Regex("(PL|UU)[A-Za-z0-9_-]{10,62}")
-        val OFFICIAL_LIVE_HOSTS = setOf(
-            "www.bbc.com", "www.dw.com", "www.france24.com", "www.euronews.com",
-            "www.aljazeera.com", "news.sky.com", "abcnews.go.com", "www.cbsnews.com", "www.youtube.com"
-        )
-        const val MAX_BYTES = 2 * 1024 * 1024
-        const val DAY_MS = 86_400_000L
-    }
+    private val ID = Regex("[a-z0-9][a-z0-9_-]*")
+    private val YOUTUBE_VIDEO = Regex("[A-Za-z0-9_-]{11}")
+    private val YOUTUBE_CHANNEL = Regex("UC[A-Za-z0-9_-]{22}")
+    private val YOUTUBE_PLAYLIST = Regex("(PL|UU)[A-Za-z0-9_-]{10,62}")
+    private val OFFICIAL_LIVE_HOSTS = setOf(
+        "www.bbc.com", "www.dw.com", "www.france24.com", "www.euronews.com",
+        "www.aljazeera.com", "news.sky.com", "abcnews.go.com", "www.cbsnews.com", "www.youtube.com"
+    )
+    private const val DAY_MS = 86_400_000L
 }
 
 internal fun InputStream.readLimited(limit: Int): ByteArray {

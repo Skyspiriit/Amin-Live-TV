@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": 11,
+  "revision": 12,
   "channels": [
     {
       "id": "tv1",
@@ -4816,6 +4816,223 @@
       "youtubePlaylist": "PL-mNCAw2IPxRnwpI7V0mN8GlmjLiEwIYm"
     },
     {
+      "id": "sports-fa-cup",
+      "name": "فوتبال · مسابقات کامل جام حذفی انگلیس",
+      "group": "sports",
+      "logo": "https://yt3.googleusercontent.com/tKAMmiGDcan7wggLVnYpXps2Hv0b-if8Er0AGmnMNTPhxd-vpxhGnEUnsCgR34S_YmIYbHJIKQ=s900-c-k-c0x00ffffff-no-rj",
+      "sourceAttribution": [
+        "https://www.thefa.com/competitions/thefacup",
+        "https://www.youtube.com/channel/UCChcWqwYXCEs657MQ00qVWA"
+      ],
+      "youtubeVideos": [
+        "zQ5x1AlImTI",
+        "PQrekQOY-VY",
+        "05ny1bmo-Kk",
+        "ad2xCptHu1c"
+      ]
+    },
+    {
+      "id": "sports-jleague",
+      "name": "فوتبال · مسابقات کامل لیگ ژاپن",
+      "group": "sports",
+      "logo": "https://yt3.googleusercontent.com/Xn5NXHvzvE5c4kamXN-v3iO-qbXObsiS1-pyWoWGIh6Str4Q-_KrCDyFCi3GSHFh-Z6Q_ZUqHQ=s900-c-k-c0x00ffffff-no-rj",
+      "sourceAttribution": [
+        "https://www.jleague.jp/corporate/en/pressrelease/article/16008",
+        "https://www.youtube.com/channel/UCmQp6ZaAejJKKkXc_Y_lh1A"
+      ],
+      "youtubeVideos": [
+        "DuIDAcDbkVM",
+        "g2aSSSouPxQ",
+        "hav_Psn1zm8"
+      ]
+    },
+    {
+      "id": "sports-fiba-3x3",
+      "name": "بسکتبال سه‌نفره · فیبا",
+      "group": "sports",
+      "logo": "https://yt3.googleusercontent.com/MUZV5d6kA0aCgtfXOqzIncdupt1J7yEffWHRBoIpUodQx-OuJOvqAn1XKroHa7L9JClmnBB07g=s900-c-k-c0x00ffffff-no-rj",
+      "sourceAttribution": [
+        "https://fiba3x3.com/",
+        "https://www.youtube.com/channel/UC7LpyJP5fupiJu2CdzRQheg"
+      ],
+      "youtubeVideos": [
+        "Cqc-kDQT7rI",
+        "1rHwDoGJBvU",
+        "1qlgOqkq90w",
+        "qXZrPQyh6wM"
+      ]
+    },
+    {
+      "id": "sports-fiba",
+      "name": "بسکتبال · مسابقات کامل فیبا",
+      "group": "sports",
+      "logo": "https://yt3.googleusercontent.com/J09pwEf655991JjUDUvEqBb24t5oYoLeihQ0FL9AP06KEo-w58J8v8AgxiCVIky_I5J4Ly19=s900-c-k-c0x00ffffff-no-rj",
+      "sourceAttribution": [
+        "https://www.fiba.basketball/",
+        "https://www.youtube.com/channel/UCtInrnU3QbWqFGsdKT1GZtg"
+      ],
+      "youtubeVideos": [
+        "covnyR2JsWA",
+        "SA5iEKerWug",
+        "lOgDK-zfHYM",
+        "_rvlKYy5eIM"
+      ]
+    },
+    {
+      "id": "sports-volleyball-world",
+      "name": "والیبال · مسابقات کامل",
+      "group": "sports",
+      "logo": "https://yt3.googleusercontent.com/EyrUl_ojXxxo5NrH_7UGPeN3QxeFhb-FMxNzy_xA4E3kUz986SJiZXE_AiaBsj41wegZS4Bh=s900-c-k-c0x00ffffff-no-rj",
+      "sourceAttribution": [
+        "https://www.volleyballworld.com/",
+        "https://www.youtube.com/channel/UCNMg6XDhRZI2QzL4pWOvP_w"
+      ],
+      "youtubeVideos": [
+        "AB-zuDeHrcs",
+        "t6PKXcsTeJ0",
+        "ZYEloPZblL4",
+        "wrZcN3unsoc"
+      ]
+    },
+    {
+      "id": "sports-bwf",
+      "name": "بدمینتون · مسابقات کامل",
+      "group": "sports",
+      "logo": "https://yt3.googleusercontent.com/LPf6i18yJy-Ly-co_16dQmxM2DClbrr-qKuWRouL3Oi2it9guteINFQRREwz24Tzeom7xFN8=s900-c-k-c0x00ffffff-no-rj",
+      "sourceAttribution": [
+        "https://bwfbadminton.com/",
+        "https://www.youtube.com/channel/UChh-akEbUM8_6ghGVnJd6cQ"
+      ],
+      "youtubeVideos": [
+        "UCDaEJWrhy0",
+        "4QJF973GKaY",
+        "_5ViUMrytXw",
+        "UWFkRyIXvVo"
+      ]
+    },
+    {
+      "id": "sports-wtt",
+      "name": "تنیس روی میز · مسابقات کامل",
+      "group": "sports",
+      "logo": "https://yt3.googleusercontent.com/2KCwNbeOIosyvVoz1uCMF5XeN4pvkjcoY4jexvJp3XGVKVxA2UG-4-6EruHi0EKXViOMusqaeg=s900-c-k-c0x00ffffff-no-rj",
+      "sourceAttribution": [
+        "https://www.worldtabletennis.com/",
+        "https://www.youtube.com/channel/UC9ckyA_A3MfXUa0ttxMoIZw"
+      ],
+      "youtubeVideos": [
+        "TmjcM-rJ1g0",
+        "Xcs87bPEWmM",
+        "gi8Xu111JBw"
+      ]
+    },
+    {
+      "id": "sports-australian-open",
+      "name": "تنیس · آرشیو اوپن استرالیا",
+      "group": "sports",
+      "logo": "https://yt3.googleusercontent.com/0Bo87qNurrbjLsMPZ8EqbxAXcewre5UMLHGwKiWY_N3yQvNnDH090JuFNILeLw-XXSHP9Hy6uQ=s900-c-k-c0x00ffffff-no-rj",
+      "sourceAttribution": [
+        "https://ausopen.com/",
+        "https://www.youtube.com/channel/UCeTKJSW1NTAkf27nNmjWt5A"
+      ],
+      "youtubeVideos": [
+        "mD3hyYiNqgw",
+        "sm42zdreDz8",
+        "rPJSfd0wWpg",
+        "etsQCbzXkRQ"
+      ]
+    },
+    {
+      "id": "sports-us-open",
+      "name": "تنیس · مسابقات کامل یو اس اوپن",
+      "group": "sports",
+      "logo": "https://yt3.googleusercontent.com/RA-1cQf66Q8tb1Yp5hbXeJvbGL1MrPrK_45ptJrulgj6lYH5NLylYk9m2A9bAwP-KhxohNaZ=s900-c-k-c0x00ffffff-no-rj",
+      "sourceAttribution": [
+        "https://www.usopen.org/",
+        "https://www.youtube.com/channel/UCXbboag48Qlr78zzz6SkzkQ"
+      ],
+      "youtubeVideos": [
+        "mBDwHY7_Xfc",
+        "n16dugBxJns",
+        "hSmiEh0wgo4",
+        "Ahf5Agyh15s"
+      ]
+    },
+    {
+      "id": "sports-gt-world",
+      "name": "اتومبیل‌رانی · مسابقات کامل جی‌تی",
+      "group": "sports",
+      "logo": "https://yt3.googleusercontent.com/CYgCykkfuhNPbHGKb_l3qxvoSkyBSSHa0hrroBDc_6BRPvX0vtBUKRljVLBPgVMlf_cnBVWiGQ=s900-c-k-c0x00ffffff-no-rj",
+      "sourceAttribution": [
+        "https://www.gt-world-challenge-europe.com/live",
+        "https://www.youtube.com/channel/UC-yHapH6mW1ceZ_5PDUf1_g"
+      ],
+      "youtubeVideos": [
+        "Xq5Z9rxcLJc",
+        "-W7hBM0O_tE",
+        "aBoh1l00hFg"
+      ]
+    },
+    {
+      "id": "sports-formula-e",
+      "name": "فرمول E · بازپخش مسابقات کامل",
+      "group": "sports",
+      "logo": "https://yt3.googleusercontent.com/Y5lE0kjAQD7MfpexOCbF_Pny4tm2-_IxFBfjxJzfy9ZSGWtybhkY_aJYnKB4FAbVAS8ZcEHFvBQ=s900-c-k-c0x00ffffff-no-rj",
+      "sourceAttribution": [
+        "https://www.fiaformulae.com/en/ways-to-watch",
+        "https://www.youtube.com/channel/UC-DuRqsBQOEk_5o1q4Ze-Fg"
+      ],
+      "youtubeVideos": [
+        "dXUjAgaXxPo",
+        "cmVeYFVLHno",
+        "hEJ9COLhaY0",
+        "MbXeyZEd8Lc"
+      ]
+    },
+    {
+      "id": "sports-one",
+      "name": "ورزش‌های رزمی · وان چمپیونشیپ",
+      "group": "sports",
+      "logo": "https://yt3.googleusercontent.com/ytc/AIdro_n_M052s_0ib-9MPEZdCGoEsNw0jyggZQ7h-GT1A8PyFpc=s900-c-k-c0x00ffffff-no-rj",
+      "sourceAttribution": [
+        "https://www.onefc.com/",
+        "https://www.youtube.com/channel/UCiormkBf3jm6mfb7k0yPbKA"
+      ],
+      "youtubeVideos": [
+        "pZH0WihP2lo",
+        "haxL-MojgtI",
+        "KMm2iw8PxDo"
+      ]
+    },
+    {
+      "id": "sports-taekwondo",
+      "name": "تکواندو · مسابقات کامل",
+      "group": "sports",
+      "logo": "https://yt3.googleusercontent.com/ytc/AIdro_l7E-hQlo1LLgEnPctEESi7Fl5-zq7uJDEdID0r7mFZqy4=s900-c-k-c0x00ffffff-no-rj",
+      "sourceAttribution": [
+        "https://www.worldtaekwondo.org/",
+        "https://www.youtube.com/channel/UCHp-A--zKubjgaa5ZQClk9g"
+      ],
+      "youtubeVideos": [
+        "oJNw650ZTE0",
+        "v1pCvoX5zA0",
+        "DQGK_VLC74g"
+      ]
+    },
+    {
+      "id": "sports-fide",
+      "name": "شطرنج · مسابقات رسمی فیده",
+      "group": "sports",
+      "logo": "https://yt3.googleusercontent.com/aRTfVhqRaP4cRf_POiqyRalh3hgeP-cIrdCsTj70twMk5f1iQtEAZTWQbJ_YvJiavES6up6Sgr8=s900-c-k-c0x00ffffff-no-rj",
+      "sourceAttribution": [
+        "https://www.fide.com/",
+        "https://www.youtube.com/channel/UC9B47GnzCRFHTT1BIBWvStQ"
+      ],
+      "youtubeVideos": [
+        "7dyXiy2kWsw",
+        "xL-j4UXDb08"
+      ]
+    },
+    {
       "id": "persian-chess",
       "name": "شطرنج فارسی",
       "group": "chess",
@@ -4823,7 +5040,8 @@
       "sourceAttribution": [
         "https://www.youtube.com/@PersianChess"
       ],
-      "youtubePlaylist": "UU4wXiMrci9gCRLOuLGqHa2Q"
+      "youtubePlaylist": "UU4wXiMrci9gCRLOuLGqHa2Q",
+      "displayGroup": "sports"
     },
     {
       "id": "top-gear",

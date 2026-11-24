@@ -1,6 +1,6 @@
 # Amin Live TV
 
-Amin Live TV 3.9.1 is a standalone Persian-language live television app for Android TV 8.0 and later. It runs under `com.enigma.aminlivetv`, upgrades earlier signed releases in place and can be installed alongside Amin Player.
+Amin Live TV 3.9.2 is a standalone Persian-language live television app for Android TV 8.0 and later. It runs under `com.enigma.aminlivetv`, upgrades earlier signed releases in place and can be installed alongside Amin Player.
 
 **Home screen (3.9.1).** The app now matches Amin Player: a gold TV mark on the launcher icon and banner, a short gold-pour startup intro inspired by Amin Player 1.37 and its strike sound, and a fixed top menu with «پخش زنده», «فیلم و مستند», «سریال‌ها» and «تنظیمات». Below the menu, «ادامهٔ تماشا» resumes the last station and the latest series episode. Three sections follow, always in this order:
 
@@ -16,7 +16,7 @@ Press «تنظیمات» to choose a theme, «سینمای طلایی» (the def
 
 ## Install on a Xiaomi Android TV Box
 
-1. Copy `Amin-Live-TV-v3.9.1.apk` to a USB drive and plug it into the box.
+1. Copy `Amin-Live-TV-v3.9.2.apk` to a USB drive and plug it into the box.
 2. Open the drive from the box’s file manager and select the APK. If Android asks, allow the file manager to install unknown apps, then return to the APK and select **Install**. The setting’s name varies by model and firmware.
 3. Open **Amin Live TV** from **Apps**. Choose a tile under **پخش زنده**, **فیلم و مستند** or **سریال‌ها**, and press OK.
 4. While watching, press Up for the previous station and Down for the next one. Press OK to show or hide the channel strip. Left and Right switch stations while the strip is visible. Back returns to the grid. **ادامهٔ تماشا** on the home screen resumes the last station that played successfully when it is still available.
@@ -25,7 +25,7 @@ If the box cannot open the USB file, install with [Android Platform Tools](https
 
 ```sh
 adb devices
-adb -s <tv-device-id> install -r --user 0 Amin-Live-TV-v3.9.1.apk
+adb -s <tv-device-id> install -r --user 0 Amin-Live-TV-v3.9.2.apk
 ```
 
 Always pass `--user 0`. Without it, ADB installs the app into every Android user, including the hidden work profile on Xiaomi boxes. That second copy then hides the main copy's switch in **Install unknown apps**, and in-app updates can't be allowed. See [UPDATE-PERMISSION-3.3.md](UPDATE-PERMISSION-3.3.md).
@@ -58,6 +58,12 @@ On Windows, use `gradlew.bat`. The APK is in `app/build/outputs/apk/debug/`. The
 
 The supplied experimental APK uses an app-specific signing key. Use that same private key with a higher `versionCode` for in-place upgrades. Keep the key and its password in private storage. For a signed release build, set `AMIN_LIVE_TV_KEYSTORE`, `AMIN_LIVE_TV_STORE_PASSWORD`, `AMIN_LIVE_TV_KEY_ALIAS` and `AMIN_LIVE_TV_KEY_PASSWORD`, then run `./gradlew assembleRelease`. Android requires matching signatures for upgrades, so development APKs signed by a different key need a separate emulator or a fresh installation.
 
+## Sports (3.9.2)
+
+Sports remains a single grid: native live channels first, then official full-match and event-replay collections and «شطرنج فارسی». No entire sports uploads feeds are added: each new collection contains reviewed, stable YouTube video IDs, excluding shorts, highlights and blocked embeds. Selections were actually decoded in Amin TV's Android TV emulator from Portugal. Availability can change; physical Xiaomi testing is still required. See the [source review and results](docs/sports-sources-2026-11-24.md) and [release notes](docs/releases/v3.9.2.md).
+
+The small 3.9.2 app update enables Sports programmes and curated lists in the existing YouTube player. Revision 12 remains safe for older clients, which skip the new Sports programmes and keep Persian Chess in its original group. Future Sports selections can be updated through the catalogue alone. The existing Persian subtitle policy applies to the moved chess playlist and new replay collections; native sports playback is unchanged. The Xiaomi installation was left untouched.
+
 ## Maintain the catalogue
 
 [`channels.json`](channels.json) is the build input and the remote update file. The bundled revision is always available. The app checks the following HTTPS location asynchronously at startup and every 15 minutes while browsing. It saves only fully validated newer revisions and uses the last valid cache when that location is unreachable. An open grid updates when a revision arrives. During playback, a new revision takes effect when the viewer returns to the grid.
@@ -67,6 +73,8 @@ https://raw.githubusercontent.com/Skyspiriit/Amin-Live-TV/main/channels.json
 ```
 
 The public GitHub endpoint requires no credentials on the TV.
+
+From 3.9.2, official Sports collections go in `programmes2` with `group: "sports"` and a `youtubeVideos` array of 1–25 distinct, checked video IDs. This array cannot be combined with a channel or playlist. The player uses YouTube's official `loadPlaylist` API; the owner retains control over ads and playback permissions. To move an existing programme into Sports without breaking older clients, keep its original `group` and source fields and add `displayGroup: "sports"`. Do not put Sports playlists into the top-level `channels` array. Run `node scripts/validate-sports-catalogue.cjs` and the Gradle checks before publishing. The validation record is a dated test snapshot, not an ongoing availability monitor.
 
 **Official YouTube playback.** Tiles marked «یوتیوب رسمی» play a broadcaster's own YouTube live broadcast or playlist in YouTube's embedded player inside the app. OK pauses, Up and Down change programme, and Back returns to the grid. When the owner doesn't allow embedding, the app opens that exact broadcast, or the playlist's newest video, in the official YouTube TV app instead. Back there returns to Amin Live TV. Tiles marked «سایت رسمی» open the broadcaster's live page in a browser. This only happens in apps older than 0.3.0, which don't read the YouTube fields. Unmarked tiles are native Media3 streams. No rehosted stream or copied token is used. See [VERIFICATION-0.3.0.md](VERIFICATION-0.3.0.md).
 

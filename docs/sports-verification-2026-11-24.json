@@ -1,0 +1,2336 @@
+{
+  "date": "2026-11-24",
+  "country": "PT",
+  "environment": "Android TV API 34 x86 emulator-5558; existing Amin TV embedded YouTube player; anonymous playback; no VPN",
+  "method": "Each selected ID was loaded through the official embedded player in Amin TV. Require non-ad decoded video frames after a seek into the match/event, matching reviewed IDs and Portugal player region. These are spot checks, not full-duration viewing.",
+  "physicalXiaomi": {
+    "tested": false,
+    "installed": false,
+    "updated": false,
+    "reason": "Box was in use playing SalinTV; left uninterrupted. No new software or catalogue was installed on it."
+  },
+  "baseline": {
+    "commit": "09b8d6b0a68636ae2538c0b041472d4d98269598",
+    "revision": 11,
+    "sportsRecords": 11,
+    "configuredSources": 6,
+    "portugalDecoded": 4
+  },
+  "result": {
+    "revision": 12,
+    "newCollections": 14,
+    "newVideos": 49,
+    "sportsRecords": 26,
+    "configuredSources": 21,
+    "portugalDecoded": 19,
+    "chessVerification": "Passed existing playlist playback and Back to Sports"
+  },
+  "native": [
+    {
+      "logs": "--------- beginning of main\n11-24 21:53:20.313  5271  5271 W AminPlayback: Source 1 failed for tv3 (ERROR_CODE_IO_BAD_HTTP_STATUS)\n11-24 21:53:22.252  5271  5271 W AminPlayback: Source 2 failed for tv3 (ERROR_CODE_IO_BAD_HTTP_STATUS)",
+      "played": false,
+      "id": "tv3"
+    },
+    {
+      "logs": "--------- beginning of main\n11-24 21:53:37.726  5420  5420 W AminPlayback: Source 1 failed for varzesh (ERROR_CODE_IO_BAD_HTTP_STATUS)\n11-24 21:53:39.677  5420  5420 W AminPlayback: Source 2 failed for varzesh (ERROR_CODE_IO_BAD_HTTP_STATUS)",
+      "played": false,
+      "id": "varzesh"
+    },
+    {
+      "logs": "--------- beginning of main\n11-24 21:53:55.798  5572  5572 I AminPlayback: Playing sport1 on source 1",
+      "played": true,
+      "id": "sport1"
+    },
+    {
+      "logs": "--------- beginning of main\n11-24 21:54:01.703  5693  5693 I AminPlayback: Playing sport2 on source 1",
+      "played": true,
+      "id": "sport2"
+    },
+    {
+      "logs": "--------- beginning of main\n11-24 21:54:07.549  5810  5810 I AminPlayback: Playing sport3 on source 1",
+      "played": true,
+      "id": "sport3"
+    },
+    {
+      "logs": "--------- beginning of main\n11-24 21:54:12.055  5930  5930 I AminPlayback: Playing persiana-fight on source 1",
+      "played": true,
+      "id": "persiana-fight"
+    }
+  ],
+  "accepted": [
+    {
+      "id": "sports-fa-cup",
+      "name": "فوتبال · مسابقات کامل جام حذفی انگلیس",
+      "count": 4,
+      "sources": [
+        "https://www.thefa.com/competitions/thefacup",
+        "https://www.youtube.com/channel/UCChcWqwYXCEs657MQ00qVWA"
+      ]
+    },
+    {
+      "id": "sports-jleague",
+      "name": "فوتبال · مسابقات کامل لیگ ژاپن",
+      "count": 3,
+      "sources": [
+        "https://www.jleague.jp/corporate/en/pressrelease/article/16008",
+        "https://www.youtube.com/channel/UCmQp6ZaAejJKKkXc_Y_lh1A"
+      ]
+    },
+    {
+      "id": "sports-fiba-3x3",
+      "name": "بسکتبال سه‌نفره · فیبا",
+      "count": 4,
+      "sources": [
+        "https://fiba3x3.com/",
+        "https://www.youtube.com/channel/UC7LpyJP5fupiJu2CdzRQheg"
+      ]
+    },
+    {
+      "id": "sports-fiba",
+      "name": "بسکتبال · مسابقات کامل فیبا",
+      "count": 4,
+      "sources": [
+        "https://www.fiba.basketball/",
+        "https://www.youtube.com/channel/UCtInrnU3QbWqFGsdKT1GZtg"
+      ]
+    },
+    {
+      "id": "sports-volleyball-world",
+      "name": "والیبال · مسابقات کامل",
+      "count": 4,
+      "sources": [
+        "https://www.volleyballworld.com/",
+        "https://www.youtube.com/channel/UCNMg6XDhRZI2QzL4pWOvP_w"
+      ]
+    },
+    {
+      "id": "sports-bwf",
+      "name": "بدمینتون · مسابقات کامل",
+      "count": 4,
+      "sources": [
+        "https://bwfbadminton.com/",
+        "https://www.youtube.com/channel/UChh-akEbUM8_6ghGVnJd6cQ"
+      ]
+    },
+    {
+      "id": "sports-wtt",
+      "name": "تنیس روی میز · مسابقات کامل",
+      "count": 3,
+      "sources": [
+        "https://www.worldtabletennis.com/",
+        "https://www.youtube.com/channel/UC9ckyA_A3MfXUa0ttxMoIZw"
+      ]
+    },
+    {
+      "id": "sports-australian-open",
+      "name": "تنیس · آرشیو اوپن استرالیا",
+      "count": 4,
+      "sources": [
+        "https://ausopen.com/",
+        "https://www.youtube.com/channel/UCeTKJSW1NTAkf27nNmjWt5A"
+      ]
+    },
+    {
+      "id": "sports-us-open",
+      "name": "تنیس · مسابقات کامل یو اس اوپن",
+      "count": 4,
+      "sources": [
+        "https://www.usopen.org/",
+        "https://www.youtube.com/channel/UCXbboag48Qlr78zzz6SkzkQ"
+      ]
+    },
+    {
+      "id": "sports-gt-world",
+      "name": "اتومبیل‌رانی · مسابقات کامل جی‌تی",
+      "count": 3,
+      "sources": [
+        "https://www.gt-world-challenge-europe.com/live",
+        "https://www.youtube.com/channel/UC-yHapH6mW1ceZ_5PDUf1_g"
+      ]
+    },
+    {
+      "id": "sports-formula-e",
+      "name": "فرمول E · بازپخش مسابقات کامل",
+      "count": 4,
+      "sources": [
+        "https://www.fiaformulae.com/en/ways-to-watch",
+        "https://www.youtube.com/channel/UC-DuRqsBQOEk_5o1q4Ze-Fg"
+      ]
+    },
+    {
+      "id": "sports-one",
+      "name": "ورزش‌های رزمی · وان چمپیونشیپ",
+      "count": 3,
+      "sources": [
+        "https://www.onefc.com/",
+        "https://www.youtube.com/channel/UCiormkBf3jm6mfb7k0yPbKA"
+      ]
+    },
+    {
+      "id": "sports-taekwondo",
+      "name": "تکواندو · مسابقات کامل",
+      "count": 3,
+      "sources": [
+        "https://www.worldtaekwondo.org/",
+        "https://www.youtube.com/channel/UCHp-A--zKubjgaa5ZQClk9g"
+      ]
+    },
+    {
+      "id": "sports-fide",
+      "name": "شطرنج · مسابقات رسمی فیده",
+      "count": 2,
+      "sources": [
+        "https://www.fide.com/",
+        "https://www.youtube.com/channel/UC9B47GnzCRFHTT1BIBWvStQ"
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "id": "T9BfcJiy1L4",
+      "metadata": {
+        "handle": "fifa",
+        "id": "T9BfcJiy1L4",
+        "channel": "UCpcTrCXblq78GZrTUTLWeBw",
+        "title": "FULL MATCH | Spain v England | Final | FIFA Women's World Cup 2023™",
+        "owner": "UCpcTrCXblq78GZrTUTLWeBw",
+        "duration": 7265,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "T9BfcJiy1L4",
+        "ok": false,
+        "player": {
+          "video": "T9BfcJiy1L4",
+          "state": -1,
+          "seconds": 0,
+          "duration": 0,
+          "error": "auth"
+        },
+        "error": "auth",
+        "reason": "",
+        "decoded": null,
+        "elapsedMs": 109
+      }
+    },
+    {
+      "id": "PCZu5Lr5KRg",
+      "metadata": {
+        "handle": "fifa",
+        "id": "PCZu5Lr5KRg",
+        "channel": "UCpcTrCXblq78GZrTUTLWeBw",
+        "title": "FULL MATCH | Spain v Argentina | Final | FIFA World Cup 2026™",
+        "owner": "UCpcTrCXblq78GZrTUTLWeBw",
+        "duration": 9190,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "PCZu5Lr5KRg",
+        "ok": false,
+        "player": {
+          "video": "PCZu5Lr5KRg",
+          "state": -1,
+          "seconds": 0,
+          "duration": 0,
+          "error": "auth"
+        },
+        "error": "auth",
+        "reason": "ویدیو دردسترس نیست\nاین ویدیو محتوایی از FIFA دارد که نمایش آن را در این وب‌سایت یا برنامه مسدود کرده است\n<a href='http://www.youtube.com/watch?v=PCZu5Lr5KRg&feature=emb_err_woyt' target='_blank'>تماشا در YouTube</a>\nتماشا در YouTube",
+        "decoded": null,
+        "elapsedMs": 542
+      }
+    },
+    {
+      "id": "-yow2RfiRWs",
+      "metadata": {
+        "handle": "fifa",
+        "id": "-yow2RfiRWs",
+        "channel": "UCpcTrCXblq78GZrTUTLWeBw",
+        "title": "FULL MATCH | France v England | 3rd Place Match | FIFA World Cup 2026™",
+        "owner": "UCpcTrCXblq78GZrTUTLWeBw",
+        "duration": 6340,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "-yow2RfiRWs",
+        "ok": false,
+        "player": {
+          "video": "-yow2RfiRWs",
+          "state": -1,
+          "seconds": 0,
+          "duration": 0,
+          "error": "auth"
+        },
+        "error": "auth",
+        "reason": "ویدیو دردسترس نیست\nاین ویدیو محتوایی از FIFA دارد که نمایش آن را در این وب‌سایت یا برنامه مسدود کرده است\n<a href='http://www.youtube.com/watch?v=-yow2RfiRWs&feature=emb_err_woyt' target='_blank'>تماشا در YouTube</a>\nتماشا در YouTube",
+        "decoded": null,
+        "elapsedMs": 541
+      }
+    },
+    {
+      "id": "Cqc-kDQT7rI",
+      "metadata": {
+        "handle": "FIBA3x3",
+        "id": "Cqc-kDQT7rI",
+        "channel": "UC7LpyJP5fupiJu2CdzRQheg",
+        "title": "Baskets Bonn 🇩🇪 vs Skyliners 🇩🇪 | Final Game | FIBA #3x3WTManama 2026 | 3x3 Basketball",
+        "owner": "UC7LpyJP5fupiJu2CdzRQheg",
+        "duration": 1487,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "Cqc-kDQT7rI",
+        "ok": true,
+        "player": {
+          "video": "Cqc-kDQT7rI",
+          "state": 1,
+          "seconds": 149.41416112588502,
+          "duration": 1487.381,
+          "error": null
+        },
+        "decoded": {
+          "time": 149.439458,
+          "ready": 4,
+          "frames": 77,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 4894
+      }
+    },
+    {
+      "id": "1rHwDoGJBvU",
+      "metadata": {
+        "handle": "FIBA3x3",
+        "id": "1rHwDoGJBvU",
+        "channel": "UC7LpyJP5fupiJu2CdzRQheg",
+        "title": "Skyliners 🇩🇪 vs Toronto 🇨🇦 | Semi-Finals Game | FIBA #3x3WTManama 2026 | 3x3 Basketball",
+        "owner": "UC7LpyJP5fupiJu2CdzRQheg",
+        "duration": 1718,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "1rHwDoGJBvU",
+        "ok": true,
+        "player": {
+          "video": "1rHwDoGJBvU",
+          "state": 1,
+          "seconds": 172.3249470667572,
+          "duration": 1718.421,
+          "error": null
+        },
+        "decoded": {
+          "time": 172.362609,
+          "ready": 4,
+          "frames": 123,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 7573
+      }
+    },
+    {
+      "id": "1qlgOqkq90w",
+      "metadata": {
+        "handle": "FIBA3x3",
+        "id": "1qlgOqkq90w",
+        "channel": "UC7LpyJP5fupiJu2CdzRQheg",
+        "title": "Ub 🇷🇸 vs Baskets Bonn 🇩🇪 | Semi-Finals Game | FIBA #3x3WTManama 2026 | 3x3 Basketball",
+        "owner": "UC7LpyJP5fupiJu2CdzRQheg",
+        "duration": 1505,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "1qlgOqkq90w",
+        "ok": true,
+        "player": {
+          "video": "1qlgOqkq90w",
+          "state": 1,
+          "seconds": 150.67663402670289,
+          "duration": 1505.141,
+          "error": null
+        },
+        "decoded": {
+          "time": 150.687175,
+          "ready": 4,
+          "frames": 47,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 4561
+      }
+    },
+    {
+      "id": "qXZrPQyh6wM",
+      "metadata": {
+        "handle": "FIBA3x3",
+        "id": "qXZrPQyh6wM",
+        "channel": "UC7LpyJP5fupiJu2CdzRQheg",
+        "title": "Liman 🇷🇸 vs Toronto 🇨🇦 | Quarter-Finals Game | FIBA #3x3WTManama 2026 | 3x3 Basketball",
+        "owner": "UC7LpyJP5fupiJu2CdzRQheg",
+        "duration": 1525,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "qXZrPQyh6wM",
+        "ok": true,
+        "player": {
+          "video": "qXZrPQyh6wM",
+          "state": 1,
+          "seconds": 152.82223284550477,
+          "duration": 1524.581,
+          "error": null
+        },
+        "decoded": {
+          "time": 152.856338,
+          "ready": 4,
+          "frames": 80,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 5031
+      }
+    },
+    {
+      "id": "UCDaEJWrhy0",
+      "metadata": {
+        "handle": "BWF-TV",
+        "id": "UCDaEJWrhy0",
+        "channel": "UChh-akEbUM8_6ghGVnJd6cQ",
+        "title": "HYLO Open 2026 | Kodai Naraoka (JPN) [5] vs Lee Zii Jia (MAS) | R16",
+        "owner": "UChh-akEbUM8_6ghGVnJd6cQ",
+        "duration": 4375,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "UCDaEJWrhy0",
+        "ok": true,
+        "player": {
+          "video": "UCDaEJWrhy0",
+          "state": 1,
+          "seconds": 438.03254210490417,
+          "duration": 4375.041,
+          "error": null
+        },
+        "decoded": {
+          "time": 438.038265,
+          "ready": 4,
+          "frames": 48,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 5008
+      }
+    },
+    {
+      "id": "4QJF973GKaY",
+      "metadata": {
+        "handle": "BWF-TV",
+        "id": "4QJF973GKaY",
+        "channel": "UChh-akEbUM8_6ghGVnJd6cQ",
+        "title": "YONEX All England Open 2026 | Shi Yu Qi (CHN) [1] vs Lakshya Sen (IND) | R32",
+        "owner": "UChh-akEbUM8_6ghGVnJd6cQ",
+        "duration": 5330,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "4QJF973GKaY",
+        "ok": true,
+        "player": {
+          "video": "4QJF973GKaY",
+          "state": 1,
+          "seconds": 533.8488309446869,
+          "duration": 5330.021,
+          "error": null
+        },
+        "decoded": {
+          "time": 533.854072,
+          "ready": 4,
+          "frames": 53,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 5228
+      }
+    },
+    {
+      "id": "_5ViUMrytXw",
+      "metadata": {
+        "handle": "BWF-TV",
+        "id": "_5ViUMrytXw",
+        "channel": "UChh-akEbUM8_6ghGVnJd6cQ",
+        "title": "HYLO Open 2026 | Jonatan Christie (INA) [4] vs Lakshya Sen (IND) | F",
+        "owner": "UChh-akEbUM8_6ghGVnJd6cQ",
+        "duration": 3185,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "_5ViUMrytXw",
+        "ok": true,
+        "player": {
+          "video": "_5ViUMrytXw",
+          "state": 1,
+          "seconds": 318.9591198683929,
+          "duration": 3185.021,
+          "error": null
+        },
+        "decoded": {
+          "time": 318.992315,
+          "ready": 4,
+          "frames": 37,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 5595
+      }
+    },
+    {
+      "id": "UWFkRyIXvVo",
+      "metadata": {
+        "handle": "BWF-TV",
+        "id": "UWFkRyIXvVo",
+        "channel": "UChh-akEbUM8_6ghGVnJd6cQ",
+        "title": "YONEX All England Open 2026 | Alwi Farhan (INA) vs Kunlavut Vitidsarn (THA) [2] | QF",
+        "owner": "UChh-akEbUM8_6ghGVnJd6cQ",
+        "duration": 4300,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "UWFkRyIXvVo",
+        "ok": true,
+        "player": {
+          "video": "UWFkRyIXvVo",
+          "state": 1,
+          "seconds": 430.534592,
+          "duration": 4300.021,
+          "error": null
+        },
+        "decoded": {
+          "time": 430.53845,
+          "ready": 4,
+          "frames": 39,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 6848
+      }
+    },
+    {
+      "id": "TmjcM-rJ1g0",
+      "metadata": {
+        "handle": "WTTGlobal",
+        "id": "TmjcM-rJ1g0",
+        "channel": "UC9ckyA_A3MfXUa0ttxMoIZw",
+        "title": "LIVE! | T1 | Q Day 2 | WTT Feeder Düsseldorf II | Session 2",
+        "owner": "UC9ckyA_A3MfXUa0ttxMoIZw",
+        "duration": 15120,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "TmjcM-rJ1g0",
+        "ok": true,
+        "player": {
+          "video": "TmjcM-rJ1g0",
+          "state": 1,
+          "seconds": 600.7005178779297,
+          "duration": 15120.041,
+          "error": null
+        },
+        "decoded": {
+          "time": 600.739442,
+          "ready": 4,
+          "frames": 103,
+          "width": 1280,
+          "height": 720,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 6339
+      }
+    },
+    {
+      "id": "Xcs87bPEWmM",
+      "metadata": {
+        "handle": "WTTGlobal",
+        "id": "Xcs87bPEWmM",
+        "channel": "UC9ckyA_A3MfXUa0ttxMoIZw",
+        "title": "LIVE! | T3 | Q Day 2 | WTT Feeder Düsseldorf II | Session 2",
+        "owner": "UC9ckyA_A3MfXUa0ttxMoIZw",
+        "duration": 14419,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "reason": "Este evento em directo terminou.",
+        "verified": true
+      },
+      "playback": {
+        "id": "Xcs87bPEWmM",
+        "ok": true,
+        "player": {
+          "video": "Xcs87bPEWmM",
+          "state": 1,
+          "seconds": 600.1069098874665,
+          "duration": 14418.241,
+          "error": null
+        },
+        "decoded": {
+          "time": 600.08891,
+          "ready": 4,
+          "frames": 51,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 8401
+      }
+    },
+    {
+      "id": "gi8Xu111JBw",
+      "metadata": {
+        "handle": "WTTGlobal",
+        "id": "gi8Xu111JBw",
+        "channel": "UC9ckyA_A3MfXUa0ttxMoIZw",
+        "title": "LIVE! | T1 | Day 4 | ITTF World Youth Championships Istanbul 2026 | Session 3 (XD SF)",
+        "owner": "UC9ckyA_A3MfXUa0ttxMoIZw",
+        "duration": 5230,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "gi8Xu111JBw",
+        "ok": true,
+        "player": {
+          "video": "gi8Xu111JBw",
+          "state": 1,
+          "seconds": 523.6468222174377,
+          "duration": 5230.421,
+          "error": null
+        },
+        "decoded": {
+          "time": 523.693905,
+          "ready": 4,
+          "frames": 138,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 6744
+      }
+    },
+    {
+      "id": "Xq5Z9rxcLJc",
+      "metadata": {
+        "handle": "GTWorld",
+        "id": "Xq5Z9rxcLJc",
+        "channel": "UC-yHapH6mW1ceZ_5PDUf1_g",
+        "title": "LIVE | Greater Bay Area GT Cup, Macau | Race | SRO GT Cup 2026",
+        "owner": "UC-yHapH6mW1ceZ_5PDUf1_g",
+        "duration": 3830,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "Xq5Z9rxcLJc",
+        "ok": true,
+        "player": {
+          "video": "Xq5Z9rxcLJc",
+          "state": 1,
+          "seconds": 383.4883370362396,
+          "duration": 3830.021,
+          "error": null
+        },
+        "decoded": {
+          "time": 383.561575,
+          "ready": 4,
+          "frames": 117,
+          "width": 1280,
+          "height": 720,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 5973
+      }
+    },
+    {
+      "id": "-W7hBM0O_tE",
+      "metadata": {
+        "handle": "GTWorld",
+        "id": "-W7hBM0O_tE",
+        "channel": "UC-yHapH6mW1ceZ_5PDUf1_g",
+        "title": "🇬🇧 LIVE | Race 2 | Shanghai International Circuit | GT World Challenge Asia pwd by AWS 2026",
+        "owner": "UC-yHapH6mW1ceZ_5PDUf1_g",
+        "duration": 7130,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "-W7hBM0O_tE",
+        "ok": true,
+        "player": {
+          "video": "-W7hBM0O_tE",
+          "state": 1,
+          "seconds": 600.2738328493194,
+          "duration": 7129.999,
+          "error": null
+        },
+        "decoded": {
+          "time": 600.176937,
+          "ready": 4,
+          "frames": 59,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 6792
+      }
+    },
+    {
+      "id": "aBoh1l00hFg",
+      "metadata": {
+        "handle": "GTWorld",
+        "id": "aBoh1l00hFg",
+        "channel": "UC-yHapH6mW1ceZ_5PDUf1_g",
+        "title": "🇬🇧 LIVE | Race 1 | Shanghai International Circuit | GT World Challenge Asia pwd by AWS 2026",
+        "owner": "UC-yHapH6mW1ceZ_5PDUf1_g",
+        "duration": 7035,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "aBoh1l00hFg",
+        "ok": true,
+        "player": {
+          "video": "aBoh1l00hFg",
+          "state": 1,
+          "seconds": 600.5411638531342,
+          "duration": 7035.021,
+          "error": null
+        },
+        "decoded": {
+          "time": 600.596468,
+          "ready": 4,
+          "frames": 43,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 5570
+      }
+    },
+    {
+      "id": "7dyXiy2kWsw",
+      "metadata": {
+        "handle": "FIDE_chess",
+        "id": "7dyXiy2kWsw",
+        "channel": "UC9B47GnzCRFHTT1BIBWvStQ",
+        "title": "♟ Chess | Salesforce FIDE World Championship 2026 | Game 1 | 🇺🇿 Javokhir Sindarov 🆚 Gukesh D 🇮🇳",
+        "owner": "UC9B47GnzCRFHTT1BIBWvStQ",
+        "duration": 19435,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "7dyXiy2kWsw",
+        "ok": true,
+        "player": {
+          "video": "7dyXiy2kWsw",
+          "state": 1,
+          "seconds": 601.087418164032,
+          "duration": 19435.021,
+          "error": null
+        },
+        "decoded": {
+          "time": 601.092265,
+          "ready": 4,
+          "frames": 42,
+          "width": 1280,
+          "height": 720,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 4654
+      }
+    },
+    {
+      "id": "xL-j4UXDb08",
+      "metadata": {
+        "handle": "FIDE_chess",
+        "id": "xL-j4UXDb08",
+        "channel": "UC9B47GnzCRFHTT1BIBWvStQ",
+        "title": "♟ FIDE Chess Olympiad 2026 | Round 11 | Sindarov, Assaubayeva, Praggnanandhaa & More",
+        "owner": "UC9B47GnzCRFHTT1BIBWvStQ",
+        "duration": 22750,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "xL-j4UXDb08",
+        "ok": true,
+        "player": {
+          "video": "xL-j4UXDb08",
+          "state": 1,
+          "seconds": 600.3833598874664,
+          "duration": 22750.181,
+          "error": null
+        },
+        "decoded": {
+          "time": 600.387158,
+          "ready": 4,
+          "frames": 42,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 8202
+      }
+    },
+    {
+      "id": "dXUjAgaXxPo",
+      "metadata": {
+        "handle": "FIAFormulaE",
+        "id": "dXUjAgaXxPo",
+        "channel": "UC-DuRqsBQOEk_5o1q4Ze-Fg",
+        "title": "São Paulo FULL race | Season 11 Replay 🇧🇷",
+        "owner": "UC-DuRqsBQOEk_5o1q4Ze-Fg",
+        "duration": 4341,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "dXUjAgaXxPo",
+        "ok": true,
+        "player": {
+          "video": "dXUjAgaXxPo",
+          "state": 1,
+          "seconds": 434.909877038147,
+          "duration": 4341.181,
+          "error": null
+        },
+        "decoded": {
+          "time": 434.91418,
+          "ready": 4,
+          "frames": 40,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 5714
+      }
+    },
+    {
+      "id": "cmVeYFVLHno",
+      "metadata": {
+        "handle": "FIAFormulaE",
+        "id": "cmVeYFVLHno",
+        "channel": "UC-DuRqsBQOEk_5o1q4Ze-Fg",
+        "title": "FULL RACE REPLAY ⏪ | The Season 10 Title Decider | 2024 London E-Prix Round 16 | Formula E",
+        "owner": "UC-DuRqsBQOEk_5o1q4Ze-Fg",
+        "duration": 3609,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "cmVeYFVLHno",
+        "ok": true,
+        "player": {
+          "video": "cmVeYFVLHno",
+          "state": 1,
+          "seconds": 361.0304599847412,
+          "duration": 3608.781,
+          "error": null
+        },
+        "decoded": {
+          "time": 360.96446,
+          "ready": 4,
+          "frames": 31,
+          "width": 1280,
+          "height": 720,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 5348
+      }
+    },
+    {
+      "id": "hEJ9COLhaY0",
+      "metadata": {
+        "handle": "FIAFormulaE",
+        "id": "hEJ9COLhaY0",
+        "channel": "UC-DuRqsBQOEk_5o1q4Ze-Fg",
+        "title": "FULL RACE REPLAY | 2025 Berlin E-Prix Round 14 | Formula E",
+        "owner": "UC-DuRqsBQOEk_5o1q4Ze-Fg",
+        "duration": 3224,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "hEJ9COLhaY0",
+        "ok": true,
+        "player": {
+          "video": "hEJ9COLhaY0",
+          "state": 1,
+          "seconds": 322.5112270152588,
+          "duration": 3223.861,
+          "error": null
+        },
+        "decoded": {
+          "time": 322.47938,
+          "ready": 4,
+          "frames": 23,
+          "width": 1280,
+          "height": 720,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 6443
+      }
+    },
+    {
+      "id": "MbXeyZEd8Lc",
+      "metadata": {
+        "handle": "FIAFormulaE",
+        "id": "MbXeyZEd8Lc",
+        "channel": "UC-DuRqsBQOEk_5o1q4Ze-Fg",
+        "title": "Season 11 Mexico City E-Prix Full Race Replay | Formula E",
+        "owner": "UC-DuRqsBQOEk_5o1q4Ze-Fg",
+        "duration": 3015,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "MbXeyZEd8Lc",
+        "ok": true,
+        "player": {
+          "video": "MbXeyZEd8Lc",
+          "state": 1,
+          "seconds": 301.5934360972748,
+          "duration": 3014.781,
+          "error": null
+        },
+        "decoded": {
+          "time": 301.563742,
+          "ready": 4,
+          "frames": 23,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 5161
+      }
+    },
+    {
+      "id": "AB-zuDeHrcs",
+      "metadata": {
+        "handle": "volleyballworld",
+        "id": "AB-zuDeHrcs",
+        "channel": "UCNMg6XDhRZI2QzL4pWOvP_w",
+        "title": "Japan 🇯🇵 vs. India 🇮🇳  - Quarter Final | AVC Continental Championships 2026 Full Match",
+        "owner": "UCNMg6XDhRZI2QzL4pWOvP_w",
+        "duration": 7162,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "AB-zuDeHrcs",
+        "ok": true,
+        "player": {
+          "video": "AB-zuDeHrcs",
+          "state": 1,
+          "seconds": 600.3053048531342,
+          "duration": 7161.954,
+          "error": null
+        },
+        "decoded": {
+          "time": 600.222791,
+          "ready": 4,
+          "frames": 23,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 4663
+      }
+    },
+    {
+      "id": "t6PKXcsTeJ0",
+      "metadata": {
+        "handle": "volleyballworld",
+        "id": "t6PKXcsTeJ0",
+        "channel": "UCNMg6XDhRZI2QzL4pWOvP_w",
+        "title": "India 🇮🇳 vs. New Zealand 🇳🇿  - Pool Play | AVC Continental Championships 2026 Full Match",
+        "owner": "UCNMg6XDhRZI2QzL4pWOvP_w",
+        "duration": 7090,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "t6PKXcsTeJ0",
+        "ok": true,
+        "player": {
+          "video": "t6PKXcsTeJ0",
+          "state": 1,
+          "seconds": 600.1614419961853,
+          "duration": 7089.949,
+          "error": null
+        },
+        "decoded": {
+          "time": 600.15129,
+          "ready": 4,
+          "frames": 34,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 5726
+      }
+    },
+    {
+      "id": "ZYEloPZblL4",
+      "metadata": {
+        "handle": "volleyballworld",
+        "id": "ZYEloPZblL4",
+        "channel": "UCNMg6XDhRZI2QzL4pWOvP_w",
+        "title": "India 🇮🇳 vs. Iran 🇮🇷  - Pool Play | AVC Men's Continental Championships 2026 | Full Match",
+        "owner": "UCNMg6XDhRZI2QzL4pWOvP_w",
+        "duration": 7359,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "ZYEloPZblL4",
+        "ok": true,
+        "player": {
+          "video": "ZYEloPZblL4",
+          "state": 1,
+          "seconds": 600.3970459141693,
+          "duration": 7358.866,
+          "error": null
+        },
+        "decoded": {
+          "time": 600.404712,
+          "ready": 4,
+          "frames": 27,
+          "width": 1280,
+          "height": 720,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 4626
+      }
+    },
+    {
+      "id": "wrZcN3unsoc",
+      "metadata": {
+        "handle": "volleyballworld",
+        "id": "wrZcN3unsoc",
+        "channel": "UCNMg6XDhRZI2QzL4pWOvP_w",
+        "title": "France vs. Iran - Final | Boys' U17 World Championship - 2026",
+        "owner": "UCNMg6XDhRZI2QzL4pWOvP_w",
+        "duration": 8810,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "wrZcN3unsoc",
+        "ok": true,
+        "player": {
+          "video": "wrZcN3unsoc",
+          "state": 1,
+          "seconds": 600.7055251144409,
+          "duration": 8810.021,
+          "error": null
+        },
+        "decoded": {
+          "time": 600.741676,
+          "ready": 4,
+          "frames": 53,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 6079
+      }
+    },
+    {
+      "id": "mD3hyYiNqgw",
+      "metadata": {
+        "handle": "AustralianOpen",
+        "id": "mD3hyYiNqgw",
+        "channel": "UCeTKJSW1NTAkf27nNmjWt5A",
+        "title": "Ivan Lendl v Pat Cash Full Match | Australian Open 1987 Semifinal",
+        "owner": "UCeTKJSW1NTAkf27nNmjWt5A",
+        "duration": 13260,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "mD3hyYiNqgw",
+        "ok": true,
+        "player": {
+          "video": "mD3hyYiNqgw",
+          "state": 1,
+          "seconds": 600.9364019465943,
+          "duration": 13260.261,
+          "error": null
+        },
+        "decoded": {
+          "time": 600.940275,
+          "ready": 4,
+          "frames": 72,
+          "width": 1440,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 4497
+      }
+    },
+    {
+      "id": "sm42zdreDz8",
+      "metadata": {
+        "handle": "AustralianOpen",
+        "id": "sm42zdreDz8",
+        "channel": "UCeTKJSW1NTAkf27nNmjWt5A",
+        "title": "Serena Williams v Venus Williams Classic Match | Australian Open 2017 Final",
+        "owner": "UCeTKJSW1NTAkf27nNmjWt5A",
+        "duration": 4871,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "sm42zdreDz8",
+        "ok": true,
+        "player": {
+          "video": "sm42zdreDz8",
+          "state": 1,
+          "seconds": 487.64961295994567,
+          "duration": 4870.861,
+          "error": null
+        },
+        "decoded": {
+          "time": 487.656091,
+          "ready": 4,
+          "frames": 69,
+          "width": 1280,
+          "height": 720,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 4938
+      }
+    },
+    {
+      "id": "rPJSfd0wWpg",
+      "metadata": {
+        "handle": "AustralianOpen",
+        "id": "rPJSfd0wWpg",
+        "channel": "UCeTKJSW1NTAkf27nNmjWt5A",
+        "title": "Mats Wilander v John McEnroe Full Match | Australian Open 1983 Semifinal",
+        "owner": "UCeTKJSW1NTAkf27nNmjWt5A",
+        "duration": 8131,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "rPJSfd0wWpg",
+        "ok": true,
+        "player": {
+          "video": "rPJSfd0wWpg",
+          "state": 1,
+          "seconds": 600.1978331125335,
+          "duration": 8131.221,
+          "error": null
+        },
+        "decoded": {
+          "time": 600.098123,
+          "ready": 4,
+          "frames": 12,
+          "width": 1440,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 4542
+      }
+    },
+    {
+      "id": "etsQCbzXkRQ",
+      "metadata": {
+        "handle": "AustralianOpen",
+        "id": "etsQCbzXkRQ",
+        "channel": "UCeTKJSW1NTAkf27nNmjWt5A",
+        "title": "Mats Wilander v Stefan Edberg Full Match | Australian Open 1988 Semifinal",
+        "owner": "UCeTKJSW1NTAkf27nNmjWt5A",
+        "duration": 9721,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "etsQCbzXkRQ",
+        "ok": true,
+        "player": {
+          "video": "etsQCbzXkRQ",
+          "state": 1,
+          "seconds": 600.3170038722077,
+          "duration": 9721.061,
+          "error": null
+        },
+        "decoded": {
+          "time": 600.351123,
+          "ready": 4,
+          "frames": 102,
+          "width": 1440,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 6397
+      }
+    },
+    {
+      "id": "mBDwHY7_Xfc",
+      "metadata": {
+        "handle": "usopen",
+        "id": "mBDwHY7_Xfc",
+        "channel": "UCXbboag48Qlr78zzz6SkzkQ",
+        "title": "Nuno Borges vs. Learner Tien Full Match | 2026 US Open Round 1",
+        "owner": "UCXbboag48Qlr78zzz6SkzkQ",
+        "duration": 5011,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "mBDwHY7_Xfc",
+        "ok": true,
+        "player": {
+          "video": "mBDwHY7_Xfc",
+          "state": 1,
+          "seconds": 501.3679130076294,
+          "duration": 5010.601,
+          "error": null
+        },
+        "decoded": {
+          "time": 501.317733,
+          "ready": 4,
+          "frames": 28,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 9056
+      }
+    },
+    {
+      "id": "n16dugBxJns",
+      "metadata": {
+        "handle": "usopen",
+        "id": "n16dugBxJns",
+        "channel": "UCXbboag48Qlr78zzz6SkzkQ",
+        "title": "Yunchaokete Bu vs Michael Zheng Full Match | 2026 US Open Round 2",
+        "owner": "UCXbboag48Qlr78zzz6SkzkQ",
+        "duration": 7659,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "n16dugBxJns",
+        "ok": true,
+        "player": {
+          "video": "n16dugBxJns",
+          "state": 1,
+          "seconds": 600.5808440038147,
+          "duration": 7658.621,
+          "error": null
+        },
+        "decoded": {
+          "time": 600.60506,
+          "ready": 4,
+          "frames": 105,
+          "width": 1280,
+          "height": 720,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 6878
+      }
+    },
+    {
+      "id": "hSmiEh0wgo4",
+      "metadata": {
+        "handle": "usopen",
+        "id": "hSmiEh0wgo4",
+        "channel": "UCXbboag48Qlr78zzz6SkzkQ",
+        "title": "Madison Keys vs. Anna Bondar Full Match | 2026 US Open Round 2",
+        "owner": "UCXbboag48Qlr78zzz6SkzkQ",
+        "duration": 9002,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "hSmiEh0wgo4",
+        "ok": true,
+        "player": {
+          "video": "hSmiEh0wgo4",
+          "state": 1,
+          "seconds": 600.1322888168945,
+          "duration": 9002.401,
+          "error": null
+        },
+        "decoded": {
+          "time": 600.090289,
+          "ready": 4,
+          "frames": 27,
+          "width": 854,
+          "height": 480,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 5011
+      }
+    },
+    {
+      "id": "Ahf5Agyh15s",
+      "metadata": {
+        "handle": "usopen",
+        "id": "Ahf5Agyh15s",
+        "channel": "UCXbboag48Qlr78zzz6SkzkQ",
+        "title": "Karen Khachanov vs. Benjamin Bonzi Full Match | 2026 US Open Round 3",
+        "owner": "UCXbboag48Qlr78zzz6SkzkQ",
+        "duration": 6214,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "Ahf5Agyh15s",
+        "ok": true,
+        "player": {
+          "video": "Ahf5Agyh15s",
+          "state": 1,
+          "seconds": 600.2706169523162,
+          "duration": 6214.461,
+          "error": null
+        },
+        "decoded": {
+          "time": 600.275017,
+          "ready": 4,
+          "frames": 62,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 8169
+      }
+    },
+    {
+      "id": "oJNw650ZTE0",
+      "metadata": {
+        "handle": "worldtaekwondo",
+        "id": "oJNw650ZTE0",
+        "channel": "UCHp-A--zKubjgaa5ZQClk9g",
+        "title": "323 Final W-57kg - Maria clara PACHECO BRA - Yu jin KIM KOR",
+        "owner": "UCHp-A--zKubjgaa5ZQClk9g",
+        "duration": 935,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "oJNw650ZTE0",
+        "ok": true,
+        "player": {
+          "video": "oJNw650ZTE0",
+          "state": 1,
+          "seconds": 93.71793303814697,
+          "duration": 935.421,
+          "error": null
+        },
+        "decoded": {
+          "time": 93.672406,
+          "ready": 4,
+          "frames": 84,
+          "width": 1280,
+          "height": 720,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 6012
+      }
+    },
+    {
+      "id": "v1pCvoX5zA0",
+      "metadata": {
+        "handle": "worldtaekwondo",
+        "id": "v1pCvoX5zA0",
+        "channel": "UCHp-A--zKubjgaa5ZQClk9g",
+        "title": "328 Final M-74kg - Edival PONTES BRA - Najmiddin KOSIMKHOJIEV UZB",
+        "owner": "UCHp-A--zKubjgaa5ZQClk9g",
+        "duration": 812,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "v1pCvoX5zA0",
+        "ok": true,
+        "player": {
+          "video": "v1pCvoX5zA0",
+          "state": 1,
+          "seconds": 81.51255495231628,
+          "duration": 811.721,
+          "error": null
+        },
+        "decoded": {
+          "time": 81.526117,
+          "ready": 4,
+          "frames": 46,
+          "width": 854,
+          "height": 480,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 5860
+      }
+    },
+    {
+      "id": "DQGK_VLC74g",
+      "metadata": {
+        "handle": "worldtaekwondo",
+        "id": "DQGK_VLC74g",
+        "channel": "UCHp-A--zKubjgaa5ZQClk9g",
+        "title": "332 Final W-46kg - Milana BEKULOVA AIN  - Emine GOGEBAKAN TUR",
+        "owner": "UCHp-A--zKubjgaa5ZQClk9g",
+        "duration": 759,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "DQGK_VLC74g",
+        "ok": true,
+        "player": {
+          "video": "DQGK_VLC74g",
+          "state": 1,
+          "seconds": 76.28762114495849,
+          "duration": 759.101,
+          "error": null
+        },
+        "decoded": {
+          "time": 76.292318,
+          "ready": 4,
+          "frames": 86,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 7876
+      }
+    },
+    {
+      "id": "pZH0WihP2lo",
+      "metadata": {
+        "handle": "ONEChampionship",
+        "id": "pZH0WihP2lo",
+        "channel": "UCiormkBf3jm6mfb7k0yPbKA",
+        "title": "🔴 [Live in HD] ONE Friday Fights 179: Chartpayak vs. Klarob",
+        "owner": "UCiormkBf3jm6mfb7k0yPbKA",
+        "duration": 11542,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "pZH0WihP2lo",
+        "ok": true,
+        "player": {
+          "video": "pZH0WihP2lo",
+          "state": 1,
+          "seconds": 600.6421330953674,
+          "duration": 11542,
+          "error": null
+        },
+        "decoded": {
+          "time": 600.675665,
+          "ready": 4,
+          "frames": 58,
+          "width": 1280,
+          "height": 720,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 4901
+      }
+    },
+    {
+      "id": "haxL-MojgtI",
+      "metadata": {
+        "handle": "ONEChampionship",
+        "id": "haxL-MojgtI",
+        "channel": "UCiormkBf3jm6mfb7k0yPbKA",
+        "title": "🔴 [Live in HD] ONE Friday Fights 178: Superlek vs. Mammadov, Shimon vs. Ondash & MORE!",
+        "owner": "UCiormkBf3jm6mfb7k0yPbKA",
+        "duration": 11802,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "haxL-MojgtI",
+        "ok": true,
+        "player": {
+          "video": "haxL-MojgtI",
+          "state": 1,
+          "seconds": 600.7306028016358,
+          "duration": 11802.021,
+          "error": null
+        },
+        "decoded": {
+          "time": 600.80197,
+          "ready": 4,
+          "frames": 147,
+          "width": 1280,
+          "height": 720,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 6883
+      }
+    },
+    {
+      "id": "KMm2iw8PxDo",
+      "metadata": {
+        "handle": "ONEChampionship",
+        "id": "KMm2iw8PxDo",
+        "channel": "UCiormkBf3jm6mfb7k0yPbKA",
+        "title": "🔴 [Live in HD] ONE Friday Fights 177: Isannuea vs. Jack",
+        "owner": "UCiormkBf3jm6mfb7k0yPbKA",
+        "duration": 11466,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "KMm2iw8PxDo",
+        "ok": true,
+        "player": {
+          "video": "KMm2iw8PxDo",
+          "state": 1,
+          "seconds": 600.252482011444,
+          "duration": 11466.041,
+          "error": null
+        },
+        "decoded": {
+          "time": 600.296377,
+          "ready": 4,
+          "frames": 59,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 5908
+      }
+    },
+    {
+      "id": "covnyR2JsWA",
+      "metadata": {
+        "handle": "FIBA",
+        "id": "covnyR2JsWA",
+        "channel": "UCtInrnU3QbWqFGsdKT1GZtg",
+        "title": "Finland v Sweden | Full Basketball Game | FIBA Basketball World Cup 2027 European Qualifiers",
+        "owner": "UCtInrnU3QbWqFGsdKT1GZtg",
+        "duration": 8725,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "covnyR2JsWA",
+        "ok": true,
+        "player": {
+          "video": "covnyR2JsWA",
+          "state": 1,
+          "seconds": 600.8701701659394,
+          "duration": 8725,
+          "error": null
+        },
+        "decoded": {
+          "time": 600.879964,
+          "ready": 4,
+          "frames": 46,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 4650
+      }
+    },
+    {
+      "id": "SA5iEKerWug",
+      "metadata": {
+        "handle": "FIBA",
+        "id": "SA5iEKerWug",
+        "channel": "UCtInrnU3QbWqFGsdKT1GZtg",
+        "title": "Switzerland v Serbia | Full Basketball Game | FIBA Basketball World Cup 2027 European Qualifiers",
+        "owner": "UCtInrnU3QbWqFGsdKT1GZtg",
+        "duration": 6648,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "SA5iEKerWug",
+        "ok": true,
+        "player": {
+          "video": "SA5iEKerWug",
+          "state": 1,
+          "seconds": 600.3809220572205,
+          "duration": 6648.021,
+          "error": null
+        },
+        "decoded": {
+          "time": 600.400043,
+          "ready": 4,
+          "frames": 114,
+          "width": 1280,
+          "height": 720,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 6380
+      }
+    },
+    {
+      "id": "lOgDK-zfHYM",
+      "metadata": {
+        "handle": "FIBA",
+        "id": "lOgDK-zfHYM",
+        "channel": "UCtInrnU3QbWqFGsdKT1GZtg",
+        "title": "France v Finland | Full Basketball Game | FIBA Basketball World Cup 2027 European Qualifiers",
+        "owner": "UCtInrnU3QbWqFGsdKT1GZtg",
+        "duration": 7500,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "lOgDK-zfHYM",
+        "ok": true,
+        "player": {
+          "video": "lOgDK-zfHYM",
+          "state": 1,
+          "seconds": 600.7418250762939,
+          "duration": 7500.041,
+          "error": null
+        },
+        "decoded": {
+          "time": 600.7473,
+          "ready": 4,
+          "frames": 51,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 5046
+      }
+    },
+    {
+      "id": "_rvlKYy5eIM",
+      "metadata": {
+        "handle": "FIBA",
+        "id": "_rvlKYy5eIM",
+        "channel": "UCtInrnU3QbWqFGsdKT1GZtg",
+        "title": "Final | USA v France | Full Basketball Game | FIBA Women's Basketball World Cup 2026",
+        "owner": "UCtInrnU3QbWqFGsdKT1GZtg",
+        "duration": 8925,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "_rvlKYy5eIM",
+        "ok": true,
+        "player": {
+          "video": "_rvlKYy5eIM",
+          "state": 1,
+          "seconds": 600.3468260152588,
+          "duration": 8925.333,
+          "error": null
+        },
+        "decoded": {
+          "time": 600.350038,
+          "ready": 4,
+          "frames": 40,
+          "width": 1280,
+          "height": 720,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 5382
+      }
+    },
+    {
+      "id": "zQ5x1AlImTI",
+      "metadata": {
+        "handle": "thefacup",
+        "id": "zQ5x1AlImTI",
+        "channel": "UCChcWqwYXCEs657MQ00qVWA",
+        "title": "FULL MATCH | Chelsea v Manchester City | Final | Emirates FA Cup 2025-26",
+        "owner": "UCChcWqwYXCEs657MQ00qVWA",
+        "duration": 5956,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "zQ5x1AlImTI",
+        "ok": true,
+        "player": {
+          "video": "zQ5x1AlImTI",
+          "state": 1,
+          "seconds": 596.1525931792908,
+          "duration": 5956.021,
+          "error": null
+        },
+        "decoded": {
+          "time": 596.155802,
+          "ready": 4,
+          "frames": 38,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 5930
+      }
+    },
+    {
+      "id": "PQrekQOY-VY",
+      "metadata": {
+        "handle": "thefacup",
+        "id": "PQrekQOY-VY",
+        "channel": "UCChcWqwYXCEs657MQ00qVWA",
+        "title": "FULL MATCH | Manchester United v Liverpool | Quarter-final | Emirates FA Cup 2023-24",
+        "owner": "UCChcWqwYXCEs657MQ00qVWA",
+        "duration": 8136,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "PQrekQOY-VY",
+        "ok": true,
+        "player": {
+          "video": "PQrekQOY-VY",
+          "state": 1,
+          "seconds": 600.4813689427796,
+          "duration": 8136.041,
+          "error": null
+        },
+        "decoded": {
+          "time": 600.498938,
+          "ready": 4,
+          "frames": 27,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 4903
+      }
+    },
+    {
+      "id": "05ny1bmo-Kk",
+      "metadata": {
+        "handle": "thefacup",
+        "id": "05ny1bmo-Kk",
+        "channel": "UCChcWqwYXCEs657MQ00qVWA",
+        "title": "FULL MATCH | Manchester City v Liverpool | Quarter-Final | Emirates FA Cup 2025-26",
+        "owner": "UCChcWqwYXCEs657MQ00qVWA",
+        "duration": 5628,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "05ny1bmo-Kk",
+        "ok": true,
+        "player": {
+          "video": "05ny1bmo-Kk",
+          "state": 1,
+          "seconds": 563.1716910019073,
+          "duration": 5628.021,
+          "error": null
+        },
+        "decoded": {
+          "time": 563.182929,
+          "ready": 4,
+          "frames": 23,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 6300
+      }
+    },
+    {
+      "id": "ad2xCptHu1c",
+      "metadata": {
+        "handle": "thefacup",
+        "id": "ad2xCptHu1c",
+        "channel": "UCChcWqwYXCEs657MQ00qVWA",
+        "title": "FULL MATCH | Two Giants Clash At The New Wembley Stadium | Chelsea v Man United | FA Cup Final 06-07",
+        "owner": "UCChcWqwYXCEs657MQ00qVWA",
+        "duration": 7925,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "ad2xCptHu1c",
+        "ok": true,
+        "player": {
+          "video": "ad2xCptHu1c",
+          "state": 1,
+          "seconds": 600.111054830246,
+          "duration": 7924.961,
+          "error": null
+        },
+        "decoded": {
+          "time": 600.070033,
+          "ready": 4,
+          "frames": 13,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 5404
+      }
+    },
+    {
+      "id": "DuIDAcDbkVM",
+      "metadata": {
+        "handle": "JLEAGUEInternational",
+        "id": "DuIDAcDbkVM",
+        "channel": "UCmQp6ZaAejJKKkXc_Y_lh1A",
+        "title": "Sanfrecce Hiroshima v Yokohama F•Marinos - Full Match | J.League",
+        "owner": "UCmQp6ZaAejJKKkXc_Y_lh1A",
+        "duration": 6029,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "DuIDAcDbkVM",
+        "ok": true,
+        "player": {
+          "video": "DuIDAcDbkVM",
+          "state": 1,
+          "seconds": 600.4707397997284,
+          "duration": 6028.621,
+          "error": null
+        },
+        "decoded": {
+          "time": 600.477018,
+          "ready": 4,
+          "frames": 42,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 5995
+      }
+    },
+    {
+      "id": "g2aSSSouPxQ",
+      "metadata": {
+        "handle": "JLEAGUEInternational",
+        "id": "g2aSSSouPxQ",
+        "channel": "UCmQp6ZaAejJKKkXc_Y_lh1A",
+        "title": "Kashiwa Reysol v JEF United Chiba - Full Match | J.League",
+        "owner": "UCmQp6ZaAejJKKkXc_Y_lh1A",
+        "duration": 5998,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "g2aSSSouPxQ",
+        "ok": true,
+        "player": {
+          "video": "g2aSSSouPxQ",
+          "state": 1,
+          "seconds": 600.099593082016,
+          "duration": 5997.741,
+          "error": null
+        },
+        "decoded": {
+          "time": 600.032279,
+          "ready": 4,
+          "frames": 20,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 5407
+      }
+    },
+    {
+      "id": "hav_Psn1zm8",
+      "metadata": {
+        "handle": "JLEAGUEInternational",
+        "id": "hav_Psn1zm8",
+        "channel": "UCmQp6ZaAejJKKkXc_Y_lh1A",
+        "title": "Kashiwa Reysol v Kawasaki Frontale - Full Match | 2026/27 Levain Cup | Quarter-Finals | Second Leg",
+        "owner": "UCmQp6ZaAejJKKkXc_Y_lh1A",
+        "duration": 5960,
+        "status": "OK",
+        "embed": true,
+        "region": "PT",
+        "liveNow": false,
+        "isPrivate": false,
+        "verified": true
+      },
+      "playback": {
+        "id": "hav_Psn1zm8",
+        "ok": true,
+        "player": {
+          "video": "hav_Psn1zm8",
+          "state": 1,
+          "seconds": 596.4527198283387,
+          "duration": 5960.181,
+          "error": null
+        },
+        "decoded": {
+          "time": 596.460286,
+          "ready": 4,
+          "frames": 25,
+          "width": 1920,
+          "height": 1080,
+          "ad": false,
+          "region": "PT"
+        },
+        "elapsedMs": 6160
+      }
+    }
+  ],
+  "compatibility": {
+    "legacy391AcceptedRevision12": true,
+    "legacyChessGroupRetained": true,
+    "unchangedOriginalRecords": 257,
+    "unchangedSeries": 38,
+    "storageMigration": false
+  },
+  "rejected": [
+    {
+      "source": "Dubai Sports",
+      "url": "https://www.dubaiplus.net/web/",
+      "reason": "Official redirects lead to Dubai+. Anonymous Portugal browser did not provide a stable, confirmed free live stream for the native or embedded player. Not added; no guessed legacy CDN links."
+    },
+    {
+      "source": "Abu Dhabi Sports",
+      "url": "https://starzplay.com/ar/admn",
+      "reason": "Official ADTV redirects lead to Starzplay. Anonymous Portugal browser showed account/subscription surfaces; discovered homepage media were trailers, not verified free sports live channels."
+    },
+    {
+      "source": "FIFA+",
+      "url": "https://www.fifa.com/pt/dazn",
+      "reason": "Free-to-view FIFA+ is now on DAZN; no stable compatible direct playback integration was verified. Not labelled paid or unavailable in Portugal."
+    },
+    {
+      "source": "FIFA official YouTube",
+      "url": "https://www.youtube.com/@fifa",
+      "reason": "All three selected full matches were blocked by the content owner in Amin TV (embedded-player error 150/auth), despite watch-page metadata reporting embedding allowed."
+    },
+    {
+      "source": "Unfiltered uploads, short highlights, paid/member-only and unconfirmed live events",
+      "reason": "Excluded by design. No YouTube channel-discovery tile is used for the new collections. Formula E is archival replay only; no claim of free current live rights."
+    }
+  ],
+  "navigation": {
+    "pause": true,
+    "reopen": true,
+    "remoteUpDown": true,
+    "backToGrid": true,
+    "environment": "Android TV emulator only",
+    "naturalCompletion": true,
+    "queueOrder": true,
+    "persianVodPolicy": true
+  },
+  "chess": {
+    "id": "persian-chess",
+    "playlist": "UU4wXiMrci9gCRLOuLGqHa2Q",
+    "backToSportsGrid": true,
+    "persianSpeechCaptionPolicyPreserved": true,
+    "playback": {
+      "id": "jFSBAQHF_vI",
+      "ok": true,
+      "player": {
+        "video": "jFSBAQHF_vI",
+        "state": 1,
+        "seconds": 170.82239708392333,
+        "duration": 1700.141,
+        "error": null
+      },
+      "decoded": {
+        "time": 170.834233,
+        "ready": 4,
+        "frames": 92,
+        "width": 1920,
+        "height": 1080,
+        "ad": false,
+        "region": "PT"
+      },
+      "elapsedMs": 1883
+    }
+  },
+  "signedUpgrade": {
+    "environment": "Android TV emulator only",
+    "savedTheme": true,
+    "seriesContinueWatching": true,
+    "to": "3.9.2",
+    "nativeContinueWatching": true,
+    "exactResumeTimestampMeasured": false,
+    "signedUpgrade": true,
+    "from": "3.9.1"
+  },
+  "apk": {
+    "certificateSha256": "ce108de5ce0ebdb7e5d118dc60ac8a2a87899f2553cdb3e9eb6abea1dfe16b3d",
+    "bundledCatalogueMatches": true,
+    "debuggable": false,
+    "sha256": "a71f6265b19217d2bf432ce6e4a2984f30ff177031bd32d0b28486909c19c4e0",
+    "versionCode": 18,
+    "package": "com.enigma.aminlivetv",
+    "versionName": "3.9.2",
+    "matchesPreviousCertificate": true,
+    "bytes": 5219472
+  },
+  "checks": {
+    "unitTests": 22,
+    "unitFailures": 0,
+    "debugBuild": true,
+    "releaseBuild": true,
+    "lintDebug": true,
+    "lintRelease": true,
+    "sourcePreservation": true,
+    "legacy391FinalRevision12Activation": true
+  },
+  "queuePlayback": [
+    {
+      "id": "Cqc-kDQT7rI",
+      "ok": true,
+      "player": {
+        "video": "Cqc-kDQT7rI",
+        "state": 1,
+        "seconds": 149.078933,
+        "duration": 1487.381,
+        "error": null
+      },
+      "decoded": {
+        "time": 149.037559,
+        "ready": 4,
+        "frames": 27,
+        "width": 1920,
+        "height": 1080,
+        "ad": false,
+        "region": "PT"
+      },
+      "elapsedMs": 3715
+    },
+    {
+      "id": "1rHwDoGJBvU",
+      "ok": true,
+      "player": {
+        "video": "1rHwDoGJBvU",
+        "state": 1,
+        "seconds": 172.19943010490417,
+        "duration": 1718.421,
+        "error": null
+      },
+      "decoded": {
+        "time": 172.22771,
+        "ready": 4,
+        "frames": 131,
+        "width": 1920,
+        "height": 1080,
+        "ad": false,
+        "region": "PT"
+      },
+      "elapsedMs": 6914
+    },
+    {
+      "id": "1qlgOqkq90w",
+      "ok": true,
+      "player": {
+        "video": "1qlgOqkq90w",
+        "state": 1,
+        "seconds": 150.59832103242493,
+        "duration": 1505.141,
+        "error": null
+      },
+      "decoded": {
+        "time": 150.61014,
+        "ready": 4,
+        "frames": 68,
+        "width": 1920,
+        "height": 1080,
+        "ad": false,
+        "region": "PT"
+      },
+      "elapsedMs": 5198
+    },
+    {
+      "id": "qXZrPQyh6wM",
+      "ok": true,
+      "player": {
+        "video": "qXZrPQyh6wM",
+        "state": 1,
+        "seconds": 152.76380302098084,
+        "duration": 1524.581,
+        "error": null
+      },
+      "decoded": {
+        "time": 152.767252,
+        "ready": 4,
+        "frames": 59,
+        "width": 1280,
+        "height": 720,
+        "ad": false,
+        "region": "PT"
+      },
+      "elapsedMs": 3618
+    }
+  ]
+}

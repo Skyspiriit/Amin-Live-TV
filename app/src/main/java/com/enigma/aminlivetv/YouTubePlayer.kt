@@ -38,6 +38,7 @@ internal class YouTubePlayer(
     private val lookups = Executors.newSingleThreadExecutor()
     private var source: YouTube? = null
     private var episode: Episode? = null
+    private var curatedVideoId: String? = null
     private var initialSeconds = 0
     private var usingPlaylist = false
     private var subtitles = false
@@ -86,6 +87,7 @@ internal class YouTubePlayer(
 
     fun play(youtube: YouTube, persianSubtitles: Boolean = false, queue: DocumentaryQueue? = null) {
         source = youtube
+        curatedVideoId = youtube.videos.firstOrNull()
         subtitles = persianSubtitles
         usingPlaylist = youtube.channel == null
         documentary = queue
@@ -156,6 +158,10 @@ internal class YouTubePlayer(
             documentaryVideo.orEmpty()
         } else if (youtube == null) {
             return
+        } else if (usingPlaylist && youtube.videos.isNotEmpty()) {
+            // Cue a valid first video; onReady loads the complete reviewed list through the official API.
+            vars.put("autoplay", 0)
+            youtube.videos.first()
         } else if (usingPlaylist) {
             vars.put("listType", "playlist").put("list", youtube.playlist)
             ""
@@ -261,6 +267,7 @@ internal class YouTubePlayer(
     private inner class Bridge {
         @JavascriptInterface fun state(generation: Int, value: Int, video: String) = ui.post {
             if (generation != pageId || discovering || (documentaryVideo != null && documentaryVideo != video)) return@post
+            if (source?.videos?.contains(video) == true) curatedVideoId = video
             if (value == PLAYING) {
                 if (!started) Log.i("AminYouTube", "Playing")
                 started = true
@@ -320,7 +327,9 @@ internal class YouTubePlayer(
                     if ("\"isLive\":true" !in page || "\"isUpcoming\":true" in page) null
                     else LIVE_VIDEO.find(page)?.let { "https://www.youtube.com/watch?v=${it.groupValues[1]}" }
                 }
-                live ?: youtube.playlist?.takeUnless { liveOnly }?.let { list ->
+                live ?: curatedVideoId?.takeIf { it in youtube.videos }?.let {
+                    "https://www.youtube.com/watch?v=$it"
+                } ?: youtube.playlist?.takeUnless { liveOnly }?.let { list ->
                     val feed = fetch("https://www.youtube.com/feeds/videos.xml?playlist_id=$list")
                     FEED_VIDEO.find(feed)?.let { "https://www.youtube.com/watch?v=${it.groupValues[1]}&list=$list" }
                 }
@@ -354,6 +363,7 @@ internal class YouTubePlayer(
         <script>
         var player, subtitles = $subtitles, current = '', rank = 0, checks = 0, retry;
         var discovering = $discovering, readingPlaylist;
+        var reviewedVideos = ${JSONArray(if (episode == null && usingPlaylist) source?.videos.orEmpty() else emptyList<String>())};
         var FA = {languageCode: 'fa', languageName: 'فارسی'};
         // Picks the best Persian subtitles YouTube's player can give, for each video in turn:
         // 5 the video's own Persian track, 4 YouTube's translation of human English captions,
@@ -419,7 +429,8 @@ internal class YouTubePlayer(
                   return;
                 }
                 if (subtitles) e.target.loadModule('captions');
-                e.target.playVideo();
+                if (reviewedVideos.length) e.target.loadPlaylist(reviewedVideos, 0, 0);
+                else e.target.playVideo();
               },
               onApiChange: persian,
               onStateChange: function (e) {

@@ -25,7 +25,8 @@ internal object SubtitlePolicy {
     // film, series and topic tiles ask for Persian subtitles.
     fun forChannel(channel: Channel, kind: PlayerKind): SubtitleMode = when {
         kind != PlayerKind.YOUTUBE -> SubtitleMode.SOURCE_DEFAULT
-        channel.categories.any { !it.main } -> SubtitleMode.PERSIAN_WHEN_AVAILABLE
+        channel.categories.any { !it.main } ||
+            (Category.SPORTS in channel.categories && channel.youtube != null && channel.youtube.channel == null) -> SubtitleMode.PERSIAN_WHEN_AVAILABLE
         else -> SubtitleMode.SOURCE_DEFAULT
     }
 

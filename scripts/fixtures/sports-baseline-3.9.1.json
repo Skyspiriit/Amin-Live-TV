@@ -1,0 +1,1044 @@
+{
+  "commit": "09b8d6b0a68636ae2538c0b041472d4d98269598",
+  "revision": 11,
+  "collections": {
+    "channels": [
+      {
+        "id": "tv1",
+        "sha256": "639caca92fd66a45df2837e13190287535b101629f59b02f74acbbc493470855"
+      },
+      {
+        "id": "tv2",
+        "sha256": "c4b490728b916cebe37d77e85ba036810ea03ae1d1ab1361e22acea3016f947b"
+      },
+      {
+        "id": "tv3",
+        "sha256": "f59955e3ecbf543de8cd3190b9647d712cb1e5ba73504537c76156758a77dec8"
+      },
+      {
+        "id": "tv4",
+        "sha256": "165cf0443f8a135cba1cd5c1dde0fd71f06852058a309f15b6931b669c00fc2d"
+      },
+      {
+        "id": "tehran",
+        "sha256": "8fc0d854cafb5360c5dfb5e93aad5325fd54da88744c27676012679ec9c9d2e4"
+      },
+      {
+        "id": "nasim",
+        "sha256": "a703ff379aae0c5569d8b531bf46b17b3114fd0f954977eec7734f48f206644c"
+      },
+      {
+        "id": "amouzesh",
+        "sha256": "b8f9045be8608e5028171931aab123739102eba9a755fb0e1e40f3a98d2f120d"
+      },
+      {
+        "id": "salamat",
+        "sha256": "b6b0479a2373cbc8af13b6b490c08640dd7dc2d6cd92ca41b8ee69db35bad4cb"
+      },
+      {
+        "id": "quran",
+        "sha256": "ece0a98e45fe75ec5113b49946d135cf2c0cc06175f870bdbd8f917f6b51b3d3"
+      },
+      {
+        "id": "ofogh",
+        "sha256": "21601209c236b6874c5909cbf029e7c8a7bb8edd9a9d844ce4e5bb2454f4c489"
+      },
+      {
+        "id": "mostanad",
+        "sha256": "68f3afa14a6b3895e8dcffa5b0c56850b70aa096b24f3db2548adc179fd2d335"
+      },
+      {
+        "id": "pooya",
+        "sha256": "e7ac2644da26db18230523e123f7ebab32177fa138acf13143e0040bd6309836"
+      },
+      {
+        "id": "omid",
+        "sha256": "0dfb6a03c3af9a121056e08bea6b9167eb50409d40c19cd3eec253eac5c3469f"
+      },
+      {
+        "id": "golkhane",
+        "sha256": "ab7e57e1d9e5b81b6d56351141a11f9c927fe82d121da8996249d0f15effec5b"
+      },
+      {
+        "id": "faratar",
+        "sha256": "6d9a06083791c74d2b87378430b2a0c34044521b5eb5645f540bfc0ed35c8e95"
+      },
+      {
+        "id": "tv1plus",
+        "sha256": "ba9cd0c858bacfbe44f3deccfcaad03b14dc3c940059c4f833dba40f08475216"
+      },
+      {
+        "id": "irinn",
+        "sha256": "ae479776dea76ba6feffc1240c97205ea1c359b8a570a64aaf0ae34039388d47"
+      },
+      {
+        "id": "irinn2",
+        "sha256": "dd15d699ba85f3f4586e9c50bb1bdb59f861bc906b3beb3d01edc181738db268"
+      },
+      {
+        "id": "varzesh",
+        "sha256": "05df4d5b7a4e1a5a7912533a2614bc9f4195d0e9c7960ee4194a0d67f3ad9b46"
+      },
+      {
+        "id": "ifilm",
+        "sha256": "0d3972c24ed91cacd795089232bb9c0e420d585728af72cf5c5a48081c5cb207"
+      },
+      {
+        "id": "hdtest",
+        "sha256": "5808804017b565afcd28895bc4a825edbfeb0188852b855e1335c790a4056ad8"
+      },
+      {
+        "id": "namayesh",
+        "sha256": "094298633aba267bf74672a464d3d0a81caf521237fd4e7622480227e75fd7c2"
+      },
+      {
+        "id": "habib",
+        "sha256": "aa3a50a1e61a3037fcf01edc4329481ff48f34ead6c8f31a65440e61591cf1cf"
+      },
+      {
+        "id": "labbayk",
+        "sha256": "815b77344aed0ecbaa7f6f1f964b209ee779fc3a18e1efad09620e461e297355"
+      },
+      {
+        "id": "razavi",
+        "sha256": "a9647cf7933240c1d672795bb1cc448d87d0dffb37e5f82593fd3420ec3972b7"
+      },
+      {
+        "id": "velayat",
+        "sha256": "c7cbfa9953ffada35a90d58585e7d712fe66fddc5f98d9da24de1353708868d8"
+      },
+      {
+        "id": "sport1",
+        "sha256": "8f70895e5520b0b6ddc4d512b832051f81f7e830d20b74be36514aae0916bfbf"
+      },
+      {
+        "id": "sport2",
+        "sha256": "86037aa131411da0bf3ad153ced04d21dc53fe8f390d9fd26d0d7dc5477934d3"
+      },
+      {
+        "id": "sport3",
+        "sha256": "acc44b38e2f7d8758473050fc6a882d3a5df250083626f3992ff29986969013a"
+      },
+      {
+        "id": "abadan",
+        "sha256": "604510a7f1d2a3546346b05c8fcb20c15534809e01d78615e032e95243d4db4d"
+      },
+      {
+        "id": "aflak",
+        "sha256": "db5cfdbb8b7ebdaa9bc8bbfb1383a97eab3f7453f440a25e967616240b6e78a2"
+      },
+      {
+        "id": "aftab",
+        "sha256": "85c5f7b73417f077bc462de26ec60747e903d48b707158bbce58b59fe733dd2c"
+      },
+      {
+        "id": "alborz",
+        "sha256": "798ce81a6fc1c26294a2286b8bfc61eeb08147c62febaa9539f1141878b19ce9"
+      },
+      {
+        "id": "atrak",
+        "sha256": "79ae97cf62cc5746b2bb56fccca0e127edb7e09a3dc86601279c216212c4a0be"
+      },
+      {
+        "id": "baran",
+        "sha256": "945155c18455b2c8268d9e145b06503b407a075534b31c4da3accd8108c6e996"
+      },
+      {
+        "id": "bushehr",
+        "sha256": "1202863e08723e84f1eff511f21083f35c73099183ede47e80150fb98f19f202"
+      },
+      {
+        "id": "dena",
+        "sha256": "7cf7cb8f14602b7ad61a21fb7c79fd41e9034f5d5a649f45180934f1fd483c0e"
+      },
+      {
+        "id": "eshragh",
+        "sha256": "18b68cdbbbd3c29a99021cd0e6491dd47954ee24d5e3c48b4a83e4f9d4a72f70"
+      },
+      {
+        "id": "fars",
+        "sha256": "1c15096fcbfc4e8d0fc1a46cee62ef803387219b11c82ad6319c72d44d28a5a4"
+      },
+      {
+        "id": "sina",
+        "sha256": "180d12bc159b225554136e6a67e8305649b7b0a88e89fabe9e17ac0af41e598a"
+      },
+      {
+        "id": "hamoon",
+        "sha256": "ca599c541122f6f2746697dc5c9b50b2e521d5af09392296d6cf3c10b22fb8ec"
+      },
+      {
+        "id": "ilam",
+        "sha256": "66220967927710e00ea2983271a7a5718d0134f9cc996e86b54ace5536bf4f10"
+      },
+      {
+        "id": "esfahan",
+        "sha256": "a0b66cbbdc8beec95ee7b170011a056bb19ecaa0d284669d4c355d22fd7bcac7"
+      },
+      {
+        "id": "jahanbin",
+        "sha256": "0bf69ad2561943f3c2d179b204dfafb8183817d5a0ea09cebf55effb26bc125e"
+      },
+      {
+        "id": "kerman",
+        "sha256": "679c78abdfdeaa63dad6b3f47d60539febd8298b2693640e87d08ec7cbc8dd7c"
+      },
+      {
+        "id": "khalijefars",
+        "sha256": "a0583ad784bd9c3423e540c546b36e2d8b03f817c8684df2b1974d5e65d4c564"
+      },
+      {
+        "id": "khavaran",
+        "sha256": "3e507f5fcea9c03bc03b03f73c82e05fe1355ec899e6916374bb875123b49801"
+      },
+      {
+        "id": "khorasanrazavi",
+        "sha256": "dadc2e0e2b889f8f2598ff3aef6627ff2dd58db718874af48fe4b352926278d4"
+      },
+      {
+        "id": "khoozestan",
+        "sha256": "0fe754c0daeda1854dfdbf3c0d1f0caadaf998267381d1cfcb67b8b89607c197"
+      },
+      {
+        "id": "kish",
+        "sha256": "cf574a4519ab823d3fa23ffae1a3ca1bee1979d78341f62ecb7cc40b0c257d68"
+      },
+      {
+        "id": "kordestan",
+        "sha256": "e51b5df0163bb705df7a665449931d050dc82a58eaf480e85c6030f03e9302a8"
+      },
+      {
+        "id": "mahabad",
+        "sha256": "67849fd7eabd9b177c0231cf5a270b9bf09f2505801e4b1988e6a25d347c55d3"
+      },
+      {
+        "id": "noor",
+        "sha256": "09c7ce9071a8a465ed92e64536bc439500f7ef7793ca836c0a5797af26ebdcd6"
+      },
+      {
+        "id": "qazvin",
+        "sha256": "bcb3569ccce20bb6ecfe51acbccb3c496d8e9c0441c88a5f77e7369cfe767ad0"
+      },
+      {
+        "id": "sabalan",
+        "sha256": "89d1aeb6d844783e8afd7e7a9594964d39d80ea13c3799e4da74046bbd30cecc"
+      },
+      {
+        "id": "sabz",
+        "sha256": "46875c9076fb230146b26b3ccff366180dbb267ba99bca3178032a6740a9f831"
+      },
+      {
+        "id": "sahand",
+        "sha256": "2fd230e935404e922f25ac5116e5ca7e750907e18b51595a5215704d9e100d6b"
+      },
+      {
+        "id": "semnan",
+        "sha256": "3e7e281c4cf28c081f4a318f3d6e43ea96e804220fb5568ceaaeaf0c2a80afe7"
+      },
+      {
+        "id": "tabarestan",
+        "sha256": "2db92828e4ff2781d7a9ccc3928a12874250ecef28de440aa9474ceff9e5b68f"
+      },
+      {
+        "id": "azarbayjangharbi",
+        "sha256": "61a1efb5b1ee6778579a8700cb32f1b13c885b68f52008e93e23f5c517a5158b"
+      },
+      {
+        "id": "taban",
+        "sha256": "fa7ddec220b2f4beb8b163158a863f5ba49bb8800895f215052eefd5bc60f9f4"
+      },
+      {
+        "id": "zagros",
+        "sha256": "ad73afe910dacb6b91d9f1dc9655988e361cb77d0805754c330c5bd7c2c264b1"
+      },
+      {
+        "id": "iran-international",
+        "sha256": "b4468e6f94f5c8a789cca781bc0940f32f4e66b50fb151e31c11663880dc7618"
+      },
+      {
+        "id": "voa-persian",
+        "sha256": "1c1e02b663ffc452569a16fb90dd22df190f5df7a73ec08de38b46ef157538d3"
+      },
+      {
+        "id": "afghanistan-international",
+        "sha256": "c2374b60200ff8ef8b1dba7601f66d822d3376afd72f202e537ef4d956623f76"
+      },
+      {
+        "id": "bbc-persian",
+        "sha256": "d1aab9b4b152b8ea01f95aac82a47544e8e200d1a6d642bacf198fccf57e0211"
+      },
+      {
+        "id": "radio-farda-tv",
+        "sha256": "d4af1c211ced82e5cced1156332b6866651b8c2b55bc0905d0a02de77a727b36"
+      },
+      {
+        "id": "ifilm2",
+        "sha256": "3b69f3ee5dc740402a0ae5a817feb4267ed844a9d1ac0aad16cea36cf0593c55"
+      },
+      {
+        "id": "jamejam",
+        "sha256": "720fee35448db791eedb6891ced7204026c3b662f38ed6c10489f2a883055269"
+      },
+      {
+        "id": "persiana-family",
+        "sha256": "5a4eb4e61f5afa9b30b1402f921c659fc4e4902478b76a6ea71b8f76c25d4f7c"
+      },
+      {
+        "id": "persiana-series",
+        "sha256": "d138b791ec44eaebc7c01cc99a40d1d05ac4c38bcb67368ef7cd0c0a154913e0"
+      },
+      {
+        "id": "persiana-cinema",
+        "sha256": "b7ff539534334f17f8c739da19a1ff42c7ddbc309ae38d27516f027ec19e237b"
+      },
+      {
+        "id": "persiana-korea",
+        "sha256": "651c59484952d9893f4a827de7e44438c63b04064683e0b6b6c0fddf9713779e"
+      },
+      {
+        "id": "persiana-plus",
+        "sha256": "ea0e2255675a9948aa37303d72f2aeda1e6a86ff27e3b5b3b3e793592c9b6350"
+      },
+      {
+        "id": "persiana-iranian",
+        "sha256": "237231aea5b568a86000408658a21160a1c9c1f256f2d436fd0fa3d616f20dec"
+      },
+      {
+        "id": "persiana-comedy",
+        "sha256": "6f41288d5c91820d5d2b36188b47eb588d9d39835f6c234b9ce4929b960dd28f"
+      },
+      {
+        "id": "persiana-reality",
+        "sha256": "af28aaf2eabfb2200facb76001733c294c030ec5603f6b87bb8e85c1153ff43e"
+      },
+      {
+        "id": "persiana-turkiye",
+        "sha256": "3f9fe601db66dc4df2a9425b07f564716018d5ad8da9e486aa59d2eeb839458d"
+      },
+      {
+        "id": "persiana-medical",
+        "sha256": "86614505391b8ce9aac2dc4002c75634596b49472c5a9c5e9ba1c48831b54642"
+      },
+      {
+        "id": "persiana-docs",
+        "sha256": "ca6657901dbe5a46e8e3fca6dc8481b5f0d887b8a6ce30a13d09637320368796"
+      },
+      {
+        "id": "persiana-junior",
+        "sha256": "d812e57d8ff12ec0c8f3b2d687ffa9f5951f0461fffb55c596dab2a8853723bc"
+      },
+      {
+        "id": "persiana-fight",
+        "sha256": "598d247ca1712bc11b208eab667887eb5ea0f46949119d212da3372ca17cc005"
+      },
+      {
+        "id": "persiana-sport",
+        "sha256": "24fe5ff12055cf7b30e3980621804055fa9b45ccd99543a64c5860e46b845a2e"
+      },
+      {
+        "id": "persiana-sports-2",
+        "sha256": "3881b681e5e3caf2e038dbbba805defd4f44df1d0890d479ca13291abeadc082"
+      },
+      {
+        "id": "persiana-sports-3",
+        "sha256": "8fc2739164db1c75ece82cecc24e2799b955f17562c70b962242ec6af90b3606"
+      },
+      {
+        "id": "persiana-women-sports",
+        "sha256": "cf86e74116816731f37bec37a495dfc64c3f05e3b2c609b196bd43273a3d0de3"
+      },
+      {
+        "id": "persiana-music",
+        "sha256": "1bfe96fb0e3a6229e630bbc56e7970ac8555d9f416a82b8eb37364e3a5d332fe"
+      },
+      {
+        "id": "persiana-nostalgia",
+        "sha256": "bda4fd8ee938bebf4b6ad943b43e3f7584e532cfb1db25264bb0e3fbf1464d72"
+      },
+      {
+        "id": "persiana-folk",
+        "sha256": "c1a902cbef1cb4fed8aa6407cf2a749e94fdf9ff3e88a2aab5515f4eeb7085e7"
+      },
+      {
+        "id": "persiana-setmix",
+        "sha256": "155a069bed057d538cccd20fe1db185733f6b28d392f8fc277fe3f8c26d19061"
+      },
+      {
+        "id": "persiana-travel",
+        "sha256": "6234de6c4f010ba399db23ebc1dab74d49aba0945ee6a2cbd004655ed1d5fca2"
+      },
+      {
+        "id": "persiana-kurd4",
+        "sha256": "ce12ae2f1425175aab86a31c0729099d4a908cdefdc8b4122bb817c84199468b"
+      },
+      {
+        "id": "247-box-tv",
+        "sha256": "77ba3e6e996006ee04d9f7923beafd7149ee727b73745dda350c1b76178fbb6a"
+      },
+      {
+        "id": "4u-plus",
+        "sha256": "1b728fd66a0346a099652d148d6e0d1c5c851c4b4941f16e5b7b265709636c7a"
+      },
+      {
+        "id": "4utv",
+        "sha256": "3db4fb59aeb5703ad7248319ba4f90d4a4d3c7263d86008ecc93528006223d6b"
+      },
+      {
+        "id": "afn-music-tv",
+        "sha256": "9cfcfeea09b14430d45312b2b27afd0910a1f867ee8d2d18d22848af88ceec73"
+      },
+      {
+        "id": "afra-film",
+        "sha256": "0af153f95c29ba2d615845fff071298baf4c4e1f81d5eb87237066431be7eb29"
+      },
+      {
+        "id": "afra-series",
+        "sha256": "dd993432fd4a4d0e472b1b48a21b000397272720183ff2dd9305b674bc654899"
+      },
+      {
+        "id": "arax-tv",
+        "sha256": "514e73e46d5132ba5eac6c6771eb1429b413ba7d6223155414e607559e3fc695"
+      },
+      {
+        "id": "ariana-tv",
+        "sha256": "81a98e81954f45b7a1ce02887f65fb9ad54164292d17c40284c679092cf5cb40"
+      },
+      {
+        "id": "ariana-news-tv",
+        "sha256": "d3402f664eb2a1be754893cf1406db0fc3fd8b87803d3d0f7ab125383c66bd04"
+      },
+      {
+        "id": "atrina-tv",
+        "sha256": "6e188921ea6ae17526663454393e8b7d0fa8bcd3c4cd54d70f86bd28d47c5623"
+      },
+      {
+        "id": "ava-family",
+        "sha256": "cda2f3105ce7b1019915f4a30561f53df379d31b05c0d5756826d6aa649675c1"
+      },
+      {
+        "id": "ava-series",
+        "sha256": "65f42ecb505ec6b27be4453141cfdd202635b83334e736a53129563602445bf4"
+      },
+      {
+        "id": "avang-tv",
+        "sha256": "07763f9ebc29d77703ed994d38e125844b2a4c41b483990c34266631a7335d90"
+      },
+      {
+        "id": "cafe-trade-tv",
+        "sha256": "7d0ec1f37ffcab9d1daebee9d7723f233cedd798de5659cf9a5d369d1b74b89e"
+      },
+      {
+        "id": "caltex-music-tv",
+        "sha256": "fa8cfcb3d2f4284e5da77b4376ee1a28802177b42f94db22e56cd5c4b8890aaf"
+      },
+      {
+        "id": "classic-tv",
+        "sha256": "079a44a4f4930ae2783eda0af09b09543af665b8c43abdc047b183e806f2c904"
+      },
+      {
+        "id": "didaniha-tv",
+        "sha256": "097519264f7654e9b49bf5208e65d60e8ac1f21c65f12815780ae70df65db531"
+      },
+      {
+        "id": "fareh-iran-tv",
+        "sha256": "1c735a45b00f20af504eb842261b92b1c609b0feb7eda464453bbcfb9c9b2b99"
+      },
+      {
+        "id": "fx-farsi-tv",
+        "sha256": "3ce1e549c7e94be9a49c6ba49b30150a4325b4c72e07e45be73443caf5220886"
+      },
+      {
+        "id": "fx2",
+        "sha256": "e743fd3fa56b0a9ef0471c00be8b2616929544c1d71266da4d7ac1dd740d0135"
+      },
+      {
+        "id": "grand-cinema",
+        "sha256": "5cb430142ac56e8f2cdf86b16dd27a5a1d685bb9f9fa3eeafdf0e706c46443a7"
+      },
+      {
+        "id": "highvision-tv",
+        "sha256": "fc1f1a04954a906dd9987027fba1d47e7892bfd28ac1888a70d3f711499ff1f4"
+      },
+      {
+        "id": "home-plus",
+        "sha256": "3e5bc83d2ddc156fe9b85b8cdcb1498fa677dac4ce7a1dd1378e4be1267e024c"
+      },
+      {
+        "id": "icc-tv",
+        "sha256": "5e9f251d8da17e4b78e75a8262a3220ac918e114f1da302de10b7088b3a591e3"
+      },
+      {
+        "id": "icnet-1-tv",
+        "sha256": "4543abbc179892328fda624fd962d0480ae6eb7836a7b48abdb796df3b0a0919"
+      },
+      {
+        "id": "icnet2",
+        "sha256": "db87ccca47e78086c81f17a0ddaf145d93e2d3512778ce630ac88f80b6c5e311"
+      },
+      {
+        "id": "icnet3",
+        "sha256": "186cf2f1cc170eb0ed9858a5a0315f85ae94bc1482d338e206a63437ce579c5e"
+      },
+      {
+        "id": "iman-be-masih-tv",
+        "sha256": "072953981d1ea830f6057a8a119ea2dfbea9c45f4f1d5237157f6e69e8935276"
+      },
+      {
+        "id": "iran-nama",
+        "sha256": "bc27baece2ab8fec166d35c538a45b5bada7f7a1f9dfdbde52bb6bf937028d81"
+      },
+      {
+        "id": "irane_farda_live_stream",
+        "sha256": "c630531c3a74161db34f17bd767ca9602b0d71a98b1977f6b9fb3e85dbbeeba9"
+      },
+      {
+        "id": "israel-parstv",
+        "sha256": "01752f9036e811678b6ee2fb66e11eefe3a2a7f6cf45d5d0c1e3c5d8293a80e9"
+      },
+      {
+        "id": "itn_tv_live_stream",
+        "sha256": "dc337807ac26ac30e666bd4245dcb73f58dda28c2aec89330bedac4a509d68a0"
+      },
+      {
+        "id": "channel-one-shahram-homayoun",
+        "sha256": "b2f23df3d3266ab98aaf327043a612af3ff39fa47a8df2e25f76f680054c95c5"
+      },
+      {
+        "id": "khatereh-tv",
+        "sha256": "ff086b5954fd6d1b1c5b74f3d9e035f6b06657fe981ce1d48d82c7fed44ee6b6"
+      },
+      {
+        "id": "maah-tv",
+        "sha256": "9b175c02cd8e9f70d1933fc326c275c62ca15ab76e81d444f7abe83aef024e29"
+      },
+      {
+        "id": "manoto",
+        "sha256": "018d806e5c4f0dc00dd960846ae379f4525be1fd4dbf9ce1b3457f5a8d4992fc"
+      },
+      {
+        "id": "mbc-persia-tv",
+        "sha256": "5eb6b4fa0f8591d2c893d8429db1e1f968134d5234b5c3de48324622e7e1a433"
+      },
+      {
+        "id": "me-2",
+        "sha256": "a169237eec8924789e0d53e6fa2e134efa8a1c2019e9cda862010f67aa44f3f9"
+      },
+      {
+        "id": "mihan-tv",
+        "sha256": "8626ab4e52438a65d6130cf9a65e4550294d328be77c72cd1c35b005a326a36f"
+      },
+      {
+        "id": "mohabat-tv",
+        "sha256": "c611ca151dbf17dfbb00751ccead0d5ab4f8bfe1e0649e2fa601768b83574ef2"
+      },
+      {
+        "id": "mtc",
+        "sha256": "820141642b67b715b339a8f40bbbb4736b12358f950f150cb575aad916085fd4"
+      },
+      {
+        "id": "navahang-tv",
+        "sha256": "dc8608ef9e5010f09245a9d6ad5f88724cc9564d549dc4792f00af63a94cf228"
+      },
+      {
+        "id": "nejat-tv",
+        "sha256": "9849f9c0ab95e3c6e632fdf97e8bca0896d65ef8fbf3666cef7c8d9842287bf5"
+      },
+      {
+        "id": "net-tv",
+        "sha256": "dc2da416a2edc01570e7cadc805a02ad374751d969ccf42586343d7091a40bdc"
+      },
+      {
+        "id": "novin-tv",
+        "sha256": "87b9a92f2ad8ffffc7fff231e08db51623ce75a53ac3f0168d5aa5d14c9b9b55"
+      },
+      {
+        "id": "omid-iran-tv",
+        "sha256": "df360d6f25e816c83d023348d97d19c1f376a01c0322783528a31c7e7749a0fc"
+      },
+      {
+        "id": "orange-tv",
+        "sha256": "f876612403b0bbaa6791b1d0332c63352214c3100063cae7d5a4dd6f5632c171"
+      },
+      {
+        "id": "oxir",
+        "sha256": "644898576c0995d5f7bc6106ed1131601f0068bd24fac6bc07641fea82c9549b"
+      },
+      {
+        "id": "pars-tv",
+        "sha256": "6a7bec0b39cb5dd5e7d77547641cecc78c70bda1ebb23c75f250a072a0c6b06d"
+      },
+      {
+        "id": "payam-javan",
+        "sha256": "ff44091a5d732f4f5a57366beb7b44de32823f06d3626f71650494b042e8269e"
+      },
+      {
+        "id": "payame-aramesh-tv",
+        "sha256": "5d0cd641add9c22996900183fab1f2bed1c9058d95a29dce06fe7bfff6880bf0"
+      },
+      {
+        "id": "persiana-hd",
+        "sha256": "08f0aee77ebb8ba3bd6fed1ee3b120147dc669b78c5f2ad8f55ccfc3bfb77c59"
+      },
+      {
+        "id": "persiana-science-live",
+        "sha256": "b4c18332e75c5dd2061e4bcb654a9db5ece1a62435cb34cc0ba0d86b943fab30"
+      },
+      {
+        "id": "pmc-royale-tv",
+        "sha256": "5ae5e25bfc4ef6dbb3e2249de3732189b3810d60a1e22535cef4ac215aea5cdd"
+      },
+      {
+        "id": "radio-javan-tv",
+        "sha256": "4bedf3550783a87e769fb92fd8a5883c61c6affaa5acc361d4e1cc5099438767"
+      },
+      {
+        "id": "rahe-nejat",
+        "sha256": "6010f4b479915e6a1fbf2ce11691a48bd697360af7cf61197a23000d51c96dbd"
+      },
+      {
+        "id": "rta-education-tv",
+        "sha256": "040fc1a3ec5ab1b6f65cc82de79e74d1e16edd5c93185e96dbacb0ec464acfaa"
+      },
+      {
+        "id": "sat7-pars-tv",
+        "sha256": "71bd421cb4f2d87acb5212f1197d332be448283f5be51c47749bba4a1bcdb9f4"
+      },
+      {
+        "id": "sl-2-tv",
+        "sha256": "af95d82da578f031e5f94a3042be7a8eb1dc5c0812d5acbfe5936dbf730369e2"
+      },
+      {
+        "id": "sl1-tv",
+        "sha256": "4298da64cf43bc42880e160bd260404d57cb7127c3faf89bd2c89371ca85bf45"
+      },
+      {
+        "id": "sun-music",
+        "sha256": "52dfbae2234cc41c55a348e59bd4b6b4aee960dc6a6434b5f5e3a4ef62147f22"
+      },
+      {
+        "id": "t2-tv",
+        "sha256": "1e7db3ee7fee5d7754bb8021e09c3922b1c496e2b972d8b732da623c5fef7a7b"
+      },
+      {
+        "id": "tapesh",
+        "sha256": "7694c0b77755bf732d3ff6649a6dd1d80650caf19415c541842530253b3d0d2a"
+      },
+      {
+        "id": "tin-tv",
+        "sha256": "024f4bf687ef19f9a3fb0ef7fff70bad3a3740f5a75fbf727a6b74b01886d0ae"
+      },
+      {
+        "id": "tm-tv",
+        "sha256": "b11be55fcb06f48cd1f45b3bc0fcb5103dcdc773e4482a4918c10bf2d8e77831"
+      },
+      {
+        "id": "your-time",
+        "sha256": "8665067806728a5e023d7c8a3483acb8e4340bb1a00802b7535a7bb849bbd7ca"
+      },
+      {
+        "id": "gem-tv",
+        "sha256": "c9a7f5ebf2e659f70cc539dd24ae945f5a0260525bc87ecc6fccaeb067e19800"
+      },
+      {
+        "id": "gem-tv-plus",
+        "sha256": "1f7753b35273425df6df7ddabe741e92f27bf46c327bfb8694f3c0758e96b3ba"
+      },
+      {
+        "id": "gem-rubix",
+        "sha256": "301ba00cb52daf3e5d00f2a4265ef3d56cb2fe3c91051c828b451e0d4b8e3b2d"
+      },
+      {
+        "id": "gem-rubix-plus",
+        "sha256": "3b3191bc3f8cd3ca24d26dc8a1dbc72a4bf0024db8a5b47bf76f15e674697bf8"
+      },
+      {
+        "id": "gem-series",
+        "sha256": "dc095ca7473f4d5e11e68b2ebacea880fddf032ae02c91f3a8101d8bc58e86f6"
+      },
+      {
+        "id": "gem-series-plus",
+        "sha256": "7fcaee49f1044a5880c0498d18ea3aeb40874862a525cbb5efc8ebc9e172703a"
+      },
+      {
+        "id": "gem-river",
+        "sha256": "7c650c9c0765476fa896f7f5e0c6463248294d23c3bbb51862085db411b92c9d"
+      },
+      {
+        "id": "gem-river-plus",
+        "sha256": "bced5560cd9aaa2be29203db188831d94d7b9efaf6980b5f20e9335116f5ecab"
+      },
+      {
+        "id": "gem-drama",
+        "sha256": "9a83b04a2bb7ef707ef23f2a55db684c3e9e956b63467010efe0b3bdeccff6d1"
+      },
+      {
+        "id": "gem-drama-plus",
+        "sha256": "cc0d45ebdd47ebb83f4a87d0fb5f26f5946235fec7447ba2fec126abcdf2743e"
+      },
+      {
+        "id": "gem-film",
+        "sha256": "8fa65e669c82a1b6384fd079651908337ec21e578693d7c3cb98145628100a05"
+      },
+      {
+        "id": "gem-onyx",
+        "sha256": "1a071f8e3c2cf45c4a25359cbe12d5b25fa7c7c67e697f1f9a2b46f0389d9a3b"
+      },
+      {
+        "id": "gem-24b",
+        "sha256": "2052a0af81809a22eb270ad43f6bed33ac29ff8785c92f36b883df2032ce9c69"
+      },
+      {
+        "id": "gem-latino",
+        "sha256": "c8bc323adcb87dc85eef60e2895a684c66bbb4f05018a67b2cadac3892a99552"
+      },
+      {
+        "id": "gem-mifa",
+        "sha256": "1b547849a530eb245d9225e698a482d047e70b1271121065ba7e0a3026dc6a17"
+      },
+      {
+        "id": "gem-mifa-plus",
+        "sha256": "0ad6d0444156bdfbfa8f0a9a9ba167f8837410b5e7b1f5842721d61b43238228"
+      },
+      {
+        "id": "gem-az",
+        "sha256": "3bd1acc87ebc3fb7c371949521914f636067fd0d46e05093670b8ef18b3ad0b8"
+      },
+      {
+        "id": "gem-kids",
+        "sha256": "400863b875b185e2f79d8bc859c43ded9c9efc68c0e5507c289e4d09c447e9f8"
+      },
+      {
+        "id": "gem-junior",
+        "sha256": "dfcd4072c5e320fac563a76585cc81b055824258ffa107cac4a4909a55771cfa"
+      },
+      {
+        "id": "gem-bollywood",
+        "sha256": "1589c4a2df0150df1c995a96c82f8ef224517c353b734157aec58836a0f952c9"
+      },
+      {
+        "id": "gem-entertainment",
+        "sha256": "084340a6477a324d265be9adeea4a8c09f54bab214d3fb070a71ba163647d8a2"
+      },
+      {
+        "id": "gem-food",
+        "sha256": "c23f32adacd052e1e30d96f1765eb8f74498eac6b4462d957e33b41f126f1af6"
+      },
+      {
+        "id": "gem-classic",
+        "sha256": "43d8cfd9163ae15a333c366084a651fd6958f95c238b9772fd44aaeafd68bd6f"
+      },
+      {
+        "id": "gem-comedy",
+        "sha256": "6821ab68ad3ef86b74b91be4ff567738b9f1b859fb45efcb3c417ea4d5be5ba9"
+      },
+      {
+        "id": "gem-documentary",
+        "sha256": "6231a15f3a3398fdfb36176aa5fa7dc996fd1423d91ef385bc7ada2962b3cde3"
+      },
+      {
+        "id": "gem-life",
+        "sha256": "5fe6493431814316febc3b583791bfc5b964ace6708663208d5cf1a332e63a9a"
+      },
+      {
+        "id": "gem-modern-economy",
+        "sha256": "4c2391096fb164051bd4c17c493c102126ae032fd9d8b7b4f88b3913917c5c9c"
+      },
+      {
+        "id": "gem-nature",
+        "sha256": "5487bb4c88da10411c86eb1013de5bdc65e5d26df3ddbc3d0f95f7c908febf8f"
+      },
+      {
+        "id": "gem-pixel",
+        "sha256": "9207b802a882ac16aeca161eb65c18b6f9e2860d876f6fc7082fcdf80bd6e859"
+      },
+      {
+        "id": "gem-sport",
+        "sha256": "12563cc11bd65d848d5c0f1aea8de10ce2484f2ce53fd3e7b433715e48f5d668"
+      },
+      {
+        "id": "gem-fit",
+        "sha256": "fa6d49147b556f160466fac97271a8f37f0e06f86031cf328d6ac1b2224e978c"
+      },
+      {
+        "id": "persiana-china",
+        "sha256": "950e44fb694774e19f4eb54a10fb975708bb8490f27e769d0677bba7e9bf5726"
+      },
+      {
+        "id": "persiana-rap",
+        "sha256": "d336a25829bb863a765cc2e6df7ced607f9c04d776f9714747c8ea5cf2d0fba2"
+      },
+      {
+        "id": "persiana-podcast",
+        "sha256": "439b7b676214e06afaabf4e03b12e3f620a0df73c878f37d04887dce32af3e57"
+      },
+      {
+        "id": "persiana-voyage",
+        "sha256": "d0e9378e40dea2d3a644ed4c6461520838fac630a72a3c7eca1ee2f0716509fe"
+      },
+      {
+        "id": "gem-travel",
+        "sha256": "7de548b5ab13d0c57dc996827d682a21cc738d1562f39be0df5d9321522e3101"
+      },
+      {
+        "id": "gem-music",
+        "sha256": "b286fa42544a7744bac8fc30efb3f5c423b78044a84f2f909f3f90cd67b828cd"
+      },
+      {
+        "id": "gem-fashion",
+        "sha256": "35d9c1e1da2867171c923d237eaf89b7211950ed6a2e5e7a87955242b6076c81"
+      },
+      {
+        "id": "dw-english",
+        "sha256": "dfe488e191c33ccf56be615f28a0e96681555a60168b449f59e67637fc787f47"
+      },
+      {
+        "id": "france24-english",
+        "sha256": "93d96d4cb2d77ba42685cc4bf34aaa2adb12631132738d995d048730443ae4d5"
+      },
+      {
+        "id": "euronews-english",
+        "sha256": "ee334bbace3d3f95d34b9919fe29b9901deedad17d5ffe08062886dd91fe43fb"
+      },
+      {
+        "id": "aljazeera-english",
+        "sha256": "55083e80afab4a31807afa51927bb139b6140070db947df02979afbc18445c17"
+      },
+      {
+        "id": "sky-news-english",
+        "sha256": "4a6a871b8015deac950bcb87cc0bc501f0e9d2d6716ac7f51914933f7ffbba2d"
+      },
+      {
+        "id": "abc-news-live",
+        "sha256": "d45ca98f3003533683a4b606339d3f9f9cadcb515176512f3429ff5f3d2b05ef"
+      },
+      {
+        "id": "cbs-news-247",
+        "sha256": "b72490b9f222773e274ad6816685c8b1719bd8f6fc782987f32cdaa377ab56b8"
+      },
+      {
+        "id": "cnn-headlines",
+        "sha256": "108b42c457b083a3678530a178129a7802a3f8d5754cdf158de5fa8349765240"
+      }
+    ],
+    "programmes": [
+      {
+        "id": "doc-persiana-docs",
+        "sha256": "a9de5a0faba5f23706f875d6054a58796fbac50dd533ff6b20980087de624b8a"
+      },
+      {
+        "id": "doc-arte-reportage",
+        "sha256": "a58f48daa00e084b0e0f167827323aa828e0093292bd35d68c5822580b40c37f"
+      },
+      {
+        "id": "doc-earth-touch",
+        "sha256": "b8953e823c09c371ddffd63cdbb77699d3ea192ed08f8d51f83180678400392c"
+      },
+      {
+        "id": "doc-nhk-globe",
+        "sha256": "d6349fbbbfb037890ff98f3e5bbcee6042972fe726e96fd73fd6d2cf36002835"
+      },
+      {
+        "id": "doc-nhk-trains",
+        "sha256": "58b0acaebef6ebb9c265994ae4bff92efb5d34df9956b3117aeaa77eda8a9f02"
+      },
+      {
+        "id": "wild-love-nature-live",
+        "sha256": "89369447cf9a088c0df4a39b983f64d6785c1adf376c22567cdf569e7e2072f2"
+      },
+      {
+        "id": "wild-wildearth-safari",
+        "sha256": "4cf6e10299a42ca96eda293c7a1c5b0090f5646528e12e9cc6266a8b40c69f7b"
+      },
+      {
+        "id": "wild-earth-touch-cats",
+        "sha256": "168b565116b9ef0a497efe6bc30cb7e2cba14f38564c6a32db9bbbb42e2fd58c"
+      },
+      {
+        "id": "wild-love-nature-ocean",
+        "sha256": "d14df37396eea8f8ee949b85d350e9bc64aba3c627fd39444142c01ea97cf51b"
+      },
+      {
+        "id": "nature-naturescape",
+        "sha256": "7bdc248e815711ab706711d8edad3e6bbdd343bbec5209b94761d0b1de470de6"
+      },
+      {
+        "id": "nature-naturescape-water",
+        "sha256": "6d1b2bfea089f58f0ca9505256ccc1f4eedf4375b8aa7686cc633e74df517e13"
+      },
+      {
+        "id": "nature-arte",
+        "sha256": "5466aa6ff3ba5e33fb35a922860fd1f56f86c7eb8a609a096c679e1c7fc78db8"
+      },
+      {
+        "id": "nature-love-nature-habitats",
+        "sha256": "9a6e41ca4a44244b7c35fba3d0ae024d0f6ee46e8b6cc19815dedf9a271d1a27"
+      },
+      {
+        "id": "science-nasa-iss",
+        "sha256": "e2f9205065cab525aba7231319dea02b3103cfd5b8c1d9d36668da59795d00e2"
+      },
+      {
+        "id": "science-nasa-webb",
+        "sha256": "f0687fe9bcc99845305a9e62ec227906ce9417057d61929fb6a48389fa684c3c"
+      },
+      {
+        "id": "science-nasa-mars",
+        "sha256": "fdc0201299ed9108595e8aa17d763be67b4f4d5d4afe08119ac6910c3d87870a"
+      },
+      {
+        "id": "science-nhk-climate",
+        "sha256": "f0dcfc1bd613d233c15987981dbc038cd554f9154758fa4f0f8e5a4f1916f3a0"
+      },
+      {
+        "id": "doc-fd-earth-untold",
+        "sha256": "d510e42be9df89ac70499332f16a79c4a00c17aea419ded288c06e9bee833a26"
+      },
+      {
+        "id": "doc-fd-pharaohs",
+        "sha256": "edcb624774ef93f6a20222925cd7ab47622783c696008ee8abcd5deb04565b53"
+      },
+      {
+        "id": "doc-fd-adventure-gold",
+        "sha256": "2f91a4d5a9f5811fab18d3a1263e7f6fdb54bf5013cab40339a4dce442406d5c"
+      },
+      {
+        "id": "doc-endevr-europe",
+        "sha256": "c3204990ff8e2bbb51b5baaa6fa401b60b804b3a53f19d3c199de77cfb7b0261"
+      },
+      {
+        "id": "doc-dw-trains",
+        "sha256": "5999b3084419ba20b082a1bce968710972fd7b582101fc33bb76e4b3eae7bab8"
+      },
+      {
+        "id": "doc-timeline-myths",
+        "sha256": "b0e25ec8436930b617e8d5593e8f31dea64cd818bc125c767f9da9c75a36266f"
+      },
+      {
+        "id": "doc-gedeon-history",
+        "sha256": "f917357fe7836a44bfa25dc4293914a08661a7e46697b14a2dc54d1e16d211e9"
+      },
+      {
+        "id": "wild-real-wild-calm",
+        "sha256": "845dd01d5f7004b110e217cd9753a2d15d2291ed6df3f562d6b3b1228c962ba5"
+      },
+      {
+        "id": "wild-fd-nature-europe",
+        "sha256": "2cc79367d82a0470aca0572bcfe402dcde4f12ea743014211f1288cecd058b44"
+      },
+      {
+        "id": "nature-fd-ocean",
+        "sha256": "270d9285be76327d03f860c9d4ee1ebdc90b3087a51d430ab67e1aba88792772"
+      },
+      {
+        "id": "science-fd-space",
+        "sha256": "5718b22db22ceeffbbc27295d5fae4120a45f24e3f16d0768b32eb1590f02986"
+      },
+      {
+        "id": "science-ri-history",
+        "sha256": "32593e29172b8de9bf2af8e9b261b40d5829e84189d6f38bad78a6cccdc01d89"
+      },
+      {
+        "id": "doc-bbc-persian-films",
+        "sha256": "3d41454e36da49a253f9f20ceaf4689529e5a5ef4a524dbe0f39f4e46a27744a"
+      },
+      {
+        "id": "doc-manoto-docs",
+        "sha256": "0b69e79728914a4dd70debc6716248248652e248e9b81a4d0eb02ea1684eae0a"
+      },
+      {
+        "id": "doc-manoto-time-tunnel",
+        "sha256": "1d0770519e388037fe88ad9f9547743e5eb7bc94c23b91a033f775d302e55719"
+      }
+    ],
+    "programmes2": [
+      {
+        "id": "movie-mosfilm",
+        "sha256": "f7710d892846196889a1a6eebf5561e7b235d090ae305f401829ba1b8a234d3c"
+      },
+      {
+        "id": "movie-filmrise-true",
+        "sha256": "67e68ce35ea09a4045ba0dbd3fce2167789b23dd86d5835da14ad7732148965c"
+      },
+      {
+        "id": "movie-filmrise-comedy",
+        "sha256": "f5bca981fefc591ef75af7bd722bcb2a87fecf3fcc89e499d86e8f5914d77291"
+      },
+      {
+        "id": "movie-central-christmas",
+        "sha256": "a0fa8669b10d078b252bd2417d825b177c42124c9c2206f3d35d66d7f0877cd2"
+      },
+      {
+        "id": "movie-shout-drama",
+        "sha256": "a943544e3ebc1df08381666fd7dc0de232817ac5ded36fb7a7b21c35b8186014"
+      },
+      {
+        "id": "movie-shout-noir",
+        "sha256": "f27411236a296cdaae731ec49daf1b533b3871fbfa622f102adeda399a7b8433"
+      },
+      {
+        "id": "series-filmrise-dogs",
+        "sha256": "fa183d38c77870315cea1d43c7f4fa0315da63e19644234cc4909152d0c466b7"
+      },
+      {
+        "id": "series-filmrise-escapes",
+        "sha256": "3c27a1b71b8578465bb8cfc928c1fc3b7377c62c928d8fcb0457394da6022ce4"
+      },
+      {
+        "id": "series-unsolved-mysteries",
+        "sha256": "326f5c2afde662b7703e08a2d32d6064e832158cb23082eb4d0843542e89e407"
+      },
+      {
+        "id": "don-complex",
+        "sha256": "1c2b828ae28d60c1d0fa980999d330bd947855c3c24f594209e61e87d4570d95"
+      },
+      {
+        "id": "win-complex",
+        "sha256": "5efebd84f1b5491191943d578dff6930340c74b5d45b4329c58b3ad442ae4040"
+      },
+      {
+        "id": "never-miss-a-point",
+        "sha256": "1551031a7d9b64f27a85657777df92ada3b5884ab02c0d8b0c0ac7f7470c7f06"
+      },
+      {
+        "id": "filmbaz",
+        "sha256": "75ca624807bf9f17bf5bb14022b83b673adaf299cbe34ff7969cc4bbe895cfc6"
+      },
+      {
+        "id": "ehsan-mansoori",
+        "sha256": "a4827ef3e07befc92d3da1c87a25e0f7f8bf65b73f3527578543395516d14def"
+      },
+      {
+        "id": "serat",
+        "sha256": "daeba3d2b40db256e22b1a00dfff0fabfff5646b485d2bfaeb2c3ed3fae2eea5"
+      },
+      {
+        "id": "persian-chess",
+        "sha256": "38f45ad5c312596f06d4386b97cab209516315d54d057000957325dcfffa021f"
+      },
+      {
+        "id": "top-gear",
+        "sha256": "e8564f7998977bd6c5a3ff42a04e9d88bf04830461048f6276af74af8624cdcc"
+      },
+      {
+        "id": "natgeo-exploration",
+        "sha256": "6ef8757b5584c8318b2d96659779ccd136fb16f2a966a07f7a03388a459409a7"
+      },
+      {
+        "id": "natgeo-animals",
+        "sha256": "78ec72148ee8a91ed24d21c297cfe4b9b792c51a4ee0cd6597f7feabdf038c8f"
+      },
+      {
+        "id": "honar-aval-dinner",
+        "sha256": "e7098ff6b324e4e4613a7804b80d7c42465d49ce5b3e84b02c6e20e8b4a3dc75"
+      },
+      {
+        "id": "khande-bazi",
+        "sha256": "0c0817fbbb093f9ec33cc152778c1152364c264008dc7884fd9e377f2776df7c"
+      }
+    ]
+  },
+  "unchanged": {
+    "iranianSeries": "da222d13a6f76ed3030229263fcfecbb389cc32186ce00d01d5e1f032bd2b650",
+    "iranianSeriesInProgress": "61c5d6edef660b19624a4fe18304fef9699ce3c6c4accff93e133225d1bf3732"
+  }
+}

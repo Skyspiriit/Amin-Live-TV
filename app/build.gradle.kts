@@ -11,8 +11,8 @@ android {
         applicationId = "com.enigma.aminlivetv"
         minSdk = 26
         targetSdk = 35
-        versionCode = 17
-        versionName = "3.9.1"
+        versionCode = 18
+        versionName = "3.9.2"
         buildConfigField(
             "String", "CATALOG_URL",
             "\"https://raw.githubusercontent.com/Skyspiriit/Amin-Live-TV/main/channels.json\""
@@ -69,6 +69,10 @@ val bundleCatalogue by tasks.registering(Copy::class) {
     into(rootProject.layout.buildDirectory.dir("generated/catalogue"))
 }
 tasks.named("preBuild").configure { dependsOn(bundleCatalogue) }
+
+tasks.withType<org.gradle.api.tasks.testing.Test>().configureEach {
+    inputs.file(rootProject.file("channels.json"))
+}
 
 dependencies {
     val media3 = "1.8.0"
