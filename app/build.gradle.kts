@@ -11,8 +11,8 @@ android {
         applicationId = "com.enigma.aminlivetv"
         minSdk = 26
         targetSdk = 35
-        versionCode = 16
-        versionName = "3.9.0"
+        versionCode = 17
+        versionName = "3.9.1"
         buildConfigField(
             "String", "CATALOG_URL",
             "\"https://raw.githubusercontent.com/Skyspiriit/Amin-Live-TV/main/channels.json\""
@@ -35,6 +35,7 @@ android {
             providers.gradleProperty("testCatalogUrl").orNull?.let { url ->
                 require(url.matches(Regex("http://127\\.0\\.0\\.1:[0-9]+/[a-zA-Z0-9/._-]+")))
                 applicationIdSuffix = ".qa"
+                resValue("string", "app_name", "Amin TV Preview")
                 buildConfigField("String", "CATALOG_URL", "\"$url\"")
                 buildConfigField("boolean", "TEST_CATALOG", "true")
                 manifestPlaceholders["networkPolicy"] = "@xml/network_security_qa"

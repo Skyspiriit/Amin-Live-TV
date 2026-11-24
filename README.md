@@ -1,8 +1,10 @@
 # Amin Live TV
 
-Amin Live TV 3.9.0 is a standalone Persian-language live television app for Android TV 8.0 and later. It runs under `com.enigma.aminlivetv`, upgrades earlier signed releases in place and can be installed alongside Amin Player.
+Amin Live TV 3.9.1 is a standalone Persian-language live television app for Android TV 8.0 and later. It runs under `com.enigma.aminlivetv`, upgrades earlier signed releases in place and can be installed alongside Amin Player.
 
-**Home screen (3.9.0).** The app now matches Amin Player: a gold TV mark on the launcher icon and banner, the same startup intro and sound, and a top menu with «پخش زنده», «فیلم و مستند», «سریال‌ها» and «تنظیمات». Below the menu, «ادامهٔ تماشا» resumes the last station and the latest series episode. Three sections follow, always in this order:
+**Home screen (3.9.1).** The app now matches Amin Player: a gold TV mark on the launcher icon and banner, a short gold-pour startup intro inspired by Amin Player 1.37 and its strike sound, and a fixed top menu with «پخش زنده», «فیلم و مستند», «سریال‌ها» and «تنظیمات». Below the menu, «ادامهٔ تماشا» resumes the last station and the latest series episode. Three sections follow, always in this order:
+
+![Amin Live TV 3.9.1 home screen on the Xiaomi test copy](docs/images/home-3.9.1.png)
 
 - **پخش زنده**: شبکه‌های ایرانی، اخبار جهان، ورزش، فیلم و سرگرمی.
 - **فیلم و مستند**: فیلم سینمایی، مستند و طبیعت، علم و فضا، موضوعات دیگر.
@@ -10,11 +12,11 @@ Amin Live TV 3.9.0 is a standalone Persian-language live television app for Andr
 
 «مستند و طبیعت» and «موضوعات دیگر» open a grid with a tab for each group (مستند، حیات وحش، طبیعت, and مافیا و مسابقه، سینما و فانتزی، دنیای خودرو، شطرنج، آیین و مداحی). Press Up from the grid to reach the tabs. Tiles without anything to play are hidden.
 
-Press «تنظیمات» to choose a theme, «سینمای طلایی» (the default, as in Amin Player) or one of the six fantasy themes, and to turn the startup intro or its sound off. The choices are saved on the TV. Any key skips the intro. See the [3.9 home screen and source review](docs/home-3.9.md), [earlier content checks](docs/entertainment-sources.md) and [artwork and design notes](docs/home-artwork.md).
+Press «تنظیمات» to choose a theme, «سینمای طلایی» (the default, as in Amin Player) or one of the six fantasy themes, and to turn the startup intro or its sound off. The choices are saved on the TV. Any key skips the intro. The TV's reduced-motion setting is respected. The current app version appears in settings. See [3.9.1 release notes](docs/releases/v3.9.1.md), [verification results](docs/verification-3.9.1.md), the [3.9 home screen and source review](docs/home-3.9.md), [earlier content checks](docs/entertainment-sources.md) and [artwork and design notes](docs/home-artwork.md).
 
 ## Install on a Xiaomi Android TV Box
 
-1. Copy `Amin-Live-TV-v3.9.0.apk` to a USB drive and plug it into the box.
+1. Copy `Amin-Live-TV-v3.9.1.apk` to a USB drive and plug it into the box.
 2. Open the drive from the box’s file manager and select the APK. If Android asks, allow the file manager to install unknown apps, then return to the APK and select **Install**. The setting’s name varies by model and firmware.
 3. Open **Amin Live TV** from **Apps**. Choose a tile under **پخش زنده**, **فیلم و مستند** or **سریال‌ها**, and press OK.
 4. While watching, press Up for the previous station and Down for the next one. Press OK to show or hide the channel strip. Left and Right switch stations while the strip is visible. Back returns to the grid. **ادامهٔ تماشا** on the home screen resumes the last station that played successfully when it is still available.
@@ -23,7 +25,7 @@ If the box cannot open the USB file, install with [Android Platform Tools](https
 
 ```sh
 adb devices
-adb -s <tv-device-id> install -r --user 0 Amin-Live-TV-v3.9.0.apk
+adb -s <tv-device-id> install -r --user 0 Amin-Live-TV-v3.9.1.apk
 ```
 
 Always pass `--user 0`. Without it, ADB installs the app into every Android user, including the hidden work profile on Xiaomi boxes. That second copy then hides the main copy's switch in **Install unknown apps**, and in-app updates can't be allowed. See [UPDATE-PERMISSION-3.3.md](UPDATE-PERMISSION-3.3.md).

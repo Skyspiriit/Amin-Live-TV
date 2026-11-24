@@ -12,8 +12,7 @@ import android.graphics.Paint
 import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.StateListDrawable
-import android.media.AudioAttributes
-import android.media.SoundPool
+import android.animation.ValueAnimator
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -86,9 +85,8 @@ class MainActivity : Activity() {
     private var foreground = false
     private var homeStale = false
     private var intro: IntroView? = null
-    private var introSound: SoundPool? = null
-    private var introSoundId = 0
-    @Volatile private var introSoundReady = false
+    private var introEnding = false
+    private var homeFocus: View? = null
     private val seriesProgress by lazy { SeriesProgress(this) }
     private val watching get() = screen == Screen.PLAYER || screen == Screen.YOUTUBE
 
@@ -115,18 +113,9 @@ class MainActivity : Activity() {
     // the window's decor, so screens drawn meanwhile (a catalogue refresh) stay below it.
     private fun startIntro() {
         val mark = runCatching { BitmapFactory.decodeResource(resources, R.drawable.intro_mark) }.getOrNull() ?: return
-        if (AppTheme.introSound(this)) {
-            // Media stream: follows the TV's media volume and is silent when it is muted.
-            introSound = SoundPool.Builder().setMaxStreams(1).setAudioAttributes(AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_MEDIA)
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build()).build().apply {
-                setOnLoadCompleteListener { _, _, state -> introSoundReady = state == 0 }
-                introSoundId = load(this@MainActivity, R.raw.intro_forge, 1)
-            }
-        }
-        val view = IntroView(this, mark, reducedMotion = false, onImpact = {
-            if (introSoundReady && foreground) introSound?.play(introSoundId, INTRO_VOLUME, INTRO_VOLUME, 1, 0, 1f)
-        }, onFormed = { endIntro() })
+        val reducedMotion = !ValueAnimator.areAnimatorsEnabled()
+        val strike = if (!reducedMotion && AppTheme.introSound(this)) IntroView.pcm(this, R.raw.intro_forge) else null
+        val view = IntroView(this, mark, strike, reducedMotion, INTRO_VOLUME, onFormed = { endIntro() })
         intro = view
         (window.decorView as ViewGroup).addView(view, ViewGroup.LayoutParams(-1, -1))
     }
@@ -134,16 +123,15 @@ class MainActivity : Activity() {
     // Fades the intro into the home screen; a key press or leaving the app ends it early.
     private fun endIntro(immediate: Boolean = false) {
         val view = intro ?: return
-        intro = null
+        if (introEnding && !immediate) return
+        introEnding = true
         val finish: () -> Unit = {
+            view.cancel()
             (window.decorView as ViewGroup).removeView(view)
-            introSound?.release()
-            introSound = null
+            if (intro === view) { intro = null; introEnding = false }
+            if (foreground && screen == Screen.HOME) homeFocus?.requestFocus()
         }
-        if (immediate) {
-            introSound?.autoPause()
-            finish()
-        } else view.fadeOut(finish)
+        if (immediate) finish() else view.fadeOut(finish)
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -233,8 +221,9 @@ class MainActivity : Activity() {
         monitor.setEnabled(foreground)
         scheduleUpdates()
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        val root = column()
         val content = column().apply {
-            setPadding(dp(44), dp(20), dp(44), dp(26))
+            setPadding(dp(44), dp(4), dp(44), dp(26))
             clipChildren = false
             clipToPadding = false
         }
@@ -242,7 +231,11 @@ class MainActivity : Activity() {
         // icon set as the tiles, and «تنظیمات». A section button jumps to that section's first tile.
         val sectionStarts = HashMap<Int, Pair<View, View>>()
         val scroll = android.widget.ScrollView(this)
-        val header = LinearLayout(this).apply { gravity = Gravity.CENTER_VERTICAL; clipChildren = false }
+        val header = LinearLayout(this).apply {
+            gravity = Gravity.CENTER_VERTICAL
+            clipChildren = false
+            setPadding(dp(44), dp(12), dp(44), dp(8))
+        }
         header.addView(ImageView(this).apply {
             setImageResource(R.drawable.intro_mark)
             importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
@@ -275,7 +268,7 @@ class MainActivity : Activity() {
         clock.addView(clockTime)
         clock.addView(clockDate)
         header.addView(clock, LinearLayout.LayoutParams(-2, -2))
-        content.addView(header, LinearLayout.LayoutParams(-1, dp(50)))
+        root.addView(header, LinearLayout.LayoutParams(-1, dp(76)))
         tickClock()
 
         // «ادامهٔ تماشا» over the theme's artwork: the last station and the latest series episode.
@@ -290,7 +283,7 @@ class MainActivity : Activity() {
         }, frame(-1, -1))
         band.addView(View(this).apply {
             background = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT,
-                intArrayOf(Color.TRANSPARENT, Color.argb(220, 5, 10, 20)))
+                intArrayOf(Color.argb(10, 5, 10, 20), Color.argb(242, 5, 10, 20)))
         }, frame(-1, -1))
         val bandCopy = column().apply {
             gravity = Gravity.CENTER_VERTICAL
@@ -317,24 +310,27 @@ class MainActivity : Activity() {
                 }
             }
         }
-        val resumeSeries = seriesProgress.latest(catalogue.iranianSeries)?.let { (title) ->
-            actionButton(getString(R.string.resume_series, title.title), 20, highlighted = true).apply {
+        val resumeSeries = seriesProgress.latest(catalogue.iranianSeries)?.let { (title, episode) ->
+            actionButton(getString(R.string.resume_series_episode, title.title, persianNumber(episode.number)), 20, highlighted = true).apply {
                 tag = RESUME_SERIES_TAG
-                maxLines = 1
+                maxLines = 2
                 setOnClickListener { openSeries(resume = true) }
             }
         }
         listOfNotNull(resume, resumeSeries).forEachIndexed { index, button ->
             resumeRow.addView(button, LinearLayout.LayoutParams(0, dp(52), 1f).apply { if (index > 0) marginStart = dp(12) })
         }
+        bandCopy.addView(text(AppTheme.current.sceneName, 14, ACCENT, bold = true).apply { gravity = Gravity.START })
         if (resumeRow.childCount > 0) {
             bandCopy.addView(text(getString(R.string.continue_watching), 22, bold = true).apply { gravity = Gravity.START })
             bandCopy.addView(resumeRow, LinearLayout.LayoutParams(-1, -2).apply { topMargin = dp(10) })
         } else {
-            bandCopy.addView(text(getString(R.string.home_tagline), 24, bold = true).apply { gravity = Gravity.START })
+            bandCopy.addView(text(getString(R.string.home_welcome), 32, bold = true).apply { gravity = Gravity.START })
+            bandCopy.addView(text(getString(R.string.home_tagline), 18, MUTED).apply { gravity = Gravity.START },
+                LinearLayout.LayoutParams(-1, -2).apply { topMargin = dp(8) })
         }
-        band.addView(bandCopy, frame(dp(if (resumeRow.childCount > 1) 640 else 420), -1, Gravity.START))
-        content.addView(band, LinearLayout.LayoutParams(-1, dp(if (resumeRow.childCount > 0) 128 else 96)).apply { topMargin = dp(16) })
+        band.addView(bandCopy, frame(dp(if (resumeRow.childCount > 1) 700 else 520), -1, Gravity.START))
+        content.addView(band, LinearLayout.LayoutParams(-1, dp(148)).apply { topMargin = dp(16) })
 
         // Each category is reachable from exactly one tile; focus returns to that tile.
         val byCategory = HashMap<Category, View>()
@@ -383,7 +379,7 @@ class MainActivity : Activity() {
                         downloadingRelease == null -> downloadRelease(tag)
                     }
                 }
-                content.addView(this, LinearLayout.LayoutParams(-1, dp(48)).apply { topMargin = dp(18) })
+                content.addView(this, 0, LinearLayout.LayoutParams(-1, dp(48)).apply { bottomMargin = dp(10) })
             }
         }
         scroll.apply {
@@ -392,7 +388,8 @@ class MainActivity : Activity() {
             clipToPadding = false
             addView(content)
         }
-        install(scroll)
+        root.addView(scroll, LinearLayout.LayoutParams(-1, 0, 1f))
+        install(root)
         val restored = when (restoreFocus) {
             RESUME_TAG -> resume ?: resumeSeries
             RESUME_SERIES_TAG -> resumeSeries
@@ -402,7 +399,8 @@ class MainActivity : Activity() {
             null -> byCategory[category]
             else -> restoreFocus?.let(tiles::get)
         }
-        (restored ?: byCategory[category] ?: tiles.values.firstOrNull() ?: themeButton).requestFocus()
+        homeFocus = restored ?: byCategory[category] ?: tiles.values.firstOrNull() ?: themeButton
+        homeFocus?.requestFocus()
     }
 
     // One home tile: its tag restores focus, `covers` lists the categories it leads to.
@@ -523,6 +521,8 @@ class MainActivity : Activity() {
             clipToPadding = false
         }
         panel.addView(text(getString(R.string.settings), 26, bold = true))
+        panel.addView(text(getString(R.string.app_version, BuildConfig.VERSION_NAME), 16, MUTED),
+            LinearLayout.LayoutParams(-2, -2).apply { topMargin = dp(4) })
         panel.addView(text(getString(R.string.theme_hint), 16, MUTED), LinearLayout.LayoutParams(-2, -2).apply { topMargin = dp(4) })
         var focus: View? = null
         for (palettes in AppTheme.palettes.chunked(4)) {
@@ -1059,6 +1059,8 @@ class MainActivity : Activity() {
     }
 
     override fun onDestroy() {
+        endIntro(immediate = true)
+        ui.removeCallbacks(clockTick)
         updates.shutdownNow()
         monitor.close()
         logos.close()

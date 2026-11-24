@@ -61,6 +61,9 @@
     <string name="update_available">نسخهٔ %1$s موجود است · برای دریافت OK را بزنید</string>
     <string name="update_permission_off">اجازهٔ نصب برای امین تی‌وی روشن نشد. دوباره OK را بزنید، کلید امین تی‌وی را روشن کنید و Back را بزنید. اگر کنار نام برنامه نشان کیف کوچکی هست، آن نسخهٔ دیگری است و این تلویزیون به کمک خانواده نیاز دارد.</string>
     <string name="update_release_link">برای دریافت نسخهٔ جدید، این نشانی را روی تلفن یا رایانه باز کنید:\n%1$s</string>
+    <string name="home_welcome">هر شب، یک دنیای تازه</string>
+    <string name="resume_series_episode">%1$s · قسمت %2$s</string>
+    <string name="app_version">امین تی‌وی · نسخهٔ %1$s</string>
     <string name="home_tagline">تلویزیون زنده، فیلم، سریال و مستند</string>
     <string name="settings">تنظیمات</string>
     <string name="intro_animation">انیمیشن آغاز برنامه: %1$s</string>
