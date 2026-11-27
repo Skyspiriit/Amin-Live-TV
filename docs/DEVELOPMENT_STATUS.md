@@ -2,6 +2,8 @@
 
 Updated **27 November 2026**. Branch `dev/cloud-series-interface`, baseline `8d37208` (`main`). **No production release or physical-device installation for this checkpoint without new owner approval.**
 
+Review: [pull request #2](https://github.com/Skyspiriit/Amin-Live-TV/pull/2), open and unmerged. The latest branch/PR Actions runs attach installable QA APKs and reports; use the source commit in each artifact's `verification.json`. Owner review is the next step.
+
 ## Production baseline
 
 3.9.2 / code 18; package/certificate in [architecture](ARCHITECTURE.md). Catalogue revision 12: 38 series / 1,134 episodes. Keep the catalogue unchanged.
