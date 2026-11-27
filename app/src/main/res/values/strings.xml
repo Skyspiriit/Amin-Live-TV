@@ -16,8 +16,15 @@
     <string name="iranian_series">سریال ایرانی</string>
     <string name="series_empty">فعلاً سریالی در دسترس نیست.</string>
     <string name="series_episode">قسمت %1$s</string>
+    <string name="series_episode_heading">قسمت</string>
+    <string name="series_season">فصل %1$s</string>
+    <string name="series_available_count">%1$s قسمت موجود</string>
+    <string name="series_resume_position">ادامهٔ تماشا · %1$s · %2$s</string>
+    <string name="series_episode_unavailable">در دسترس نیست</string>
+    <string name="series_watched">دیده‌شده</string>
+    <string name="series_progress">ادامه از %1$s</string>
+    <string name="series_play">تماشا</string>
     <string name="series_season_episode">فصل %1$s · قسمت %2$s</string>
-    <string name="series_continue">ادامهٔ تماشا · %1$s</string>
     <string name="series_continue_title">ادامهٔ تماشا · %1$s · %2$s</string>
     <string name="series_next_episode">قسمت بعد</string>
     <string name="series_next_available">قسمت موجود بعدی</string>

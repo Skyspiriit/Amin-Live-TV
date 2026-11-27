@@ -13,6 +13,8 @@ internal object ReleaseCheck {
     private val versionPattern = Regex("(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:\\.(0|[1-9][0-9]*))?")
 
     fun latest(): Result<String?> = runCatching {
+        // Normal previews cannot offer production APKs; local updater fixtures remain usable.
+        if (BuildConfig.DEBUG && !BuildConfig.TEST_CATALOG) return@runCatching null
         val endpoint = if (BuildConfig.TEST_CATALOG) URI(BuildConfig.CATALOG_URL).resolve("releases.json")
             else URI(ENDPOINT)
         val connection = endpoint.toURL().openConnection() as HttpURLConnection
