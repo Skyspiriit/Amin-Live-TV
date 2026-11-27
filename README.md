@@ -10,7 +10,7 @@ Amin Live TV 3.9.2 is a standalone Persian-language live television app for Andr
 - **فیلم و مستند**: فیلم سینمایی، مستند و طبیعت، علم و فضا، موضوعات دیگر.
 - **سریال‌ها**: سریال ایرانی، سریال خارجی.
 
-«مستند و طبیعت» and «موضوعات دیگر» open a grid with a tab for each group (مستند، حیات وحش، طبیعت, and مافیا و مسابقه، سینما و فانتزی، دنیای خودرو، شطرنج، آیین و مداحی). Press Up from the grid to reach the tabs. Tiles without anything to play are hidden.
+«مستند و طبیعت» and «موضوعات دیگر» open a grid with a tab for each group (مستند، حیات وحش، طبیعت, and مافیا و مسابقه، سینما و فانتزی، دنیای خودرو، آیین و مداحی). In 3.9.2, شطرنج فارسی is in ورزش. Press Up from the grid to reach the tabs. Tiles without anything to play are hidden.
 
 Press «تنظیمات» to choose a theme, «سینمای طلایی» (the default, as in Amin Player) or one of the six fantasy themes, and to turn the startup intro or its sound off. The choices are saved on the TV. Any key skips the intro. The TV's reduced-motion setting is respected. The current app version appears in settings. See [3.9.1 release notes](docs/releases/v3.9.1.md), [verification results](docs/verification-3.9.1.md), the [3.9 home screen and source review](docs/home-3.9.md), [earlier content checks](docs/entertainment-sources.md) and [artwork and design notes](docs/home-artwork.md).
 
@@ -33,6 +33,8 @@ Always pass `--user 0`. Without it, ADB installs the app into every Android user
 See [Xiaomi’s APK installation guide](https://www.mi.com/uk/support/article/KA-06405/).
 
 ## Persian series
+
+**Development preview, pending owner review:** compact numbered RTL episode cards, visible unavailable gaps, watched/progress labels and a focused one-click resume action. [Interface screenshots and tests](docs/series-interface-checkpoint.md). [Research for the nine requested classics](docs/catalogue-research-2026-11-27.md) is documentation only; no catalogue entries were changed. Production remains 3.9.2.
 
 Open **سریال ایرانی** on the home screen and select a title and episode. **ادامهٔ تماشا** opens the saved episode. Choose **از ابتدا** to restart, **فهرست قسمت‌ها** to choose a different episode, or **قسمت بعد** when an episode ends. **قسمت‌های موجود** marks titles with some episodes unavailable. Amin Live TV stores positions from the embedded YouTube player on the device. If YouTube blocks embedding, **تماشا در یوتیوب** opens the episode in the official YouTube TV app, where Amin Live TV cannot track position.
 
