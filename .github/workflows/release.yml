@@ -1,21 +1,32 @@
-name: Signed release
+name: Approved production release
 
-# Pushing a tag such as v0.3.0 builds, tests and signs the APK with the release key kept in
-# repository secrets, checks that its certificate matches the previous release so installed
-# copies upgrade in place, and publishes it as a GitHub release.
+# Only the repository owner can approve a production run from reviewed main code.
+# Development/PR builds never receive these signing secrets or publish a release.
 on:
-  push:
-    tags:
-      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Production version tag matching the reviewed app version (vX.Y.Z)'
+        required: true
+        type: string
+      owner_approved:
+        description: 'I approve publishing this production release'
+        required: true
+        default: false
+        type: boolean
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   release:
-    runs-on: ubuntu-latest
+    if: github.actor == github.repository_owner && github.ref == 'refs/heads/main' && inputs.owner_approved
+    runs-on: ubuntu-24.04
+    environment: production
+    permissions:
+      contents: write
     env:
-      TAG: ${{ github.ref_name }}
+      TAG: ${{ inputs.tag }}
       GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
@@ -27,9 +38,13 @@ jobs:
 
       - name: Check the tag matches the app version
         run: |
+          [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo 'Use vX.Y.Z'; exit 1; }
           version=$(sed -n 's/^ *versionName = "\(.*\)"/\1/p' app/build.gradle.kts)
           # A two-part version (3.3) is tagged with patch 0 (v3.3.0) so that 0.3.x apps recognise it.
           test "v$version" = "$TAG" || test "v$version.0" = "$TAG" || { echo "Tag $TAG does not match versionName $version"; exit 1; }
+          test -f "docs/releases/$TAG.md"
+          existing=$(gh release list --limit 100 --json tagName --jq '.[].tagName')
+          if printf '%s\n' "$existing" | grep -Fxq "$TAG"; then echo 'This version is already published'; exit 1; fi
 
       - name: Restore the release key
         env:
@@ -56,13 +71,19 @@ jobs:
           new=$(cert "$apk"); old=$(cert previous/*.apk)
           echo "New: $new"; echo "Previous ($previous): $old"
           test -n "$new" && test "$new" = "$old"
+          test "$new" = ce108de5ce0ebdb7e5d118dc60ac8a2a87899f2553cdb3e9eb6abea1dfe16b3d
+          aapt="$(dirname "$apksigner")/aapt"
+          new_code=$("$aapt" dump badging "$apk" | sed -n "s/.*versionCode='\([0-9]*\)'.*/\1/p" | head -1)
+          old_code=$("$aapt" dump badging previous/*.apk | sed -n "s/.*versionCode='\([0-9]*\)'.*/\1/p" | head -1)
+          test "$new_code" -gt "$old_code"
+          "$aapt" dump badging "$apk" | grep -q "package: name='com.enigma.aminlivetv'"
           cp "$apk" "Amin-Live-TV-$TAG.apk"
           sha256sum "Amin-Live-TV-$TAG.apk"
 
       - name: Publish the release
         run: |
           notes="docs/releases/$TAG.md"
-          gh release create "$TAG" "Amin-Live-TV-$TAG.apk" --title "Amin Live TV $TAG" --notes-file "$notes"
+          gh release create "$TAG" "Amin-Live-TV-$TAG.apk" --target "$GITHUB_SHA" --title "Amin Live TV $TAG" --notes-file "$notes"
 
       - name: Remove the key
         if: always()

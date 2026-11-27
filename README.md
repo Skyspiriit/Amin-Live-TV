@@ -44,6 +44,8 @@ The app checks the repository’s published GitHub releases in the background at
 
 ## Build
 
+For cloud development and iPhone review, start with [development status](docs/DEVELOPMENT_STATUS.md), [architecture](docs/ARCHITECTURE.md), [roadmap](docs/ROADMAP.md) and [cloud setup](docs/CLOUD_DEVELOPMENT.md). On Linux, `bash .codex/setup.sh` prepares the Android environment and `bash scripts/check.sh` verifies it. GitHub Actions produces a separate **Amin TV Preview** APK (`com.enigma.aminlivetv.qa`), preserving the production installation. Ordinary previews do not offer production APK updates.
+
 Open this folder in Android Studio with JDK 17, Android SDK Platform 35, and Android Build Tools 35.0.0.
 
 ```sh
@@ -54,7 +56,7 @@ On Windows, use `gradlew.bat`. The APK is in `app/build/outputs/apk/debug/`. The
 
 `Catalogue.kt` validates and stores the catalogue. `YouTubePlayer.kt` plays official YouTube content and hands blocked embeds to the YouTube app. `AppUpdate.kt` downloads, checks and installs new releases. `ChannelMonitor.kt` and `StreamProbe.kt` check channel health. `ChannelHistory.kt` controls visibility, scan priority and local history. `LivePlayer.kt` owns Media3 playback and failover, and `MainActivity.kt` owns the TV interface and resume state.
 
-**Signed releases.** Pushing a tag that matches `versionName`, such as `v0.3.0`, runs `.github/workflows/release.yml`. It runs the unit tests and lint, signs the APK with the release key, checks that its certificate matches the previous release, and publishes the release with the notes in `docs/releases/<tag>.md`. It needs four repository secrets: `AMIN_LIVE_TV_KEYSTORE_BASE64` (the keystore file in base64), `AMIN_LIVE_TV_STORE_PASSWORD`, `AMIN_LIVE_TV_KEY_ALIAS` and `AMIN_LIVE_TV_KEY_PASSWORD`.
+**Signed releases.** The development branch proposes a manual **Approved production release** workflow. Only the repository owner may run it from reviewed `main`, entering a tag matching `versionName` and explicitly approving publication. It checks the original certificate and an increasing version code before publishing. Do not run it for a preview checkpoint. The existing key must first be securely provisioned, with specific owner approval, into protected Actions secrets: `AMIN_LIVE_TV_KEYSTORE_BASE64`, `AMIN_LIVE_TV_STORE_PASSWORD`, `AMIN_LIVE_TV_KEY_ALIAS` and `AMIN_LIVE_TV_KEY_PASSWORD`. The audit found those secrets absent; no key was transferred. See [cloud setup](docs/CLOUD_DEVELOPMENT.md).
 
 The supplied experimental APK uses an app-specific signing key. Use that same private key with a higher `versionCode` for in-place upgrades. Keep the key and its password in private storage. For a signed release build, set `AMIN_LIVE_TV_KEYSTORE`, `AMIN_LIVE_TV_STORE_PASSWORD`, `AMIN_LIVE_TV_KEY_ALIAS` and `AMIN_LIVE_TV_KEY_PASSWORD`, then run `./gradlew assembleRelease`. Android requires matching signatures for upgrades, so development APKs signed by a different key need a separate emulator or a fresh installation.
 

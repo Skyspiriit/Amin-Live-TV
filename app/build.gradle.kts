@@ -6,6 +6,7 @@ plugins {
 android {
     namespace = "com.enigma.aminlivetv"
     compileSdk = 35
+    buildToolsVersion = "35.0.0"
 
     defaultConfig {
         applicationId = "com.enigma.aminlivetv"
@@ -32,10 +33,13 @@ android {
 
     buildTypes {
         debug {
+            applicationIdSuffix = ".qa"
+            versionNameSuffix = "-preview"
+            resValue("string", "app_name", "Amin TV Preview")
             providers.gradleProperty("testCatalogUrl").orNull?.let { url ->
                 require(url.matches(Regex("http://127\\.0\\.0\\.1:[0-9]+/[a-zA-Z0-9/._-]+")))
-                applicationIdSuffix = ".qa"
-                resValue("string", "app_name", "Amin TV Preview")
+                // Local updater fixtures use numeric version tags, as before.
+                versionNameSuffix = ""
                 buildConfigField("String", "CATALOG_URL", "\"$url\"")
                 buildConfigField("boolean", "TEST_CATALOG", "true")
                 manifestPlaceholders["networkPolicy"] = "@xml/network_security_qa"
