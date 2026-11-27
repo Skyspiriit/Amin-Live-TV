@@ -15,6 +15,7 @@ Production package **`com.enigma.aminlivetv`** and certificate SHA-256 **`ce108d
 | `MainActivity` | Home/menu, category grids, remote navigation, live continuation, update notice |
 | `IranianSeriesActivity` | Titles/episodes, series controls, samples, checkpoints, Back/restart/next |
 | `IranianSeries` / `SeriesProgress` | Season/episode ordering, exact-ID bookmark matching and continuation |
+| `EpisodeCards` | Presentation-only gap placeholders and Persian timestamp formatting; no synthetic playback IDs |
 | `CatalogueStore` / `CatalogueParser` | Bundled/cache-first load, atomic cache, bounded HTTPS refresh/validation |
 | `LivePlayer` | Native Media3 playback, last-good source and failover |
 | `ChannelHistory`, `ViewingSession`, `ChannelMonitor`, `StreamProbe`, `MediaSample` | Local health/history, bounded probes and retry scheduling |
@@ -33,6 +34,8 @@ Amin Player is a visual reference only: warm gold accents, compact numbered epis
 Native streams carry source attribution. Other tiles use official embedded YouTube channels/playlists or bounded reviewed IDs. Do not extract protected streams or bypass embedding, membership or geographic restrictions. External YouTube playback provides no accurate resume samples. Historical public/embed-only source decisions are not authorization proof for new additions under the current request.
 
 Complete runs use `iranianSeries`; partial/ongoing runs use `iranianSeriesInProgress`. Parsing sorts season/episode numbers and rejects duplicates. Preserve original numbers and stable series/episode/video IDs. UI placeholders can represent gaps without changing `Episode` or saved progress. Unknown final counts must stay unknown until corroborated.
+
+The episode grid orders by season/number, exposes leading/internal gaps and skips unavailable cards during D-pad selection. A wholly absent season is one unavailable-season placeholder when its length is unknown. Optional `episodeCounts: {"1": 57}` declares a **verified** season bound for future catalogue work; this checkpoint adds no bounds or episodes to `channels.json`. Counts are validated against existing episodes and cannot exceed 500. Continue Watching/player paths and preference formats are unchanged.
 
 ## Local data
 

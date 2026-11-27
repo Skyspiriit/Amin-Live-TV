@@ -14,6 +14,7 @@ android {
         targetSdk = 35
         versionCode = 18
         versionName = "3.9.2"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField(
             "String", "CATALOG_URL",
             "\"https://raw.githubusercontent.com/Skyspiriit/Amin-Live-TV/main/channels.json\""
@@ -87,4 +88,7 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     // Real org.json for catalogue parsing tests; Android's copy is only a stub on the JVM.
     testImplementation("org.json:json:20240303")
+    androidTestImplementation("androidx.test:core:1.7.0")
+    androidTestImplementation("androidx.test:runner:1.7.0")
+    androidTestImplementation("androidx.test.ext:junit:1.3.0")
 }

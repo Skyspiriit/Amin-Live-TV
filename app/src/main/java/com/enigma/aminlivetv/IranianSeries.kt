@@ -9,9 +9,11 @@ internal data class IranianSeries(
     val id: String,
     val title: String,
     val episodes: List<Episode>,
-    val availability: SeriesAvailability = SeriesAvailability.COMPLETE
+    val availability: SeriesAvailability = SeriesAvailability.COMPLETE,
+    // Optional verified season bounds. Absent bounds never imply a guessed finale/count.
+    val episodeCounts: Map<Int, Int> = emptyMap()
 ) {
-    val multipleSeasons = episodes.last().season > 1
+    val multipleSeasons = maxOf(episodes.maxOf { it.season }, episodeCounts.keys.maxOrNull() ?: 1) > 1
     val thumbnail = "https://i.ytimg.com/vi/${episodes.first().videoId}/mqdefault.jpg"
     fun after(episode: Episode): Episode? =
         episodes.indexOf(episode).takeIf { it >= 0 }?.let { episodes.getOrNull(it + 1) }
@@ -78,7 +80,20 @@ private fun parseSeriesSection(
                     (to.season == from.season + 1 && to.number == 1)
             })
         }
-        IranianSeries(id, title, episodes, availability)
+        val counts = if (item.isNull("episodeCounts")) emptyMap() else {
+            val declared = item.getJSONObject("episodeCounts")
+            require(declared.length() in 1..50)
+            declared.keys().asSequence().associate { seasonKey ->
+                val season = seasonKey.toIntOrNull()
+                require(season != null && season in 1..50 && seasonKey == season.toString())
+                val count = declared.get(seasonKey) as Int
+                require(count in 1..500)
+                require(episodes.filter { it.season == season }.all { it.number <= count })
+                if (complete) require(episodes.count { it.season == season } == count)
+                season to count
+            }
+        }
+        IranianSeries(id, title, episodes, availability, counts)
     }
 }
 

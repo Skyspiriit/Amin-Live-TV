@@ -18,6 +18,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ArrayAdapter
+import android.widget.BaseAdapter
+import android.widget.GridView
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ListView
@@ -117,15 +119,119 @@ class IranianSeriesActivity : Activity() {
     private fun showEpisodes(title: IranianSeries, focusId: String? = null) {
         series = title
         episode = null
-        val resume = continuation(title)?.let { (episode) ->
-            Choice(getString(R.string.series_continue, episodeLabel(title, episode))) { play(title, episode) }
+        window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        val cards = episodeCards(title)
+        val content = column(dp(28))
+        content.addView(label(title.title, 32).apply { gravity = Gravity.START or Gravity.CENTER_VERTICAL },
+            LinearLayout.LayoutParams(-1, dp(50)))
+        val summary = getString(R.string.series_available_count, persianNumber(title.episodes.size)) +
+            (statusLabel(title)?.let { " · ${getString(it)}" } ?: "")
+        content.addView(label(summary, 19).apply {
+            gravity = Gravity.START or Gravity.CENTER_VERTICAL
+            setTextColor(AppTheme.current.muted)
+        }, LinearLayout.LayoutParams(-1, dp(32)))
+
+        val gridId = View.generateViewId()
+        val resume = continuation(title)?.let { (selected) ->
+            val saved = progress.position(title, selected)?.takeUnless { it.completed }?.seconds ?: 0.0
+            label(getString(R.string.series_resume_position, episodeLabel(title, selected), episodeTime(saved)), 23).apply {
+                id = View.generateViewId()
+                isFocusable = true
+                gravity = Gravity.START or Gravity.CENTER_VERTICAL
+                setPadding(dp(18), 0, dp(18), 0)
+                background = focusBackground()
+                nextFocusDownId = gridId
+                setOnClickListener { play(title, selected) }
+                contentDescription = text
+                content.addView(this, LinearLayout.LayoutParams(-1, dp(56)).apply { bottomMargin = dp(10) })
+            }
         }
-        val choices = listOfNotNull(resume) + title.episodes.map { entry ->
-            Choice(episodeLabel(title, entry)) { play(title, entry) }
+        val grid = GridView(this).apply {
+            id = gridId
+            layoutDirection = View.LAYOUT_DIRECTION_RTL
+            numColumns = ((resources.displayMetrics.widthPixels / resources.displayMetrics.density - 56) / 205)
+                .toInt().coerceIn(2, 4)
+            stretchMode = GridView.STRETCH_COLUMN_WIDTH
+            horizontalSpacing = dp(10)
+            verticalSpacing = dp(10)
+            setDrawSelectorOnTop(true)
+            selector = outline(Color.TRANSPARENT, ACCENT)
+            resume?.let { nextFocusUpId = it.id }
+            adapter = object : BaseAdapter() {
+                override fun getCount() = cards.size
+                override fun getItem(position: Int) = cards[position]
+                override fun getItemId(position: Int) = position.toLong()
+                override fun areAllItemsEnabled() = false
+                override fun isEnabled(position: Int) = cards[position].episode != null
+                override fun getView(position: Int, recycled: View?, parent: ViewGroup): View =
+                    (recycled as? EpisodeCardView ?: EpisodeCardView()).apply { bind(title, cards[position]) }
+            }
+            setOnItemClickListener { _, _, position, _ -> cards[position].episode?.let { play(title, it) } }
         }
-        val focus = title.episodes.indexOfFirst { it.id == focusId }
-            .let { if (it < 0) 0 else it + if (resume == null) 0 else 1 }
-        showList(title.title, choices, focus, statusLabel(title))
+        content.addView(grid, LinearLayout.LayoutParams(-1, 0, 1f))
+        display(content)
+        val selected = cards.indexOfFirst { it.episode?.id == focusId && it.episode != null }
+            .takeIf { it >= 0 } ?: cards.indexOfFirst { it.episode != null }
+        grid.setSelection(selected)
+        if (focusId == null && resume != null) resume.requestFocus() else grid.requestFocus()
+    }
+
+    private inner class EpisodeCardView : LinearLayout(this@IranianSeriesActivity) {
+        private val number = label("", 36).apply {
+            setTextColor(ACCENT)
+            importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+        }
+        private val heading = label("", 21).apply { gravity = Gravity.START }
+        private val detail = label("", 17).apply {
+            gravity = Gravity.START
+            setTextColor(AppTheme.current.muted)
+        }
+
+        init {
+            layoutParams = android.widget.AbsListView.LayoutParams(-1, dp(82))
+            gravity = Gravity.CENTER_VERTICAL
+            layoutDirection = View.LAYOUT_DIRECTION_RTL
+            background = focusBackground()
+            setPadding(dp(12), dp(7), dp(12), dp(7))
+            addView(number, LayoutParams(dp(64), -1).apply { marginEnd = dp(8) })
+            addView(LinearLayout(context).apply {
+                orientation = VERTICAL
+                gravity = Gravity.CENTER_VERTICAL
+                importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
+                addView(heading, LayoutParams(-1, -2))
+                addView(detail, LayoutParams(-1, -2))
+            }, LayoutParams(0, -1, 1f))
+        }
+
+        fun bind(title: IranianSeries, card: EpisodeCard) {
+            val entry = card.episode
+            val saved = entry?.let { progress.position(title, it) }
+            isEnabled = entry != null
+            number.text = card.number?.let(::persianNumber) ?: "—"
+            number.setTextColor(if (entry == null) AppTheme.current.muted else ACCENT)
+            heading.text = if (title.multipleSeasons) getString(R.string.series_season, persianNumber(card.season))
+                else getString(R.string.series_episode_heading)
+            detail.text = when {
+                entry == null -> getString(R.string.series_episode_unavailable)
+                saved?.completed == true -> getString(R.string.series_watched)
+                saved != null && saved.seconds > 0 -> getString(R.string.series_progress, episodeTime(saved.seconds))
+                else -> getString(R.string.series_play)
+            }
+            val name = when {
+                entry != null -> episodeLabel(title, entry)
+                card.number != null -> if (title.multipleSeasons)
+                    getString(R.string.series_season_episode, persianNumber(card.season), persianNumber(card.number))
+                    else getString(R.string.series_episode, persianNumber(card.number))
+                else -> getString(R.string.series_season, persianNumber(card.season))
+            }
+            contentDescription = "$name · ${detail.text}"
+        }
+    }
+
+    private fun focusBackground() = StateListDrawable().apply {
+        addState(intArrayOf(android.R.attr.state_focused), outline(AppTheme.current.selected, ACCENT))
+        addState(intArrayOf(android.R.attr.state_selected), outline(AppTheme.current.selected, ACCENT))
+        addState(intArrayOf(), outline(TILE))
     }
 
     private fun statusLabel(title: IranianSeries): Int? = when (title.availability) {
@@ -178,7 +284,7 @@ class IranianSeriesActivity : Activity() {
             minimumHeight = dp(54)
             background = outline(TILE)
             setPadding(dp(12), dp(5), dp(12), dp(5))
-            addView(thumbnail, LayoutParams(dp(144), dp(81)).apply { marginEnd = dp(14) })
+            addView(thumbnail, LayoutParams(dp(104), dp(58)).apply { marginEnd = dp(14) })
             addView(LinearLayout(context).apply {
                 orientation = VERTICAL
                 addView(title, LayoutParams(-1, -2))
@@ -406,7 +512,7 @@ class IranianSeriesActivity : Activity() {
         textSize = size.toFloat()
         gravity = Gravity.CENTER
         setTypeface(typeface, Typeface.BOLD)
-        setTextColor(Color.WHITE)
+        setTextColor(AppTheme.current.ink)
     }
 
     private fun outline(fill: Int, border: Int = fill) = GradientDrawable().apply {
