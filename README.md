@@ -46,6 +46,8 @@ The app checks the repository’s published GitHub releases in the background at
 
 ## Build
 
+**Continue in Codex Cloud:** read the [complete Amin TV handover](docs/CLOUD_HANDOVER.md) first. It identifies the released version, prepared branch, architecture, completed features, limitations, owner preferences and next checkpoint. The published environment is **Amin-Live-TV**; select the handover/development branch explicitly until its review is merged.
+
 For cloud development and iPhone review, start with [development status](docs/DEVELOPMENT_STATUS.md), [architecture](docs/ARCHITECTURE.md), [roadmap](docs/ROADMAP.md) and [cloud setup](docs/CLOUD_DEVELOPMENT.md). On Linux, `bash .codex/setup.sh` prepares the Android environment and `bash scripts/check.sh` verifies it. GitHub Actions produces a separate **Amin TV Preview** APK (`com.enigma.aminlivetv.qa`), preserving the production installation. Ordinary previews do not offer production APK updates.
 
 Open this folder in Android Studio with JDK 17, Android SDK Platform 35, and Android Build Tools 35.0.0.
