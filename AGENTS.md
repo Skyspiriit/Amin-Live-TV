@@ -1,8 +1,9 @@
 # Amin TV development
 
-Read `docs/DEVELOPMENT_STATUS.md`, `docs/ARCHITECTURE.md` and `docs/ROADMAP.md` before changing code. Update status at every tested checkpoint.
+Start with `docs/CLOUD_HANDOVER.md`, then read `docs/DEVELOPMENT_STATUS.md`, `docs/ARCHITECTURE.md` and `docs/ROADMAP.md` before changing code. Update status at every tested checkpoint.
 
 - Continue this application; do not rewrite it or modify the adjacent Amin Player/VPN projects.
+- Current handover scope is Amin TV only and documentation only. All other apps are skipped. Morphent and segmentation projects must not be inspected, edited or pushed.
 - Preserve production package `com.enigma.aminlivetv`, release certificate, catalogue IDs and preference formats. Never clear production data to fix an update.
 - Work in a dedicated branch and prepare a PR. Do not merge, tag or publish a production release without explicit owner approval.
 - Previews use `com.enigma.aminlivetv.qa`. Do not install on the physical Xiaomi without specific permission. Emulator results are not Xiaomi results.

@@ -1,8 +1,14 @@
 # Amin TV development status
 
-Updated **27 November 2026**. Branch `dev/cloud-series-interface`, baseline `8d37208` (`main`). **No production release or physical-device installation for this checkpoint without new owner approval.**
+Updated **28 November 2026** for documentation handover. Implementation checkpoint: `dev/cloud-series-interface` at `79ef32e`, baseline `8d37208` (`main`). Handover branch: `docs/cloud-handover-20261128`. **No production release or physical-device installation for this checkpoint without new owner approval.**
 
 Review: [pull request #2](https://github.com/Skyspiriit/Amin-Live-TV/pull/2), open and unmerged. The latest branch/PR Actions runs attach installable QA APKs and reports; use the source commit in each artifact's `verification.json`. Owner review is the next step.
+
+## Cloud handover — 28 November
+
+[Start here](CLOUD_HANDOVER.md). The private Amin-Live-TV environment was rechecked as ready/runnable. The handover documents architecture, features, source branches, build/release boundaries, user-data compatibility, known limitations, owner preferences and roadmap. Final implementation verification is [run 46061095907](https://github.com/Skyspiriit/Amin-Live-TV/actions/runs/46061095907): both build and TV-navigation jobs passed on `79ef32e` (test-merge tree `c711da10`).
+
+This follow-up changes documentation only; no application code, catalogue, package/version, signing, workflows, runtime data or physical installation changed. Other applications are skipped by the owner; Morphent and all segmentation work are explicitly excluded. Signing credentials/private keys/local secrets are not included. Keep the original PR #2 checkpoint intact while the handover is reviewed separately.
 
 ## Production baseline
 
@@ -17,7 +23,7 @@ Physical Xiaomi update on 26 November used the app's automatic download and Andr
 - Existing debug artifacts share production identity unless a test-catalogue flag is passed. This branch makes all previews separate and suppresses production update offers in ordinary previews.
 - Existing releases publish on tag push. A manual owner-approved flow will be proposed. **No GitHub signing secrets existed** during the audit; no secret values were read or transferred.
 - The private **Amin-Live-TV** Codex environment is published and the environment API reports `runnable: true`. Its preparation built the baseline, passed 22 JVM tests and lint (0 errors, 17 warnings). A software-only emulator did not boot within five minutes; no cloud-emulator playback claim. GitHub-hosted builds also verify the versioned setup independently of the owner's PC.
-- Partial lists omit unavailable numbers. UI placeholders will expose known gaps without changing saved IDs/positions. Unknown final counts need future verified metadata.
+- Production partial lists omit unavailable numbers; the prepared UI exposes known gaps with placeholders without changing saved IDs/positions. Unknown final counts need future verified metadata.
 
 ## Milestones
 

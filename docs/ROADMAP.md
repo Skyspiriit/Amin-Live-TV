@@ -2,6 +2,8 @@
 
 Review from iPhone; normal development/builds run remotely. Production stays 3.9.2 until a separately approved release.
 
+**28 November handover:** [Codex Cloud continuation guide](CLOUD_HANDOVER.md) prepared on a documentation-only branch. Work is limited to Amin TV; all other applications are skipped, and Morphent/segmentation must not be touched. The implementation checkpoint and release/device approvals below remain unchanged.
+
 ## Checkpoint 1 — cloud setup and Persian episode interface
 
 Audit source/docs/issues/unfinished branches; version a repeatable Linux/Java 17/SDK 35 setup; produce a separate installable preview and reports in GitHub Actions; improve compact numbered RTL episode selection, unavailable gaps and focus while preserving exact resume/Continue Watching. Test, update continuation documents, prepare a PR and **stop**. No merge, production tag/release or device installation without owner approval.
